@@ -7,3 +7,11 @@
 	prune = true
 [core]
 	excludesfile = ~/.gitignore
+
+[alias]
+	s = status
+	a = add
+	b = branch
+	c = commit -m
+	d = diff
+	o = checkout

@@ -11,12 +11,6 @@ alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/ji
 alias ll='ls -al'
 # Git
 alias g='git'
-alias gs='git status '
-alias ga='git add '
-alias gb='git branch '
-alias gc='git commit -m '
-alias gd='git diff'
-alias go='git checkout '
 
 # Basher #
 ##########
