@@ -1,0 +1,9 @@
+[user]
+	name = Jim Ray
+	email = jray@slack-corp.com
+[push]
+	default = simple
+[fetch]
+	prune = true
+[core]
+	excludesfile = ~/.gitignore
