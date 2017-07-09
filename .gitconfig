@@ -12,6 +12,6 @@
 	s = status
 	a = add
 	b = branch
-	c = commit -m
+	c = commit
 	d = diff
 	o = checkout
