@@ -8,7 +8,9 @@ alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/ji
 
 # Aliases #
 ###########
+alias ls='ls -G'
 alias ll='ls -al'
+
 # Git
 alias g='git'
 
