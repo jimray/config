@@ -1,4 +1,3 @@
-
 # Dotfiles #
 ############
 # This is for portable dotfiles-style config, using a bare git tree
@@ -9,6 +8,9 @@ alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/ji
 ###########
 alias ls='ls -G'
 alias ll='ls -al'
+alias reload='source ~/.bashrc'
+# This assums MacVim is installed...
+alias vim='/Applications/MacVim.app/Contents/bin/vim'
 
 # Git
 alias g='git'
