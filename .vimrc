@@ -21,6 +21,9 @@ set encoding=utf-8
 " Show matching brackets when cursor is over
 set showmatch
 
+" No wrapping
+set nowrap
+
 " We don't need not steenking backup
 set nobackup
 set nowb
@@ -57,8 +60,13 @@ set hlsearch
 set ignorecase
 set smartcase
 
+" Clear search
+map <leader><space> :let @/=''<cr> 
+
 " Plugins
 " #######
+" Installed plugins:
+" https://github.com/tpope/vim-surround.git
 
 " Helps plugins load better, turn it back on later
 filetype off
@@ -74,3 +82,10 @@ syntax on
 
 " Plugins loaded, filetypes back on!
 filetype plugin indent on
+
+" Make vim pretty!
+if (has("termguicolors"))
+set termguicolors
+endif
+colorscheme oceanic-next
+let g:airline_theme='oceanicnext'

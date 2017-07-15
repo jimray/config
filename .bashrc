@@ -9,8 +9,11 @@ alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/ji
 alias ls='ls -G'
 alias ll='ls -al'
 alias reload='source ~/.bashrc'
-# This assums MacVim is installed...
-alias vim='/Applications/MacVim.app/Contents/bin/vim'
+# if MacVim is installed use that instead
+if [ -e /Applications/MacVim.app/ ]; then
+  alias vim='/Applications/MacVim.app/Contents/bin/vim'
+  alias vi='/Applications/MacVim.app/Contents/bin/vim'
+fi
 
 # Git
 alias g='git'
