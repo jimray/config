@@ -12,9 +12,6 @@ set ttyfast
 " Show line numbers
 set number
 
-" Show file info
-set ruler
-
 " Default to utf-8
 set encoding=utf-8
 
@@ -73,7 +70,12 @@ filetype off
 
 " DO PLUGIN STUFF HERE
 " ---------------------
-"  Safe to assume vim 8 native plugins?
+" Airline
+" this isn't strictly an airline thing but cuts down on the redundancy
+set noshowmode
+set noruler
+set laststatus=0
+
 " ---------------------
 " END PLUGIN STUFF HERE
 
@@ -85,7 +87,7 @@ filetype plugin indent on
 
 " Make vim pretty!
 if (has("termguicolors"))
-set termguicolors
+  set termguicolors
 endif
 colorscheme oceanic-next
 let g:airline_theme='oceanicnext'
