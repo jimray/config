@@ -1,7 +1,10 @@
 # This doesn't do much yet, mostly for record keeping
+# Before running this, init the dotfiles setup
+# curl -Lks https://git.io/vQFTa | /bin/bash
+
 # Set up vim for plugins
 mkdir -p ~/.vim/pack/plugins/start/
-mkdir -p ~/.vim/colors
+mkdir -p ~/.vim/colors/
 
 # Grab vim plugins - maybe move these into .vimrc and grep for them?
 git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround

@@ -11,6 +11,7 @@
 [alias]
 	s = status
 	a = add
+  au = add -u
 	b = branch
 	c = commit
 	d = diff

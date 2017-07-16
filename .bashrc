@@ -35,4 +35,5 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
 
+# rocket current_working_dir [git_branch] >
 export PS1='🚀  \W $(parse_git_branch) > '
