@@ -1,5 +1,8 @@
 " Basics
 " ######
+" Stuff you might expect to find in here, like indentation, is handled by
+" .editorconfig
+
 " Not vi compatible
 set nocompatible
 
@@ -11,9 +14,6 @@ set ttyfast
 
 " Show line numbers
 set number
-
-" Default to utf-8
-set encoding=utf-8
 
 " Show matching brackets when cursor is over
 set showmatch
@@ -28,17 +28,6 @@ set noswapfile
 
 " Take me to your leader
 let mapleader = ","
-
-" Indentation
-" ###########
-
-" Use spaces instead of tabs and be smart about it
-set expandtab
-set smarttab
-
-" 1 tab is 2 spaces
-set shiftwidth=2
-set tabstop=2
 
 " Auto indent and be smart about it
 set autoindent

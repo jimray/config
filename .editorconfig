@@ -8,10 +8,17 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
+# we use 2 spaces to indent!
+indent_style = space
+indent_size = 2
+
+# every file is utf-8 by default
+charset = utf-8
+
 # Matches multiple files with brace expansion notation
 # Set default charset
-[*.{js,py}]
-charset = utf-8
+# [*.{js,py}]
+# charset = utf-8
 
 # 4 space indentation
 [*.py]
