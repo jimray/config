@@ -23,3 +23,9 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 # TODO figure out how to automate iTerm's colors
 
+# NVM
+git clone https://github.com/creationix/nvm.git ~/.nvm
+# go ahead and install an LTS version of node to get started
+nvm install --lts
+# install some sensible Node global packages
+npm install -g nodemon

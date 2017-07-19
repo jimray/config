@@ -1,24 +1,29 @@
-# Dotfiles #
-############
+# Init
+######
 # This is for portable dotfiles-style config, using a bare git tree
 # https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
 alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/jimray'
 
-# Aliases #
-###########
+# NVM
+#####
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Aliases 
+#########
 alias ls='ls -G'
 alias ll='ls -al'
 alias reload='source ~/.bashrc'
 
-# Vim
 # if MacVim is installed use that instead
 if [ -e /Applications/MacVim.app/ ]; then
   alias vim='/Applications/MacVim.app/Contents/bin/vim'
   alias vi='/Applications/MacVim.app/Contents/bin/vim'
 fi
 
-# Git
 alias g='git'
+alias n='nvm'
 
 # Console #
 ###########
