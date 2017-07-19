@@ -9,11 +9,18 @@
 	excludesfile = ~/.gitignore
 
 [alias]
-	s = status
 	a = add
   au = add -u
   aux = !git add -u && git commit
 	b = branch
 	c = commit
 	d = diff
+  g = grep
 	o = checkout
+	s = status
+
+  #blame without whitespace
+  blame = blame -w -M -C
+
+  #more good aliases here!
+  #https://gist.github.com/jhermsmeier/ae195a83b4c3d212c770
