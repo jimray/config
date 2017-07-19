@@ -24,12 +24,6 @@ alias g='git'
 alias nv='exec nave use'
 alias nvx='exec nave exit'
 
-# Basher #
-##########
-# https://github.com/basherpm/basher
-export PATH="$HOME/.basher/bin:$PATH"
-eval "$(basher init -)"
-
 # Console #
 ###########
 # Git status

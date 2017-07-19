@@ -23,14 +23,3 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 # TODO figure out how to automate iTerm's colors
 
-# TODO no more basher, no more nave, just use NVM dummy
-# https://github.com/creationix/nvm
-# Basher
-########
-
-git clone https://github.com/basherpm/basher.git ~/.basher
-
-# Node
-######
-
-basher install isaacs/nave
