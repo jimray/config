@@ -18,6 +18,10 @@ fi
 # Git
 alias g='git'
 
+# Base64 encode a given file and copy the resulting output to the clipboard
+base64copy() { openssl base64 -A -in $1 | pbcopy }
+alias bcp=base64copy
+
 # Basher #
 ##########
 # https://github.com/basherpm/basher

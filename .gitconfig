@@ -12,6 +12,7 @@
 	s = status
 	a = add
   au = add -u
+  aux = !git add -u && git commit
 	b = branch
 	c = commit
 	d = diff
