@@ -2,6 +2,9 @@
 # Before running this, init the dotfiles setup
 # curl -Lks https://git.io/vQFTa | /bin/bash
 
+# VIM
+#####
+
 # Set up vim for plugins
 mkdir -p ~/.vim/pack/plugins/start/
 mkdir -p ~/.vim/colors/
@@ -19,3 +22,15 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # Oceanic for iTerm, too
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 # TODO figure out how to automate iTerm's colors
+
+# TODO no more basher, no more nave, just use NVM dummy
+# https://github.com/creationix/nvm
+# Basher
+########
+
+git clone https://github.com/basherpm/basher.git ~/.basher
+
+# Node
+######
+
+basher install isaacs/nave

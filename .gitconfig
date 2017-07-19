@@ -13,7 +13,8 @@
 	a = add
   au = add -u
   aux = !git add -u && git commit
-	b = branch
+  # who creates a branch but doesn't check it out?
+	b = checkout -b
 	c = commit
 	d = diff
   g = grep
