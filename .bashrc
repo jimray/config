@@ -20,10 +20,6 @@ fi
 # Git
 alias g='git'
 
-# Nave
-alias nv='exec nave use'
-alias nvx='exec nave exit'
-
 # Console #
 ###########
 # Git status
