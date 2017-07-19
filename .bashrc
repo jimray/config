@@ -9,6 +9,8 @@ alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/ji
 alias ls='ls -G'
 alias ll='ls -al'
 alias reload='source ~/.bashrc'
+
+# Vim
 # if MacVim is installed use that instead
 if [ -e /Applications/MacVim.app/ ]; then
   alias vim='/Applications/MacVim.app/Contents/bin/vim'
@@ -18,9 +20,9 @@ fi
 # Git
 alias g='git'
 
-# Base64 encode a given file and copy the resulting output to the clipboard
-base64copy() { openssl base64 -A -in $1 | pbcopy }
-alias bcp=base64copy
+# Nave
+alias nv='exec nave use'
+alias nvx='exec nave exit'
 
 # Basher #
 ##########
@@ -41,3 +43,4 @@ function parse_git_branch {
 
 # rocket current_working_dir [git_branch] >
 export PS1='🚀  \W $(parse_git_branch) > '
+
