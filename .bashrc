@@ -4,12 +4,6 @@
 # https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
 alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/jimray'
 
-# NVM
-#####
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # Aliases 
 #########
 alias ls='ls -G'
@@ -23,7 +17,6 @@ if [ -e /Applications/MacVim.app/ ]; then
 fi
 
 alias g='git'
-alias n='nvm'
 
 # Console #
 ###########
@@ -39,3 +32,17 @@ function parse_git_branch {
 # rocket current_working_dir [git_branch] >
 export PS1='🚀  \W $(parse_git_branch) > '
 
+# NVM
+#####
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Pyenv
+#######
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# pyenv-virtualenv
+eval "$(pyenv virtualenv-init -)"

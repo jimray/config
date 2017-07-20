@@ -25,7 +25,18 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 
 # NVM
 git clone https://github.com/creationix/nvm.git ~/.nvm
+
+# Pyenv and pyenv-virtualenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/pyenv-install-latest
+
+
+# TODO test this! Installing some defaults makes sens, but probably last!
 # go ahead and install an LTS version of node to get started
-nvm install --lts
+# nvm install --lts
 # install some sensible Node global packages
-npm install -g nodemon
+# npm install -g nodemon
+# 
+# install latest python and TODO make it global
+# pyenv install-latest
