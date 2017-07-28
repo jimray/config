@@ -9,7 +9,8 @@
 mkdir -p ~/.vim/pack/plugins/start/
 mkdir -p ~/.vim/colors/
 
-# Grab vim plugins - maybe move these into .vimrc and grep for them?
+# Grab vim plugins - 
+# TODO move these into .vimrc and grep for them?
 git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround
 git clone https://github.com/vim-airline/vim-airline.git ~/.vim/pack/plugins/start/vim-airline
 git clone https://github.com/vim-airline/vim-airline-themes.git ~/.vim/pack/plugins/start/vim-airline-themes
@@ -32,7 +33,7 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-v
 git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/pyenv-install-latest
 
 
-# TODO test this! Installing some defaults makes sens, but probably last!
+# TODO test this! Installing some defaults makes sense, but probably last!
 # go ahead and install an LTS version of node to get started
 # nvm install --lts
 # install some sensible Node global packages
@@ -40,3 +41,13 @@ git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/
 # 
 # install latest python and TODO make it global
 # pyenv install-latest
+
+# MacOS specific stuff. Commenting until tested...
+# 
+# defaults write "com.apple.Dock"
+#	autohide = 1;
+#	magnification = 1;
+#	tilesize -integer "35"
+#	orientation = left;
+
+# chflags nohidden ~/Library/

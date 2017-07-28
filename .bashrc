@@ -30,7 +30,7 @@ function parse_git_branch {
 }
 
 # rocket current_working_dir [git_branch] >
-export PS1='🚀  \W $(parse_git_branch) > '
+export PS1='\w $(parse_git_branch)\n🚀  '
 
 # NVM
 #####
