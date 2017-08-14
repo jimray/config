@@ -1,6 +1,9 @@
-[user]
-	name = Jim Ray
-	email = jray@slack-corp.com
+# [user] stuff is in ~/.gitconfig.local
+# and not checked into config to allow for 
+# work vs. personal git configs
+[include]
+  path = ~/.gitconfig.local
+
 [push]
 	default = simple
 [fetch]
