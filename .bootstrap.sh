@@ -42,7 +42,27 @@ git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/
 # install latest python and TODO make it global
 # pyenv install-latest
 
-# MacOS specific stuff. Commenting until tested...
+# MacOS specific subshell. 
+(
+if [ "$(uname)" != "Darwin" ]
+then exit
+fi
+
+# Install Homebrew
+if [ ! -f "/usr/local/bin/brew" ]
+then /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+# Install CLI tools
+if [ ! -d "/Library/Developer" ]
+then xcode-select --install
+fi
+
+# Install some CLI tools
+brew install "git" || :
+# TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "firefoxdeveloperedition", etc.
+
+# Commenting until tested...
 # 
 # defaults write "com.apple.Dock"
 #	autohide = 1;
@@ -51,3 +71,5 @@ git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/
 #	orientation = left;
 
 # chflags nohidden ~/Library/
+)
+# End MacOS specific subshell
