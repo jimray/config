@@ -14,11 +14,13 @@
 
 [alias]
 	a = add
+  # add all tracked files
   au = add -u
+  # add all tracked files AND commit
   aux = !git add -u && git commit
   # who creates a branch but doesn't check it out?
 	b = checkout -b
-	c = commit
+  c = commit
 	d = diff
   g = grep
 	o = checkout
