@@ -5,6 +5,9 @@
 # VIM
 #####
 
+# On the Mac, we're using MacVim, which gets installed manually
+# TODO: make that more automatic, maybe via brew?
+
 # Set up vim for plugins
 mkdir -p ~/.vim/pack/plugins/start/
 mkdir -p ~/.vim/colors/
@@ -53,14 +56,14 @@ if [ ! -f "/usr/local/bin/brew" ]
 then /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# Install CLI tools
+# Install xcode CLI tools
 if [ ! -d "/Library/Developer" ]
 then xcode-select --install
 fi
 
-# Install some CLI tools
-brew install "git" || :
-# TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "firefoxdeveloperedition", etc.
+# Install some handy CLI tools
+brew install "git" "golang" || :
+# TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 
 # Commenting until tested...
 # 
