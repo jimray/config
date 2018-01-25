@@ -1,6 +1,6 @@
 # This doesn't do much yet, mostly for record keeping
 # Before running this, init the dotfiles setup
-# curl -Lks https://git.io/vQFTa | /bin/bash
+# curl -Lks https://git.io/vNPBg| /bin/bash
 
 # VIM
 #####
