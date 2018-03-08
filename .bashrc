@@ -8,7 +8,7 @@
 # config add .my_dotfile
 # config commit -m "Added a dotfile"
 # config push
-alias config='/usr/bin/git --git-dir=/Users/jimray/.config --work-tree=/Users/jimray'
+alias config='/usr/bin/git --git-dir=/Users/jimray/.cfg --work-tree=/Users/jimray'
 
 # Aliases 
 #########
@@ -26,29 +26,10 @@ alias g='git'
 
 # Console #
 ###########
-# Git status
-# https://gist.github.com/henrik/31631
-function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo " 💩 "
-}
-function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
-}
-
-# show the current directory and git status. And a rocket!
-export PS1='\w $(parse_git_branch)\n🚀  '
+# show the current directory. And a rocket!
+export PS1='\w\n🚀  '
 
 # NVM
 #####
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Pyenv
-#######
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# pyenv-virtualenv
-eval "$(pyenv virtualenv-init -)"

@@ -24,7 +24,7 @@ git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
 
 # Make vim pretty
 curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/colors/OceanicNext.vim' > ~/.vim/colors/oceanic-next.vim
-curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload/airline/themes/oceanicnext.vim' > ~/.vim/pack/plugins/start/vim-airline-themes/autoload/airline/themes
+curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload/airline/themes/oceanicnext.vim' > ~/.vim/pack/plugins/start/vim-airline-themes/autoload/airline/themes/oceanicnext.vim
 
 # Oceanic for iTerm, too
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
@@ -33,20 +33,11 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # NVM
 git clone https://github.com/creationix/nvm.git ~/.nvm
 
-# Pyenv and pyenv-virtualenv
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-git clone https://github.com/momo-lab/pyenv-install-latest.git ~/.pyenv/plugins/pyenv-install-latest
-
-
 # TODO test this! Installing some defaults makes sense, but probably last!
 # go ahead and install an LTS version of node to get started
 # nvm install --lts
 # install some sensible Node global packages
 # npm install -g nodemon
-# 
-# install latest python and TODO make it global
-# pyenv install-latest
 
 # MacOS specific subshell. 
 (
@@ -65,17 +56,27 @@ then xcode-select --install
 fi
 
 # Install some handy CLI tools
-brew install "git" "golang" || :
+brew install "git" "golang" "python" "pipenv" || :
+brew cask install "ngrok" || :
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 
-# Commenting until tested...
-# 
-# defaults write "com.apple.Dock"
-#	autohide = 1;
-#	magnification = 1;
-#	tilesize -integer "35"
-#	orientation = left;
+# Set up the dock
+# hide that dock
+defaults write com.apple.dock autohide -bool true
+# magnify
+defaults write com.apple.dock magnification -bool true
+# set the dock size
+defaults write com.apple.dock tilesize -float 35
+defaults write com.apple.dock largesize -float 100
+# only show active apps in the dock
+defaults write com.apple.dock static-only -bool true
+# don't animate when opening an app
+defaults write com.apple.dock launchanim -bool false
 
-# chflags nohidden ~/Library/
+# done with Dock customization, go ahead and restart it
+killall Dock
+
+# don't hid the ~/Library/ folder
+chflags nohidden ~/Library/
 )
 # End MacOS specific subshell
