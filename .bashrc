@@ -27,7 +27,7 @@ alias g='git'
 # Console #
 ###########
 # show the current directory. And a rocket!
-export PS1='\w\n🚀  '
+export PS1='🚀  \W > '
 
 # NVM
 #####
