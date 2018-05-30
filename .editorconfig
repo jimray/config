@@ -31,3 +31,7 @@ indent_size = 4
 [*.md]
 indent_style = tab
 trim_trailing_whitespace = false
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
