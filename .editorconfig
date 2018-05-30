@@ -3,17 +3,19 @@
 # top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
+# matches every file -- set some defualts the override
+# per-filetype
 [*]
+charset = utf-8
+# Unix-style newlines with a newline ending every file
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
 
 # 2 spaces to indent!
 indent_style = space
 indent_size = 2
 
-# every file is utf-8 by default
-charset = utf-8
 
 # Matches multiple files with brace expansion notation
 # Set default charset
@@ -28,3 +30,4 @@ indent_size = 4
 # Markdown
 [*.md]
 indent_style = tab
+trim_trailing_whitespace = false
