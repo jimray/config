@@ -10,7 +10,7 @@
 # config push
 alias config='/usr/bin/git --git-dir=/Users/jimray/.cfg --work-tree=/Users/jimray'
 
-# Aliases 
+# Aliases
 #########
 alias ls='ls -G'
 alias ll='ls -al'
@@ -33,3 +33,7 @@ export PS1='🚀  \W > '
 #####
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Python
+########
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
