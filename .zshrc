@@ -18,6 +18,12 @@ alias reload='source ~/.zshrc'
 
 alias g='git'
 
+# if MacVim is installed use that instead
+if [ -e /Applications/MacVim.app/ ]; then
+  alias vim='/Applications/MacVim.app/Contents/bin/vim'
+  alias vi='/Applications/MacVim.app/Contents/bin/vim'
+fi
+
 # Console
 # #######
 # show the current directory. And a rocket!
@@ -25,4 +31,10 @@ export PS1='🚀  %~ > '
 
 # NVM
 # ###
+export NVM_AUTO_USE=true
 source ~/.zsh-nvm/zsh-nvm.plugin.zsh
+
+# Python
+# ######
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+
