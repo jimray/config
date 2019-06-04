@@ -14,7 +14,7 @@
 mkdir -p ~/.vim/pack/plugins/start/
 mkdir -p ~/.vim/colors/
 
-# Grab vim plugins - 
+# Grab vim plugins -
 # TODO move these into .vimrc and grep for them?
 git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround
 git clone https://github.com/vim-airline/vim-airline.git ~/.vim/pack/plugins/start/vim-airline
@@ -31,7 +31,7 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # TODO figure out how to automate iTerm's colors
 
 # NVM
-git clone https://github.com/creationix/nvm.git ~/.nvm
+git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
 
 # TODO test this! Installing some defaults makes sense, but probably last!
 # go ahead and install an LTS version of node to get started
@@ -39,7 +39,7 @@ git clone https://github.com/creationix/nvm.git ~/.nvm
 # install some sensible Node global packages
 # npm install -g nodemon
 
-# MacOS specific subshell. 
+# MacOS specific subshell.
 (
 if [ "$(uname)" != "Darwin" ]
 then exit
