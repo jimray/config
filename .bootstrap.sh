@@ -56,7 +56,10 @@ then xcode-select --install
 fi
 
 # Install some handy CLI tools
-brew install "git" "golang" "python" "pipenv" || :
+# git - source control; golang - Go programming language
+# python - python programming language; pipenv - python dev workflow tool
+# asdf - managine multiple runtime versions (no more nvm!)
+brew install "git" "golang" "python" "pipenv" "asdf" || :
 brew cask install "ngrok" || :
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 
