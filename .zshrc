@@ -31,8 +31,8 @@ export PS1='🚀 %1~ > '
 
 # NVM
 # ###
-export NVM_AUTO_USE=true
-source ~/.zsh-nvm/zsh-nvm.plugin.zsh
+# export NVM_AUTO_USE=true
+# source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # Python
 # ######
@@ -40,3 +40,7 @@ export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
+# activate asdf
+# https://asdf-vm.com
+. /usr/local/opt/asdf/asdf.sh
