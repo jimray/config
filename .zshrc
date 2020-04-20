@@ -26,8 +26,8 @@ fi
 
 # Console
 # #######
-# show the current directory. And a rocket!
-export PS1='🚀  %~ > '
+# a rocket!
+export PS1='🚀 %1~ > '
 
 # NVM
 # ###
@@ -38,3 +38,5 @@ source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 # ######
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
