@@ -44,3 +44,7 @@ HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_se
 # activate asdf
 # https://asdf-vm.com
 . /usr/local/opt/asdf/asdf.sh
+
+# activate z
+# https://github.com/rupa/z
+. /usr/local/bin/z.sh

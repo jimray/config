@@ -30,8 +30,13 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 # TODO figure out how to automate iTerm's colors
 
+# Install z
+curl https://raw.githubusercontent.com/rupa/z/master/z.sh --output /usr/local/bin/z.sh
+chmod a+x /usr/local/bin/z.sh
+
 # NVM
-git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
+# replacing with adsf(?)
+# git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
 
 # TODO test this! Installing some defaults makes sense, but probably last!
 # go ahead and install an LTS version of node to get started
