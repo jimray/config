@@ -1,6 +1,10 @@
 # [user] stuff is in ~/.gitconfig.local
-# and not checked into config to allow for 
+# and not checked into config to allow for
 # work vs. personal git configs
+# at the very least it should include
+# [user]
+#   name = Jim Ray
+#   email = jimray@example.com
 [include]
   path = ~/.gitconfig.local
 

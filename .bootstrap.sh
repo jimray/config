@@ -31,11 +31,13 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 # TODO figure out how to automate iTerm's colors
 
 # Install z
-curl https://raw.githubusercontent.com/rupa/z/master/z.sh --output /usr/local/bin/z.sh
-chmod a+x /usr/local/bin/z.sh
+git clone https://github.com/rupa/z.git ~/._z
+
+# Install asdf
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
 # NVM
-# replacing with adsf(?)
+# replacing with asdf(?)
 # git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
 
 # TODO test this! Installing some defaults makes sense, but probably last!
@@ -63,8 +65,7 @@ fi
 # Install some handy CLI tools
 # git - source control; golang - Go programming language
 # python - python programming language; pipenv - python dev workflow tool
-# asdf - managine multiple runtime versions (no more nvm!)
-brew install "git" "golang" "python" "pipenv" "asdf" || :
+brew install "git" "golang" "python" "pipenv" || :
 brew cask install "ngrok" || :
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 

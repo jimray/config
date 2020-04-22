@@ -8,7 +8,7 @@
 # config add .my_dotfile
 # config commit -m "Added a dotfile"
 # config push
-alias config='/usr/bin/git --git-dir=/Users/jimray/.cfg --work-tree=/Users/jimray'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 
 # Aliases
 # #######
@@ -39,12 +39,17 @@ export PS1='🚀 %1~ > '
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
 # heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+# HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # activate asdf
 # https://asdf-vm.com
-. /usr/local/opt/asdf/asdf.sh
+. $HOME/.asdf/asdf.sh
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit
+compinit
 
 # activate z
 # https://github.com/rupa/z
-. /usr/local/bin/z.sh
+. $HOME/._z/z.sh
