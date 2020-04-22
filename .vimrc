@@ -9,7 +9,7 @@ set nocompatible
 " Don't beep, blink
 set visualbell
 
-" Assume we've got a fast terminal connection lol 
+" Assume we've got a fast terminal connection lol
 set ttyfast
 
 " Show line numbers
@@ -47,7 +47,7 @@ set ignorecase
 set smartcase
 
 " Clear search
-map <leader><space> :let @/=''<cr> 
+map <leader><space> :let @/=''<cr>
 
 " Plugins
 " #######
@@ -69,12 +69,13 @@ set laststatus=0
 " END PLUGIN STUFF HERE
 
 " Turn syntax highlighting on
-syntax on
+syntax enable
 
 " Plugins loaded, filetypes back on!
 filetype plugin indent on
 
 " Make vim pretty!
+set t_Co=256
 if (has("termguicolors"))
   set termguicolors
 endif
