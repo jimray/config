@@ -51,8 +51,6 @@ map <leader><space> :let @/=''<cr>
 
 " Plugins
 " #######
-" Installed plugins:
-" https://github.com/tpope/vim-surround.git
 
 " Helps plugins load better, turn it back on later
 filetype off
@@ -67,6 +65,10 @@ set laststatus=0
 
 " ---------------------
 " END PLUGIN STUFF HERE
+
+" Split smarter
+set splitbelow
+set splitright
 
 " Turn syntax highlighting on
 syntax enable
