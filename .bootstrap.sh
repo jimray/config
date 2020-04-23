@@ -2,6 +2,13 @@
 # Before running this, init the dotfiles setup
 # curl -Lks https://git.io/vNPBg| /bin/bash
 
+# TMUX
+#####
+
+# Set up tmux for plugins
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+
 # VIM
 #####
 
@@ -21,6 +28,8 @@ git clone https://github.com/vim-airline/vim-airline.git ~/.vim/pack/plugins/sta
 git clone https://github.com/vim-airline/vim-airline-themes.git ~/.vim/pack/plugins/start/vim-airline-themes
 git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugins/start/editorconfig-vim
 git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
+git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim-vinegar
+git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
 
 # Make vim pretty
 curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/colors/OceanicNext.vim' > ~/.vim/colors/oceanic-next.vim
