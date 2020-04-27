@@ -72,10 +72,9 @@ then xcode-select --install
 fi
 
 # Install some handy CLI tools
-# git - source control; golang - Go programming language
-# python - python programming language; pipenv - python dev workflow tool
-brew install "git" "golang" "python" "pipenv" || :
-brew cask install "ngrok" || :
+# brew install "git" "tmux" || :
+# brew cask install "ngrok" || :
+brew bundle --file .Brewfile
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 
 # Set up the dock
