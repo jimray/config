@@ -49,6 +49,9 @@ set smartcase
 " Clear search
 map <leader><space> :let @/=''<cr>
 
+" unset the last search pattern when hitting return
+nnoremap <CR> :noh<CR><CR>
+
 " Plugins
 " #######
 
@@ -66,15 +69,15 @@ set laststatus=0
 " ---------------------
 " END PLUGIN STUFF HERE
 
-" Split smarter
-set splitbelow
-set splitright
-
 " Turn syntax highlighting on
 syntax enable
 
 " Plugins loaded, filetypes back on!
 filetype plugin indent on
+
+" Split smarter
+set splitbelow
+set splitright
 
 " Make vim pretty!
 set t_Co=256
