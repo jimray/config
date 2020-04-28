@@ -45,16 +45,6 @@ git clone https://github.com/rupa/z.git ~/._z
 # Install asdf
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
-# NVM
-# replacing with asdf(?)
-# git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
-
-# TODO test this! Installing some defaults makes sense, but probably last!
-# go ahead and install an LTS version of node to get started
-# nvm install --lts
-# install some sensible Node global packages
-# npm install -g nodemon
-
 # MacOS specific subshell.
 (
 if [ "$(uname)" != "Darwin" ]
@@ -75,6 +65,7 @@ fi
 # brew install "git" "tmux" || :
 # brew cask install "ngrok" || :
 brew bundle --file .Brewfile
+rm .Brewfile.lock.json
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
 
 # Set up the dock
