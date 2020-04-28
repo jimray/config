@@ -55,6 +55,14 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # install some sensible Node global packages
 # npm install -g nodemon
 
+# At some point, set up SSH. You'll need a config that at least contains
+# Personal GitHub account
+#Host github.com
+# HostName github.com
+# User git
+# AddKeysToAgent yes
+# IdentityFile ~/.ssh/id_rsa
+
 # MacOS specific subshell.
 (
 if [ "$(uname)" != "Darwin" ]
