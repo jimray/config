@@ -1,5 +1,9 @@
-# This doesn't do much yet, mostly for record keeping
+#!/bin/bash
+
+# This is an evolving record of setting up a macOS or unix box
+# It most mostly serves as as record keeping
 # Before running this, init the dotfiles setup
+# TODO: currently busted, fix
 # curl -Lks https://git.io/vNPBg| /bin/bash
 
 # TMUX
@@ -8,21 +12,15 @@
 # Set up tmux for plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-
 # VIM
 #####
-
-# On the Mac, we're using MacVim, which gets installed manually
-# TODO: make that more automatic, maybe via brew?
-
 # Set up vim for plugins
 # These are vim8-style packages, not using a plugin manager like Pathogen
 # :h packages
 mkdir -p ~/.vim/pack/plugins/start/
 mkdir -p ~/.vim/colors/
 
-# Grab vim plugins -
-# TODO move these into .vimrc and grep for them?
+# Grab vim plugins
 git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround
 git clone https://github.com/vim-airline/vim-airline.git ~/.vim/pack/plugins/start/vim-airline
 git clone https://github.com/vim-airline/vim-airline-themes.git ~/.vim/pack/plugins/start/vim-airline-themes
@@ -30,14 +28,12 @@ git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugi
 git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
 git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim-vinegar
 git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
+git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
+git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
 
 # Make vim pretty
 curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/colors/OceanicNext.vim' > ~/.vim/colors/oceanic-next.vim
 curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload/airline/themes/oceanicnext.vim' > ~/.vim/pack/plugins/start/vim-airline-themes/autoload/airline/themes/oceanicnext.vim
-
-# Oceanic for iTerm, too
-# https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
-# TODO figure out how to automate iTerm's colors
 
 # Install z
 git clone https://github.com/rupa/z.git ~/._z
@@ -69,6 +65,13 @@ if [ ! -d "/Library/Developer" ]
 then xcode-select --install
 fi
 
+# On the Mac, we're using MacVim, which gets installed manually
+# TODO: make that more automatic, maybe via brew?
+
+# Oceanic for iTerm, too
+# https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
+# TODO figure out how to automate iTerm's colors
+
 # Install some handy CLI tools
 # brew install "git" "tmux" || :
 # brew cask install "ngrok" || :
@@ -92,7 +95,7 @@ defaults write com.apple.dock launchanim -bool false
 # done with Dock customization, go ahead and restart it
 killall Dock
 
-# don't hid the ~/Library/ folder
+# don't hide the ~/Library/ folder
 chflags nohidden ~/Library/
 )
 # End MacOS specific subshell

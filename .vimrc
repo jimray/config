@@ -9,7 +9,7 @@ set nocompatible
 " Don't beep, blink
 set visualbell
 
-" Assume we've got a fast terminal connection lol
+" Assume we've got a fast terminal connection
 set ttyfast
 
 " Show line numbers
@@ -26,7 +26,7 @@ set nobackup
 set nowb
 set noswapfile
 
-" Take me to your leader
+" Comma leader
 let mapleader = ","
 
 " Auto indent and be smart about it
@@ -52,6 +52,9 @@ map <leader><space> :let @/=''<cr>
 " unset the last search pattern when hitting return
 nnoremap <CR> :noh<CR><CR>
 
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
 " Plugins
 " #######
 
@@ -66,6 +69,18 @@ set noshowmode
 set noruler
 set laststatus=0
 
+" sensible markdown folding via vim-markdown
+let g:vim_markdown_folding_style_pythonic = 1
+" don't autofold section headers
+let g:vim_markdown_folding_level = 6
+
+" make vim work like a normal text editor for prose writing
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+
 " ---------------------
 " END PLUGIN STUFF HERE
 
@@ -79,7 +94,7 @@ filetype plugin indent on
 set splitbelow
 set splitright
 
-" Make vim pretty!
+" Make vim pretty
 set t_Co=256
 if (has("termguicolors"))
   set termguicolors
