@@ -53,7 +53,14 @@ map <leader><space> :let @/=''<cr>
 nnoremap <CR> :noh<CR><CR>
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+" This breaks lists in markdown
+" TODO: only set for files that are not markdown
+"set list listchars=tab:»·,trail:·,nbsp:·
+
+" Split smarter
+set splitbelow
+set splitright
+
 
 " Plugins
 " #######
@@ -89,10 +96,6 @@ syntax enable
 
 " Plugins loaded, filetypes back on!
 filetype plugin indent on
-
-" Split smarter
-set splitbelow
-set splitright
 
 " Make vim pretty
 set t_Co=256
