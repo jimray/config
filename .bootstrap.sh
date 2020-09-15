@@ -78,6 +78,7 @@ fi
 # TODO figure out how to automate iTerm's colors
 
 # Install some handy CLI tools all helpfully bundled up in a local Brewfile
+# to generate the .Brewfile: brew bundle dump --file .Brewfile
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
