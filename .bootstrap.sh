@@ -39,7 +39,12 @@ curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload
 git clone https://github.com/rupa/z.git ~/._z
 
 # Install asdf
+# ASDF manages plugins that manage software versions like python, nodejs
+# I always forget how this works! Example:
+# asdf add plugin nodejs
+# asdf install nodejs 13.14.0
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+
 
 # At some point, set up SSH. You'll need a config that at least contains
 # Personal GitHub account
@@ -72,9 +77,7 @@ fi
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 # TODO figure out how to automate iTerm's colors
 
-# Install some handy CLI tools
-# brew install "git" "tmux" || :
-# brew cask install "ngrok" || :
+# Install some handy CLI tools all helpfully bundled up in a local Brewfile
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
 # TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
