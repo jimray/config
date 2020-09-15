@@ -31,7 +31,11 @@
   # create a new branch and check it out
 	b = checkout -b
 
-  master = checkout master
+  # because you gotta checkout main a lot
+  main = checkout main
+
+  # get submodules
+  mods = git pull --recurse-submodules
 
   c = commit
 	d = diff
