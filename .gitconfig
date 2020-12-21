@@ -35,9 +35,10 @@
   main = checkout main
 
   # get submodules
-  mods = git pull --recurse-submodules
+  mods = pull --recurse-submodules
 
   c = commit
+  cm = commit -m
 	d = diff
   g = grep
 	o = checkout
