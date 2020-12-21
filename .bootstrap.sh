@@ -99,6 +99,8 @@ defaults write com.apple.dock launchanim -bool false
 # done with Dock customization, go ahead and restart it
 killall Dock
 
+# figure out how to install Safari extensions: Bumpr, Better, 1Password, Quiet, keysearch, StopTheMadness
+
 # don't hide the ~/Library/ folder
 chflags nohidden ~/Library/
 )

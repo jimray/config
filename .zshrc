@@ -24,6 +24,8 @@ if [ -e /Applications/MacVim.app/ ]; then
   alias vi='/Applications/MacVim.app/Contents/bin/vim'
 fi
 
+alias coda='nova'
+
 # Console
 # #######
 # a rocket!
