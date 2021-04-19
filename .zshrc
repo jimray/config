@@ -55,3 +55,5 @@ compinit
 # activate z
 # https://github.com/rupa/z
 . $HOME/._z/z.sh
+
+export PATH="$HOME/.poetry/bin:$PATH"
