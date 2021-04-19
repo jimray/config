@@ -49,3 +49,7 @@
 
   #more good aliases here!
   #https://gist.github.com/jhermsmeier/ae195a83b4c3d212c770
+
+# make the default branch name be `main` instead of `master`
+[init]
+	defaultBranch = main
