@@ -17,16 +17,27 @@
 	editor = /usr/bin/vim
 
 [alias]
+  # get the branch name, used later
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+
+  # add a files
 	a = add
 
   # add all tracked files
   au = add -u
 
   # add all UNtracked files -- use with caution, probably at the start of a project
-  az = !"git ls-files -o --exclude-standard -z | xargs -0 git add"
+  az = "!git ls-files -o --exclude-standard -z | xargs -0 git add"
 
   # add all tracked files AND commit
-  aux = !"git add -u && git commit"
+  aux = "!git add -u && git commit"
+
+  # rebase
+  rb = "!git fetch origin $(git branch-name) && git rebase origin/$(git branch-name)"
+
+  # better pull and fetch -- only from the current branch not *every* branch
+  pu = "!git pull origin $(git branch-name)"
+  fe = "!git fetch origin $(git branch-name)"
 
   # create a new branch and check it out
 	b = checkout -b
