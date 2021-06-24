@@ -24,7 +24,9 @@ if [ -e /Applications/MacVim.app/ ]; then
   alias vi='/Applications/MacVim.app/Contents/bin/vim'
 fi
 
-alias coda='nova'
+if [ -e /Applications/Nova.app/ ]; then
+  alias coda='nova'
+fi
 
 # Console
 # #######
@@ -57,3 +59,8 @@ compinit
 . $HOME/._z/z.sh
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+# use a local .zshrc if they got it
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
