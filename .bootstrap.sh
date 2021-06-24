@@ -113,6 +113,6 @@ then exit
 fi
 
 sudo apt-get -y update
-sudo apt-get -y install "zsh" "vim"
+sudo apt-get -y install "zsh" "vim" "tmux"
 )
 # End Linux specific subshell
