@@ -40,7 +40,7 @@ export PS1='🚀 %1~ > '
 
 # Python
 # ######
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+#export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
 # heroku autocomplete setup
 # HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
@@ -58,6 +58,8 @@ compinit
 # https://github.com/rupa/z
 . $HOME/._z/z.sh
 
+# activate poetry packaging
+# https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
 # use a local .zshrc if they got it
