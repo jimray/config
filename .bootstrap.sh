@@ -42,7 +42,12 @@ git clone https://github.com/rupa/z.git ~/._z
 # I always forget how this works! Example:
 # asdf plugin add nodejs
 # asdf install nodejs 13.14.0
+# asdf plugin add python
+# asdf install python latest
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+
+# Install poetry for python package management
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
 
 # At some point, set up SSH. You'll need a config that at least contains
