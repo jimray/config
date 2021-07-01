@@ -3,8 +3,7 @@
 # This is an evolving record of setting up a macOS or unix box
 # It most mostly serves as as record keeping
 # Before running this, init the dotfiles setup
-# TODO: currently busted, fix
-# curl -Lks https://git.io/vNPBg| /bin/bash
+# curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/bash
 
 # TMUX
 #####
@@ -53,6 +52,7 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # User git
 # AddKeysToAgent yes
 # IdentityFile ~/.ssh/id_rsa
+
 
 # MacOS specific subshell.
 (
@@ -105,3 +105,14 @@ killall Dock
 chflags nohidden ~/Library/
 )
 # End MacOS specific subshell
+
+# Linux specific subshell
+(
+if [ "$(uname)" != "Linux" ]
+then exit
+fi
+
+sudo apt-get -y update
+sudo apt-get -y install "zsh" "vim" "tmux"
+)
+# End Linux specific subshell
