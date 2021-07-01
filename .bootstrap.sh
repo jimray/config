@@ -41,7 +41,7 @@ git clone https://github.com/rupa/z.git ~/._z
 # Install asdf
 # ASDF manages plugins that manage software versions like python, nodejs
 # I always forget how this works! Example:
-# asdf add plugin nodejs
+# asdf plugin add nodejs
 # asdf install nodejs 13.14.0
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
