@@ -75,10 +75,6 @@ if [ ! -d "/Library/Developer" ]
 then xcode-select --install
 fi
 
-# Config iTerm
-#
-# defaults write com.googlecode.iterm2 PrefsCustomFulder -string "~/.iterm/"
-# defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
 # On the Mac, we're using MacVim, which gets installed manually
 # TODO: make that more automatic, maybe via brew?
@@ -91,7 +87,13 @@ fi
 # to generate the .Brewfile: brew bundle dump --file .Brewfile
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
-# TODO investigate cask installs for stuff like "slack", "iterm2", "1password", "dropbox", "visual-studio-code", "firefox", "macvim", etc.
+
+# brew installs some default apps, like visual-studio-code and iterm, so ok to config here
+
+# Config iTerm
+#
+defaults write com.googlecode.iterm2 PrefsCustomFulder -string "~/.iterm/"
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
 # Set up the dock
 # hide that dock
