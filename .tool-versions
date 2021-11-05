@@ -1,2 +1,4 @@
 nodejs 14.15.3
 golang 1.16.2
+python 3.9.6
+deno 1.13.1
