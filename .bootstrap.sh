@@ -75,6 +75,11 @@ if [ ! -d "/Library/Developer" ]
 then xcode-select --install
 fi
 
+# Config iTerm
+#
+# defaults write com.googlecode.iterm2 PrefsCustomFulder -string "~/.iterm/"
+# defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+
 # On the Mac, we're using MacVim, which gets installed manually
 # TODO: make that more automatic, maybe via brew?
 
