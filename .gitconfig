@@ -15,6 +15,7 @@
 [core]
 	excludesfile = ~/.gitignore
 	editor = /usr/bin/vim
+	ignorecase = true
 
 [alias]
   # get the branch name, used later
@@ -67,3 +68,11 @@
 # make the default branch name be `main` instead of `master`
 [init]
 	defaultBranch = main
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = Jim Ray
+	email = jray@slack-corp.com
