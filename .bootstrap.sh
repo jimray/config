@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # This is an evolving record of setting up a macOS or unix box
-# It most mostly serves as as record keeping
+# It most mostly serves as as record keeping and notes to myself
 # Before running this, init the dotfiles setup
 # curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/bash
+#
+# When setting up a new Mac, you should be able to run the above script from the built-in Terminal app
+# and then never have to touch that again as iTerm 2 is one of the apps that gets gets installed
+# via homebrew. Neat!
 
 # TMUX
 #####
@@ -58,6 +62,9 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 # AddKeysToAgent yes
 # IdentityFile ~/.ssh/id_rsa
 
+# Projects go in the Projects directory
+mkdir ~/Projects
+
 
 # MacOS specific subshell.
 (
@@ -71,13 +78,10 @@ then /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/i
 fi
 
 # Install xcode CLI tools
-if [ ! -d "/Library/Developer" ]
+if [ ! -d "/Library/Developer/CommandLineTools" ]
 then xcode-select --install
 fi
 
-
-# On the Mac, we're using MacVim, which gets installed manually
-# TODO: make that more automatic, maybe via brew?
 
 # Oceanic for iTerm, too
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
@@ -88,15 +92,17 @@ fi
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
 
-# brew installs some default apps, like visual-studio-code and iterm, so ok to config here
+# brew installs some default apps, like bbedit, macvim, visual-studio-code, and iterm, so ok to config here
 
 # Config iTerm
-#
-defaults write com.googlecode.iterm2 PrefsCustomFulder -string "~/.iterm/"
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.iterm"
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 
+# Allows you to hold down keys in VSCode Vim Mode
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
 # Set up the dock
-# hide that dock
+# hide
 defaults write com.apple.dock autohide -bool true
 # magnify
 defaults write com.apple.dock magnification -bool true
@@ -114,7 +120,8 @@ killall Dock
 # figure out how to install Safari extensions: Bumpr, Better, 1Password, Quiet, keysearch, StopTheMadness
 
 # don't hide the ~/Library/ folder
-chflags nohidden ~/Library/
+setfile -a v ~/Library
+chflags nohidden ~/Library
 )
 # End MacOS specific subshell
 
