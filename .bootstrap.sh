@@ -133,5 +133,8 @@ fi
 
 sudo apt-get -y update
 sudo apt-get -y install "zsh" "vim" "tmux"
+
+# use zsh
+chsh -s $(which zsh)
 )
 # End Linux specific subshell
