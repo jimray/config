@@ -131,10 +131,18 @@ if [ "$(uname)" != "Linux" ]
 then exit
 fi
 
+# Obviously, this assumes we're using a Debian based linux
+# check for that?
 sudo apt-get -y update
 sudo apt-get -y install "zsh" "vim" "tmux"
 
 # use zsh
 chsh -s $(which zsh)
+
+# install the github CLI
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
 )
 # End Linux specific subshell
