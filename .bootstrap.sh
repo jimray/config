@@ -54,13 +54,28 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
 
-# At some point, set up SSH. You'll need a config that at least contains
-# Personal GitHub account
+# At some point, set up SSH for Github
+# ssh-keygen -f ~/.ssh/gh -t ed25519 -C "gh_email@emaildomain.tld"
+#
+# Then add it to the ssh-agent
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/gh
+#
+# Then add ssh key to your github using the `gh` CLI
+# Get access token here: https://github.com/settings/tokens
+# gh ssh-key add ~/.ssh/gh
+#
+#
+# You'll need a ~/.ssh/config that
+# at least contains Personal GitHub account:
 #Host github.com
 # HostName github.com
 # User git
 # AddKeysToAgent yes
-# IdentityFile ~/.ssh/id_rsa
+# IdentityFile ~/.ssh/gh
+#
+# There's probably a way to automate all of this without it feeling
+# insecure?
 
 # Projects go in the Projects directory
 mkdir ~/Projects
