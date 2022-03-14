@@ -1,34 +1,39 @@
+# This is a standard set of tools, installable on just about any Mac you use
+# To install personal apps (not on a work machine), run `brew bundle --file .Brewfile.personal`
+#
+# Core setup
 tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
+tap "buo/cask-upgrade"
 brew "coreutils"
-brew "readline"
-brew "asdf"
-brew "pcre"
-brew "glib"
+
+# deps?
 brew "cmake"
-brew "deno"
 brew "libidn2"
 brew "gnutls"
-brew "harfbuzz"
-brew "ffmpeg"
-brew "fswatch"
+brew "gnupg"
+brew "openssl@3"
+brew "sqlite"
+
+# git and github
 brew "gh"
 brew "git"
 brew "git-lfs"
-brew "gnupg"
-brew "hugo"
+
+# handy tools
+brew "asdf"
+brew "heroku/brew/heroku"
 brew "jq"
-brew "node"
-brew "openssl@3"
 brew "pandoc"
 brew "tcptraceroute"
 brew "tldr"
 brew "tmux"
-brew "watchman", link: false
+brew "watchman"
 brew "wget"
-brew "heroku/brew/heroku"
+
+# Mac apps, sideloaded
 cask "bbedit"
 cask "iterm2"
 cask "macvim"
