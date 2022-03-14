@@ -30,21 +30,13 @@ fi
 
 # Console
 # #######
+#
 # a rocket!
 export PS1='🚀 %1~ > '
 
-# NVM
-# ###
-# export NVM_AUTO_USE=true
-# source ~/.zsh-nvm/zsh-nvm.plugin.zsh
-
-# Python
-# ######
-#export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-
-# heroku autocomplete setup
-# HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
-
+# Specific app setups
+# ###################
+#
 # activate asdf
 # https://asdf-vm.com
 . $HOME/.asdf/asdf.sh
@@ -53,6 +45,9 @@ fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
 autoload -Uz compinit
 compinit
+
+# Homebrew
+export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 
 # activate z
 # https://github.com/rupa/z
@@ -66,11 +61,13 @@ export PATH="$HOME/.poetry/bin:$PATH"
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
+
 # PDE SETUP || 2022-02-09T13:37:47-0500
 ##############################################
 /usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
-##############################################
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+##############################################
+
