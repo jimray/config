@@ -44,6 +44,11 @@ export PS1='🚀 %1~ > '
 
 # heroku autocomplete setup
 # HEROKU_AC_ZSH_SETUP_PATH=/Users/jimray/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+#
+# Deno -- this is for the raspberry pi binary only
+# asdf doesn't currently support an arm64 build of deno
+# deno manually installed from here: https://github.com/LukeChannings/deno-arm64/releases
+export PATH="$HOME/.deno/bin:$PATH"
 
 # activate asdf
 # https://asdf-vm.com
@@ -62,10 +67,30 @@ compinit
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
-# use a local .zshrc if they got it
+# use a default tmux so you don't have to start it manually
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+  tmux attach -t default || tmux new -s default
+fi
+
+# run OS-specific bits
+case `uname` in
+  Darwin)
+    # macOS commands here
+  ;;
+  Linux)
+    # Linux commands here
+    if [ -f ~/.zshrc_linux ]; then
+      source ~/.zshrc_linux
+    fi
+  ;;
+esac
+
+# use a local .zshrc if it exists
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
+
+
 # PDE SETUP || 2022-02-09T13:37:47-0500
 ##############################################
 /usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
