@@ -133,6 +133,7 @@ defaults write com.apple.dock launchanim -bool false
 killall Dock
 
 # figure out how to install Safari extensions: Bumpr, Better, 1Password, Quiet, keysearch, StopTheMadness
+# The answer is the `mas` app but Apple keeps breaking it
 
 # don't hide the ~/Library/ folder
 setfile -a v ~/Library
@@ -149,7 +150,7 @@ fi
 # Obviously, this assumes we're using a Debian based linux
 # check for that?
 sudo apt-get -y update
-sudo apt-get -y install "zsh" "vim" "tmux"
+sudo apt-get -y install "zsh" "vim" "tmux" "tldr"
 
 # use zsh
 chsh -s $(which zsh)
