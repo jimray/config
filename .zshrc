@@ -67,15 +67,14 @@ compinit
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
-# use a default tmux so you don't have to start it manually
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach -t default || tmux new -s default
-fi
 
 # run OS-specific bits
 case `uname` in
   Darwin)
     # macOS commands here
+    if [ -f ~/.zshrc_macos ]; then
+      source ~/.zshrc_macos
+    fi
   ;;
   Linux)
     # Linux commands here
@@ -84,6 +83,13 @@ case `uname` in
     fi
   ;;
 esac
+
+# if connecting over SSH
+if [[ $STY = '' && $SSH_TTY != '' ]]; then
+  if [ -f ~/.zshrc_ssh ]; then
+    source ~/.zshrc_ssh
+  fi
+fi
 
 # use a local .zshrc if it exists
 if [ -f ~/.zshrc_local ]; then
