@@ -46,7 +46,7 @@ set hlsearch
 set ignorecase
 set smartcase
 
-" Clear search
+" Clear search with a comma and space
 map <leader><space> :let @/=''<cr>
 
 " unset the last search pattern when hitting return
