@@ -1,6 +1,8 @@
 # Use a default tmux so you don't have to start it manually
+# `new-session` will connect to `default` if it exits
+# or create it if not
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach -t default || tmux new -s default
+  tmux new-session -A -s default
 fi
 
 # Since this is connected remotely, display the hostname
