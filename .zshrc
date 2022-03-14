@@ -34,13 +34,13 @@ fi
 # a rocket!
 export PS1='🚀 %1~ > '
 
+# Specific app setups
+# ###################
+#
 # Deno -- this is for the raspberry pi binary only
 # asdf doesn't currently support an arm64 build of deno
 # deno manually installed from here: https://github.com/LukeChannings/deno-arm64/releases
 export PATH="$HOME/.deno/bin:$PATH"
-
-# Specific app setups
-# ###################
 #
 # activate asdf
 # https://asdf-vm.com
