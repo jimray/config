@@ -52,6 +52,9 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
 # Install poetry for python package management
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+# tell poetry to create virtual envs inside a project dir instead of the default location
+poetry config virtualenvs.in-project true
+
 
 
 # At some point, set up SSH for Github
