@@ -10,6 +10,11 @@
 # config push
 alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
 
+# Load zsh functions
+for file in ~/.zfunc/**; do
+  autoload $file
+done
+
 # Aliases
 # #######
 alias ls='ls -G'
@@ -40,7 +45,8 @@ export PS1='🚀 %1~ > '
 # Deno -- this is for the raspberry pi binary only
 # asdf doesn't currently support an arm64 build of deno
 # deno manually installed from here: https://github.com/LukeChannings/deno-arm64/releases
-export PATH="$HOME/.deno/bin:$PATH"
+# TODO: move this to .zshrc.local on proper platform
+# export PATH="$HOME/.deno/bin:$PATH"
 #
 # activate asdf
 # https://asdf-vm.com
