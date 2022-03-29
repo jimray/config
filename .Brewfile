@@ -34,7 +34,9 @@ brew "watchman"
 brew "wget"
 
 # Mac apps, sideloaded
+cask "alfred"
 cask "bbedit"
 cask "iterm2"
 cask "macvim"
+cask "nova"
 cask "visual-studio-code"

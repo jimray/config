@@ -81,7 +81,12 @@ let g:vim_markdown_folding_style_pythonic = 1
 " don't autofold section headers
 let g:vim_markdown_folding_level = 6
 
+filetype plugin indent on
+
+" vim-pencil
 " make vim work like a normal text editor for prose writing
+let g:pencil#wrapModeDefault = 'soft'
+
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()
@@ -95,7 +100,6 @@ augroup END
 syntax enable
 
 " Plugins loaded, filetypes back on!
-filetype plugin indent on
 
 " Make vim pretty
 set t_Co=256
