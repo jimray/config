@@ -30,6 +30,7 @@ brew "pandoc"
 brew "tcptraceroute"
 brew "tldr"
 brew "tmux"
+brew "tree"
 brew "watchman"
 brew "wget"
 
