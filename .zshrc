@@ -19,6 +19,7 @@ done
 # #######
 alias ls='ls -G'
 alias ll='ls -al'
+alias la='ls -a'
 alias reload='source ~/.zshrc'
 
 alias g='git'
