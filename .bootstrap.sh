@@ -33,10 +33,8 @@ git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim
 git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
 git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
 git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
-
-# Make vim pretty
-curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/colors/OceanicNext.vim' > ~/.vim/colors/oceanic-next.vim
-curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload/airline/themes/oceanicnext.vim' > ~/.vim/pack/plugins/start/vim-airline-themes/autoload/airline/themes/oceanicnext.vim
+git clone https://github.com/jayli/vim-easycomplete ~/.vim/pack/plugins/start/vim-easycomplete
+git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
 
 # Install z
 git clone https://github.com/rupa/z.git ~/._z
