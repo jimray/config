@@ -34,12 +34,6 @@ if [ -e /Applications/Nova.app/ ]; then
   alias coda='nova'
 fi
 
-# Console
-# #######
-#
-# a rocket!
-export PS1='🚀 %1~ > '
-
 # Specific app setups
 # ###################
 #
