@@ -17,9 +17,14 @@ done
 
 # Aliases
 # #######
-alias ls='ls -G'
-alias ll='ls -al'
-alias la='ls -a'
+# use exa instead of ls
+if [ -x "$(command -v exa)" ]; then
+  alias ls='exa --icons'
+  alias ll='exa -alhgUm --git --icons'
+  alias lt='exa --tree --icons'
+  alias lg='exa -a --long --grid -h'
+fi
+
 alias reload='source ~/.zshrc'
 
 alias g='git'

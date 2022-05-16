@@ -31,10 +31,11 @@ brew "pandoc"
 brew "tcptraceroute"
 brew "tldr"
 brew "tmux"
-brew "tree"
 brew "watchman"
 brew "wget"
 brew "starship"
+brew "exa"
+brew "ripgrep"
 
 # Mac apps, sideloaded
 cask "alfred"
