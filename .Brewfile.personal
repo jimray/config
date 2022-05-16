@@ -1,6 +1,3 @@
-# Install open source fonts
-tap "homebrew/cask-fonts"
-
 # Install apps from the app store
 brew "mas"
 
