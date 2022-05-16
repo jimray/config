@@ -6,7 +6,8 @@ tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
-tap "buo/cask-upgrade"
+tap "buo/cask-upgrade"    # upgrade cask installed apps via `brew cu`
+tap "homebrew/cask-fonts"
 brew "coreutils"
 
 # deps?
@@ -32,6 +33,9 @@ brew "tldr"
 brew "tmux"
 brew "watchman"
 brew "wget"
+brew "starship"
+brew "exa"
+brew "ripgrep"
 
 # Mac apps, sideloaded
 cask "alfred"
@@ -40,3 +44,7 @@ cask "iterm2"
 cask "macvim"
 cask "nova"
 cask "visual-studio-code"
+
+# fonts!
+cask "font-sauce-code-pro-nerd-font"
+cask "font-league-gothic"

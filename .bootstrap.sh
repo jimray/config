@@ -33,10 +33,11 @@ git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim
 git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
 git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
 git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
+git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
 
-# Make vim pretty
-curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/colors/OceanicNext.vim' > ~/.vim/colors/oceanic-next.vim
-curl 'https://raw.githubusercontent.com/mhartington/oceanic-next/master/autoload/airline/themes/oceanicnext.vim' > ~/.vim/pack/plugins/start/vim-airline-themes/autoload/airline/themes/oceanicnext.vim
+# fzf requires both the binary with the fzf plugin and an additional plugin :shrug:
+git clone http://github.com/junegunn/fzf ~/.vim/pack/plugins/start/fzf
+git clone http://github.com/junegunn/fzf.vim ~/.vim/pack/plugins/start/fzf.vim
 
 # Install z
 git clone https://github.com/rupa/z.git ~/._z
@@ -145,20 +146,19 @@ chflags nohidden ~/Library
 if [ "$(uname)" != "Linux" ]
 then exit fi
 
+# Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
-  # Obviously, this assumes we're using a Debian based linux
   sudo apt-get -y update
-  sudo apt-get -y install "zsh" "vim" "tmux" "tldr"
+  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "starship" "exa" "ripgrep"
 
   # install the github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
   sudo apt update
   sudo apt install gh
-
-  # use zsh
-  chsh -s $(which zsh)
 fi
 
+# use zsh
+chsh -s $(which zsh)
 )
 # End Linux specific subshell

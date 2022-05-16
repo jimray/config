@@ -17,8 +17,14 @@ done
 
 # Aliases
 # #######
-alias ls='ls -G'
-alias ll='ls -al'
+# use exa instead of ls
+if [ -x "$(command -v exa)" ]; then
+  alias ls='exa --icons'
+  alias ll='exa -alhgUm --git --icons'
+  alias lt='exa --tree --icons'
+  alias lg='exa -a --long --grid -h'
+fi
+
 alias reload='source ~/.zshrc'
 
 alias g='git'
@@ -33,12 +39,6 @@ if [ -e /Applications/Nova.app/ ]; then
   alias coda='nova'
 fi
 
-# Console
-# #######
-#
-# a rocket!
-export PS1='🚀 %1~ > '
-
 # Specific app setups
 # ###################
 #
@@ -52,7 +52,9 @@ autoload -Uz compinit
 compinit
 
 # Homebrew
-export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
+if [ -x "$(command -v brew)" ]; then
+  export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
+fi
 
 # activate z
 # https://github.com/rupa/z
@@ -62,8 +64,14 @@ export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
+# where should ripgrep find its config file?
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+if [ -x "$(command -v rg)" ]; then
+  export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+fi
 
-# run OS-specific bits
+# Specific OS setups
+# ##################
 case `uname` in
   Darwin)
     # macOS commands here
@@ -90,6 +98,14 @@ fi
 if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
+
+# use starship for a nicer console
+eval "$(starship init zsh)"
+
+# fzf for fuzzy find
+# github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 # PDE SETUP || 2022-02-09T13:37:47-0500
 ##############################################
