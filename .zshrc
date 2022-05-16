@@ -58,18 +58,28 @@ autoload -Uz compinit
 compinit
 
 # Homebrew
-export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
+if [ -x "$(command -v brew)" ]; then
+  export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
+fi
 
 # activate z
 # https://github.com/rupa/z
-. $HOME/._z/z.sh
+if [ -x "$(command -v z)" ]; then
+  . $HOME/._z/z.sh
+fi
 
 # activate poetry packaging
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
+# where should ripgrep find its config file?
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+if [ -x "$(command -v rg)" ]; then
+  export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+fi
 
-# run OS-specific bits
+# Specific OS setups
+# ##################
 case `uname` in
   Darwin)
     # macOS commands here
@@ -97,7 +107,9 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
+# use starship for a nicer console
 eval "$(starship init zsh)"
+
 
 # PDE SETUP || 2022-02-09T13:37:47-0500
 ##############################################

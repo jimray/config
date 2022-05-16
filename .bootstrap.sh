@@ -33,7 +33,6 @@ git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim
 git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
 git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
 git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
-git clone https://github.com/jayli/vim-easycomplete ~/.vim/pack/plugins/start/vim-easycomplete
 git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
 
 # Install z
