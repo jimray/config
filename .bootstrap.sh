@@ -56,8 +56,6 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 # tell poetry to create virtual envs inside a project dir instead of the default location
 poetry config virtualenvs.in-project true
 
-
-
 # At some point, set up SSH for Github
 # ssh-keygen -f ~/.ssh/gh -t ed25519 -C "gh_email@emaildomain.tld"
 #
@@ -84,7 +82,6 @@ poetry config virtualenvs.in-project true
 # Projects go in the Projects directory
 mkdir ~/Projects
 
-
 # MacOS specific subshell.
 (
 if [ "$(uname)" != "Darwin" ]
@@ -100,7 +97,6 @@ fi
 if [ ! -d "/Library/Developer/CommandLineTools" ]
 then xcode-select --install
 fi
-
 
 # Oceanic for iTerm, too
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
@@ -148,13 +144,15 @@ chflags nohidden ~/Library
 # Linux specific subshell
 (
 if [ "$(uname)" != "Linux" ]
-then exit
-fi
+then exit fi
 
 # Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get -y update
   sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep"
+
+  # install starship
+  curl -sS https://starship.rs/install.sh | sh
 
   # install the github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
