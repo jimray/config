@@ -87,6 +87,10 @@ filetype plugin indent on
 " make vim work like a normal text editor for prose writing
 let g:pencil#wrapModeDefault = 'soft'
 
+" vim-rooter
+" some defaults as to what constitutes a project directory
+let g:rooter_patterns = ['.git', 'Makefile']
+
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd call pencil#init()

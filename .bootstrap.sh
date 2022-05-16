@@ -35,6 +35,10 @@ git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/sta
 git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
 git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
 
+# fzf requires both the binary with the fzf plugin and an additional plugin :shrug:
+git clone http://github.com/junegunn/fzf ~/.vim/pack/plugins/start/fzf
+git clone http://github.com/junegunn/fzf.vim ~/.vim/pack/plugins/start/fzf.vim
+
 # Install z
 git clone https://github.com/rupa/z.git ~/._z
 

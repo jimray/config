@@ -108,6 +108,10 @@ fi
 # use starship for a nicer console
 eval "$(starship init zsh)"
 
+# fzf for fuzzy find
+# github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 # PDE SETUP || 2022-02-09T13:37:47-0500
 ##############################################
