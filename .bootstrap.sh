@@ -149,7 +149,10 @@ then exit fi
 # Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get -y update
-  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "starship" "exa" "ripgrep"
+  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep"
+
+  # install starship
+  curl -sS https://starship.rs/install.sh | sh
 
   # install the github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
