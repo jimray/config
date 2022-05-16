@@ -64,9 +64,7 @@ fi
 
 # activate z
 # https://github.com/rupa/z
-if [ -x "$(command -v z)" ]; then
-  . $HOME/._z/z.sh
-fi
+. $HOME/._z/z.sh
 
 # activate poetry packaging
 # https://python-poetry.org
