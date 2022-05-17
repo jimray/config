@@ -107,6 +107,9 @@ fi
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
 
+# fzf needs some additional config
+$(brew --prefix)/opt/fzf/install
+
 # brew installs some default apps, like bbedit, macvim, visual-studio-code, and iterm, so ok to config here
 
 # Config iTerm
@@ -149,7 +152,7 @@ then exit fi
 # Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get -y update
-  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep"
+  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
 
   # install starship
   curl -sS https://starship.rs/install.sh | sh

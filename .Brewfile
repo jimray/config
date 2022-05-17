@@ -36,6 +36,7 @@ brew "wget"
 brew "starship"
 brew "exa"
 brew "ripgrep"
+brew "fzf"
 
 # Mac apps, sideloaded
 cask "alfred"
