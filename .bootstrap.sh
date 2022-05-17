@@ -149,7 +149,7 @@ then exit fi
 # Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get -y update
-  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep"
+  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
 
   # install starship
   curl -sS https://starship.rs/install.sh | sh
