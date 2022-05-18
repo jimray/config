@@ -61,6 +61,12 @@ nnoremap <CR> :noh<CR><CR>
 set splitbelow
 set splitright
 
+" Buffers
+set hidden
+" ctrl+n, ctrl+p to go back and forth between buffers
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+nnoremap <C-W> :bd<CR>
 
 " Plugins
 " #######
@@ -75,6 +81,10 @@ filetype off
 set noshowmode
 set noruler
 set laststatus=0
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " sensible markdown folding via vim-markdown
 let g:vim_markdown_folding_style_pythonic = 1
