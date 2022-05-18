@@ -33,6 +33,9 @@ let mapleader = ","
 set autoindent
 set smartindent
 
+" Don't wait so long to do things
+set updatetime=100
+
 " Search
 " ######
 
