@@ -36,6 +36,7 @@ git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
 git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
 git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
 git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
+git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/pack/plugins/start/auto-pairs
 git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
 
 # fzf requires both the binary with the fzf plugin and an additional plugin :shrug:
