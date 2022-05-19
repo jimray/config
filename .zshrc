@@ -15,14 +15,21 @@ for file in ~/.zfunc/**; do
   autoload $file
 done
 
+# ctrl-leftarrow and ctrl-right arrow move word by word
+bindkey ";5D" backward-word
+bindkey ";5C" forward-word
+
 # Aliases
 # #######
+
 # use exa instead of ls
 if [ -x "$(command -v exa)" ]; then
   alias ls='exa --icons'
   alias ll='exa -alhgUm --git --icons'
   alias lt='exa --tree --icons'
   alias lg='exa -a --long --grid -h'
+  # but if you *need* ls...
+  alias lsls='ls'
 fi
 
 alias reload='source ~/.zshrc'
