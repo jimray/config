@@ -36,6 +36,9 @@ alias reload='source ~/.zshrc'
 
 alias g='git'
 
+# start a simple HTTP server and serve the current directory at 8000
+alias serve='python -m http.server 8000'
+
 # if MacVim is installed use that instead
 if [ -e /Applications/MacVim.app/ ]; then
   alias vim='/Applications/MacVim.app/Contents/bin/vim'
