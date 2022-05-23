@@ -123,4 +123,7 @@ set t_Co=256
 if (has("termguicolors"))
   set termguicolors
 endif
+
+let g:oceanic_italic_comments = 1
+let g:oceanic_transparent_bg = 1
 colorscheme oceanicnext
