@@ -52,6 +52,15 @@ fi
 # Specific app setups
 # ###################
 #
+# PDE SETUP || 2022-02-09T13:37:47-0500
+##############################################
+/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+##############################################
+#
 # activate asdf
 # https://asdf-vm.com
 . $HOME/.asdf/asdf.sh
@@ -117,12 +126,4 @@ eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-# PDE SETUP || 2022-02-09T13:37:47-0500
-##############################################
-/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-##############################################
 
