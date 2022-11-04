@@ -63,7 +63,7 @@ export NVM_DIR="$HOME/.nvm"
 #
 # activate asdf
 # https://asdf-vm.com
-. $HOME/.asdf/asdf.sh
+. /usr/local/opt/asdf/libexec/asdf.sh
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
@@ -124,6 +124,7 @@ eval "$(starship init zsh)"
 # fzf for fuzzy find
 # github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 
 
