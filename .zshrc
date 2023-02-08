@@ -83,6 +83,12 @@ fi
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
 
+#pipx autocompletion
+autoload -U bashcompinit
+bashcompinit
+
+eval "$(register-python-argcomplete pipx)"
+
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 if [ -x "$(command -v rg)" ]; then
@@ -128,3 +134,6 @@ eval "$(starship init zsh)"
 
 
 
+
+# Created by `pipx` on 2023-02-08 15:41:45
+export PATH="$PATH:/Users/jim.ray/.local/bin"
