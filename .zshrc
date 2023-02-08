@@ -36,6 +36,9 @@ alias reload='source ~/.zshrc'
 
 alias g='git'
 
+alias sqlite='sqlite3'
+alias sql='sqlite3'
+
 # start a simple HTTP server and serve the current directory at 8000
 alias serve='python -m http.server 8000'
 
@@ -75,6 +78,9 @@ if [ -x "$(command -v brew)" ]; then
   export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
+# use homebrew sqlite
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
 # activate z
 # https://github.com/rupa/z
 . $HOME/._z/z.sh
@@ -88,6 +94,7 @@ autoload -U bashcompinit
 bashcompinit
 
 eval "$(register-python-argcomplete pipx)"
+export PATH="$PATH:/Users/jim.ray/.local/bin"
 
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
@@ -136,4 +143,3 @@ eval "$(starship init zsh)"
 
 
 # Created by `pipx` on 2023-02-08 15:41:45
-export PATH="$PATH:/Users/jim.ray/.local/bin"
