@@ -12,6 +12,7 @@ brew "coreutils"
 
 # deps?
 brew "cmake"
+brew "curl"
 brew "libidn2"
 brew "gnutls"
 brew "gnupg"

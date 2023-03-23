@@ -81,6 +81,9 @@ fi
 # use homebrew sqlite
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
+#use homebrew curl
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
 # activate z
 # https://github.com/rupa/z
 . $HOME/._z/z.sh
