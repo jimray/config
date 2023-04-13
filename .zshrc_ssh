@@ -2,5 +2,8 @@
 # `new-session` will connect to `default` if it exits
 # or create it if not
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux new-session -A -s default
+  tmux at
+  # tmux new-session -A -s default
+  # echo "\nYou probably want to start a tmux session"
+  # tmux ls
 fi
