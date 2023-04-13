@@ -502,7 +502,7 @@
 			<key>Columns</key>
 			<integer>120</integer>
 			<key>Command</key>
-			<string></string>
+			<string>tmux</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -548,6 +548,8 @@
 			<string>Default</string>
 			<key>Disable Window Resizing</key>
 			<true/>
+			<key>Draw Powerline Glyphs</key>
+			<false/>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -879,7 +881,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Menlo-Regular 14</string>
+			<string>SauceCodeProNerdFontComplete-Regular 14</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -2755,6 +2757,8 @@
 			<string>/Users/jimray</string>
 		</dict>
 	</array>
+	<key>OnlyWhenMoreTabs</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2788,6 +2792,8 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PromptOnQuit</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>
