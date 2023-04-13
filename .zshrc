@@ -16,8 +16,8 @@ for file in ~/.zfunc/**; do
 done
 
 # ctrl-leftarrow and ctrl-right arrow move word by word
-bindkey ";5D" backward-word
-bindkey ";5C" forward-word
+# bindkey ";5D" backward-word
+# bindkey ";5C" forward-word
 
 # Aliases
 # #######
