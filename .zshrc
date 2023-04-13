@@ -36,6 +36,9 @@ alias reload='source ~/.zshrc'
 
 alias g='git'
 
+alias sqlite='sqlite3'
+alias sql='sqlite3'
+
 # start a simple HTTP server and serve the current directory at 8000
 alias serve='python -m http.server 8000'
 
@@ -52,9 +55,18 @@ fi
 # Specific app setups
 # ###################
 #
+# PDE SETUP || 2022-02-09T13:37:47-0500
+##############################################
+/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+##############################################
+#
 # activate asdf
 # https://asdf-vm.com
-. $HOME/.asdf/asdf.sh
+. /usr/local/opt/asdf/libexec/asdf.sh
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
@@ -66,6 +78,12 @@ if [ -x "$(command -v brew)" ]; then
   export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
+# use homebrew sqlite
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
+#use homebrew curl
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
 # activate z
 # https://github.com/rupa/z
 . $HOME/._z/z.sh
@@ -73,6 +91,13 @@ fi
 # activate poetry packaging
 # https://python-poetry.org
 export PATH="$HOME/.poetry/bin:$PATH"
+
+#pipx autocompletion
+autoload -U bashcompinit
+bashcompinit
+
+eval "$(register-python-argcomplete pipx)"
+export PATH="$PATH:/Users/jim.ray/.local/bin"
 
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
@@ -117,12 +142,7 @@ eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-# PDE SETUP || 2022-02-09T13:37:47-0500
-##############################################
-/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-##############################################
 
+
+# Created by `pipx` on 2023-02-08 15:41:45
