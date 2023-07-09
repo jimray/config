@@ -142,7 +142,6 @@ eval "$(starship init zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
-
-
-
 # Created by `pipx` on 2023-02-08 15:41:45
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
