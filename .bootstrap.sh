@@ -63,11 +63,6 @@ git clone https://github.com/rupa/z.git ~/._z
 # asdf install python latest
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
-# Install poetry for python package management
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-# tell poetry to create virtual envs inside a project dir instead of the default location
-poetry config virtualenvs.in-project true
-
 # At some point, set up SSH for Github
 # ssh-keygen -f ~/.ssh/gh -t ed25519 -C "gh_email@emaildomain.tld"
 #
@@ -100,15 +95,19 @@ if [ "$(uname)" != "Darwin" ]
 then exit
 fi
 
-# Install Homebrew
-if [ ! -f "/usr/local/bin/brew" ]
-then /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
-
 # Install xcode CLI tools
+# This will have likely already happened but just in case
 if [ ! -d "/Library/Developer/CommandLineTools" ]
 then xcode-select --install
 fi
+
+# Install Homebrew
+if [ ! -f "/opt/homebrew/bin/brew" ]
+then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 
 # Oceanic for iTerm, too
 # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
