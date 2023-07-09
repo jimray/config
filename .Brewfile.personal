@@ -7,5 +7,3 @@ brew "hugo"
 # Fonts
 
 # Mac Store apps
-mas "1Password", id: 1333542190
-mas "1Password for Safari", id: 1569813296
