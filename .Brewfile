@@ -2,7 +2,6 @@
 # To install personal apps (not on a work machine), run `brew bundle --file .Brewfile.personal`
 #
 # Core setup
-tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
@@ -26,7 +25,6 @@ brew "git-lfs"
 
 # handy tools
 brew "asdf"
-brew "heroku/brew/heroku"
 brew "jq"
 brew "pandoc"
 brew "tcptraceroute"
