@@ -4,6 +4,12 @@ brew "mas"
 # Hugo for blogging
 brew "hugo"
 
+# Other personal apps
+cask "fantastical"
+
 # Fonts
 
 # Mac Store apps
+mas "Things 3", id: 904280696
+mas "Ulysses", id: 1225570693
+mas "Nozio", id: 928871589
