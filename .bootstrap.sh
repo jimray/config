@@ -117,6 +117,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # to generate the .Brewfile: brew bundle dump --file .Brewfile
 brew bundle --file .Brewfile
 rm .Brewfile.lock.json
+# don't forget to install personall apps after! brew bundle --file .Brewfile.personal
 
 # fzf needs some additional config
 $(brew --prefix)/opt/fzf/install
@@ -142,6 +143,19 @@ defaults write com.apple.dock largesize -float 100
 defaults write com.apple.dock static-only -bool true
 # don't animate when opening an app
 defaults write com.apple.dock launchanim -bool false
+
+# Set up Finder
+# Use list view in all Finder windows by default
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# Set up Safari
+# show the debug menu
+defaults write com.apple.Safari IncludeDebugMenu -boolean true
+# show the full URL always
+defaults write com.apple.safari ShowFullURLInSmartSearchField -bool true
+# show the favorites bar (for bookmarklets mostly)
+defaults write com.apple.Safari ShowFavoritesBar -bool true
 
 # done with Dock customization, go ahead and restart it
 killall Dock
