@@ -10,7 +10,7 @@ symbol = ""
 [directory]
 format = "[$path ]($style)"
 truncate_to_repo = false
-home_symbol = "ﮟ "
+home_symbol = "󰥳 "
 
 [git_branch]
 symbol = " "
