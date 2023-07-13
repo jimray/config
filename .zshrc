@@ -64,25 +64,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ##############################################
 #
-# activate asdf
-# https://asdf-vm.com
-. /usr/local/opt/asdf/libexec/asdf.sh
-# append completions to fpath
-fpath=(${ASDF_DIR}/completions $fpath)
-# initialise completions with ZSH's compinit
-autoload -Uz compinit
-compinit
-
-# Homebrew
-if [ -x "$(command -v brew)" ]; then
-  export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
-fi
-
-# use homebrew sqlite
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-
-#use homebrew curl
-export PATH="/usr/local/opt/curl/bin:$PATH"
 
 # activate z
 # https://github.com/rupa/z
@@ -96,7 +77,7 @@ export PATH="$HOME/.poetry/bin:$PATH"
 autoload -U bashcompinit
 bashcompinit
 
-eval "$(register-python-argcomplete pipx)"
+# eval "$(register-python-argcomplete pipx)"
 export PATH="$PATH:/Users/jim.ray/.local/bin"
 
 # where should ripgrep find its config file?
@@ -110,6 +91,30 @@ fi
 case `uname` in
   Darwin)
     # macOS commands here
+    # set the path for homebrew
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
+    # activate asdf
+    # https://asdf-vm.com
+    . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    # append completions to fpath
+    fpath=(${ASDF_DIR}/completions $fpath)
+    # initialise completions with ZSH's compinit
+    autoload -Uz compinit
+    compinit
+
+    # Homebrew
+    if [ -x "$(command -v brew)" ]; then
+      export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
+    fi
+
+    # use homebrew sqlite
+    export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
+    #use homebrew curl
+    export PATH="/usr/local/opt/curl/bin:$PATH"
+
+    # localize other macos bits in .zshrc_macos
     if [ -f ~/.zshrc_macos ]; then
       source ~/.zshrc_macos
     fi
@@ -134,6 +139,7 @@ if [ -f ~/.zshrc_local ]; then
     source ~/.zshrc_local
 fi
 
+
 # use starship for a nicer console
 eval "$(starship init zsh)"
 
@@ -141,7 +147,3 @@ eval "$(starship init zsh)"
 # github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-# Created by `pipx` on 2023-02-08 15:41:45
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
