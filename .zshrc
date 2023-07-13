@@ -19,38 +19,6 @@ done
 # bindkey ";5D" backward-word
 # bindkey ";5C" forward-word
 
-# Aliases
-# #######
-
-# use exa instead of ls
-if [ -x "$(command -v exa)" ]; then
-  alias ls='exa --icons'
-  alias ll='exa -alhgUm --git --icons'
-  alias lt='exa --tree --icons'
-  alias lg='exa -a --long --grid -h'
-  # but if you *need* ls...
-  alias lsls='ls'
-fi
-
-alias reload='source ~/.zshrc'
-
-alias g='git'
-
-alias sqlite='sqlite3'
-alias sql='sqlite3'
-
-# start a simple HTTP server and serve the current directory at 8000
-alias serve='python -m http.server 8000'
-
-# if MacVim is installed use that instead
-if [ -e /Applications/MacVim.app/ ]; then
-  alias vim='/Applications/MacVim.app/Contents/bin/vim'
-  alias vi='/Applications/MacVim.app/Contents/bin/vim'
-fi
-
-if [ -e /Applications/Nova.app/ ]; then
-  alias coda='nova'
-fi
 
 # Specific app setups
 # ###################
@@ -90,31 +58,7 @@ fi
 # ##################
 case `uname` in
   Darwin)
-    # macOS commands here
-    # set the path for homebrew
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-
-    # activate asdf
-    # https://asdf-vm.com
-    . /opt/homebrew/opt/asdf/libexec/asdf.sh
-    # append completions to fpath
-    fpath=(${ASDF_DIR}/completions $fpath)
-    # initialise completions with ZSH's compinit
-    autoload -Uz compinit
-    compinit
-
-    # Homebrew
-    if [ -x "$(command -v brew)" ]; then
-      export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
-    fi
-
-    # use homebrew sqlite
-    export PATH="/usr/local/opt/sqlite/bin:$PATH"
-
-    #use homebrew curl
-    export PATH="/usr/local/opt/curl/bin:$PATH"
-
-    # localize other macos bits in .zshrc_macos
+    # localize macOS commands in .zshrc_macos
     if [ -f ~/.zshrc_macos ]; then
       source ~/.zshrc_macos
     fi
@@ -147,3 +91,36 @@ eval "$(starship init zsh)"
 # github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Aliases
+# #######
+
+# use exa instead of ls
+#if [ -x "$(command -v exa)" ]; then
+if (( $+commands[exa] )); then
+  alias ls='exa --icons'
+  alias ll='exa -alhgUm --git --icons'
+  alias lt='exa --tree --icons'
+  alias lg='exa -a --long --grid -h'
+  # but if you *need* ls...
+  alias lsls='ls'
+fi
+
+alias reload='source ~/.zshrc'
+
+alias g='git'
+
+alias sqlite='sqlite3'
+alias sql='sqlite3'
+
+# start a simple HTTP server and serve the current directory at 8000
+alias serve='python -m http.server 8000'
+
+# if MacVim is installed use that instead
+if [ -e /Applications/MacVim.app/ ]; then
+  alias vim='/Applications/MacVim.app/Contents/bin/vim'
+  alias vi='/Applications/MacVim.app/Contents/bin/vim'
+fi
+
+if [ -e /Applications/Nova.app/ ]; then
+  alias coda='nova'
+fi
