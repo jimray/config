@@ -35,7 +35,6 @@ format = "[$symbol $version]($style)"
 [package]
 disabled = true
 
-
 [python]
 symbol = " "
 format = "[${symbol}${pyenv_prefix}(${version} )]($style)"
