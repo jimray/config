@@ -13,3 +13,7 @@ cask "fantastical"
 mas "Things 3", id: 904280696
 mas "Ulysses", id: 1225570693
 mas "Nozio", id: 928871589
+mas "AdGuard for Safari", id: 1440147259
+mas "Hush", id: 1544743900
+mas "Homecoming for Mastodon", id: 1666139593
+mas "Keyword Search", id: 1558453954
