@@ -44,6 +44,8 @@ cask "iterm2"
 cask "macvim"
 cask "nova"
 cask "visual-studio-code"
+cask "safari-technology-preview"
+cask "utm"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"
