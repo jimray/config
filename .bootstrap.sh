@@ -48,6 +48,9 @@ if [ "$(uname)" = "Darwin" ]; then
     # Config iTerm
     defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.iterm"
     defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+    # Oceanic for iTerm
+    # This gets saved in the ~/.iterm plist file, here for reference
+    # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
 
     # Allows you to hold down keys in VSCode Vim Mode
     defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
@@ -85,8 +88,57 @@ if [ "$(uname)" = "Darwin" ]; then
     setfile -a v ~/Library
     chflags nohidden ~/Library
 
-    echo "Finished with macOS specific configuration"
+    echo "Finished with macOS configuration"
 fi
+
+if [ "$(uname)" = "FreeBSD" ]; then
+    # FreeBSD-specific configuration
+    echo "Starting FreeBSD specific configuration"
+
+    # Install applications using FreeBSD ports
+    if ! command -v pkg >/dev/null 2>&1; then
+        echo "pkg is not installed. Please install it manually."
+        exit 1
+    fi
+    sudo pkg install -y git zsh vim tmux tldr exa ripgrep fzf gh
+
+    echo "Finished with FreeBSD configuration"
+fi
+
+if [ "$(uname)" = "Linux" ]; then
+    # Linux-specific configuration
+    echo "Starting Linux specific configuration"
+
+    if command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get -y update
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
+
+        # install the github CLI
+        # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+        type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
+    else
+      echo "apt-get is not available. Please install the required packages manually."
+    fi
+
+    # install starship
+    curl -sS https://starship.rs/install.sh | sh
+
+    # use zsh
+    chsh -s $(which zsh)
+
+    echo "Finished with Linux configuration"
+fi
+
+echo "Starting non-OS specific configuration"
+
+# Projects go in the Projects directory
+echo "Adding a Projects directory"
+mkdir -p ~/Projects
 
 # TMUX
 #####
@@ -165,40 +217,3 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 #
 # There's probably a way to automate all of this without it feeling
 # insecure?
-
-# Projects go in the Projects directory
-echo "Adding a Projects directory"
-mkdir -p ~/Projects
-
-# Linux specific subshell
-(
-if [ "$(uname)" != "Linux" ]
-then exit fi
-
-echo "Starting Linux specific configuration"
-
-# Install Debian based linux utils
-if [ -x "$(command -v apt-get)" ]; then
-
-  echo "Installing common utils"
-
-  sudo apt-get -y update
-  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
-
-
-  # install the github CLI
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-  sudo apt update
-  sudo apt install gh
-fi
-
-# install starship
-curl -sS https://starship.rs/install.sh | sh
-
-# use zsh
-chsh -s $(which zsh)
-
-echo "Finished with Linux specific configuration"
-)
-# End Linux specific subshell
