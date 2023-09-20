@@ -8,7 +8,7 @@
 # config add .my_dotfile
 # config commit -m "Added a dotfile"
 # config push
-alias config='/usr/bin/git --git-dir=$HOME/.cfg --work-tree=$HOME'
+alias config='$(which git) --git-dir=$HOME/.cfg --work-tree=$HOME'
 
 # Load zsh functions
 for file in ~/.zfunc/**; do
