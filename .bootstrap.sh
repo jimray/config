@@ -179,8 +179,6 @@ if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get -y update
   sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
 
-  # install starship
-  curl -sS https://starship.rs/install.sh | sh
 
   # install the github CLI
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -188,6 +186,9 @@ if [ -x "$(command -v apt-get)" ]; then
   sudo apt update
   sudo apt install gh
 fi
+
+# install starship
+curl -sS https://starship.rs/install.sh | sh
 
 # use zsh
 chsh -s $(which zsh)
