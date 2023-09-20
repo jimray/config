@@ -6,6 +6,7 @@ brew "hugo"
 
 # Other personal apps
 cask "fantastical"
+cask "slack"
 
 # Fonts
 
