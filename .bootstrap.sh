@@ -35,7 +35,7 @@ if [ "$(uname)" = "Darwin" ]; then
     rm .Brewfile.lock.json
 
     # Ask the user if they want to run brew bundle
-    read -p "Do you want to install non-work apps via `brew bundle --file .Brewfile.personal'? (y/n): " run_brew_bundle
+    read -p "Do you want to install non-work apps in .Brewfile.personal? (y/n): " run_brew_bundle
     if [ "$run_brew_bundle" = "y" ]; then
         brew bundle --file .Brewfile.personal
     fi
@@ -65,12 +65,12 @@ if [ "$(uname)" = "Darwin" ]; then
     defaults write com.apple.dock largesize -float 100
     # only show active apps in the dock
     defaults write com.apple.dock static-only -bool true
-    # don't animate when opening an app
+    # dont animate when opening an app
     defaults write com.apple.dock launchanim -bool false
 
     # Set up Finder
     # Use list view in all Finder windows by default
-    # Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
+    # Four-letter codes for the other view modes: icnv, clmv, glyv
     defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
     # Set up Safari
@@ -202,7 +202,7 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/gh
 #
-# Then add ssh key to your github using the `gh` CLI
+# Then add ssh key to your github using the gh CLI
 # Get access token here: https://github.com/settings/tokens
 # gh ssh-key add ~/.ssh/gh
 #
