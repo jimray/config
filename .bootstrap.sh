@@ -1,13 +1,144 @@
-#!/bin/bash
+#!/bin/sh
 
 # This is an evolving record of setting up a macOS or unix box
 # It most mostly serves as as record keeping and notes to myself
 # Before running this, init the dotfiles setup
-# curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/bash
+# curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/sh
 #
 # When setting up a new Mac, you should be able to run the above script from the built-in Terminal app
 # and then never have to touch that again as iTerm 2 is one of the apps that gets gets installed
 # via homebrew. Neat!
+
+# Operating system specific configurations
+
+# first, macOS
+if [ "$(uname)" = "Darwin" ]; then
+    # macOS-specific configuration
+    echo "Starting macOS specific configuration"
+
+    # Install Xcode command line tools
+    if ! command -v xcode-select >/dev/null 2>&1; then
+        echo "Installing Xcode command line tools..."
+        xcode-select --install
+    fi
+
+    # Install Homebrew if not already installed
+    if ! command -v brew >/dev/null 2>&1; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    fi
+
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
+    # Install some handy CLI tools all helpfully bundled up in a local Brewfile
+    # to generate the .Brewfile: brew bundle dump --file .Brewfile
+    brew bundle --file .Brewfile
+    rm .Brewfile.lock.json
+
+    # Ask the user if they want to run brew bundle
+    read -p "Do you want to install non-work apps in .Brewfile.personal? (y/n): " run_brew_bundle
+    if [ "$run_brew_bundle" = "y" ]; then
+        brew bundle --file .Brewfile.personal
+    fi
+
+    # fuzzy completion and keybindings for fzf
+    $(brew --prefix)/opt/fzf/install
+
+    # brew installs some default apps, like bbedit, macvim, visual-studio-code, and iterm, so ok to config here
+
+    # Config iTerm
+    defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.iterm"
+    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+    # Oceanic for iTerm
+    # This gets saved in the ~/.iterm plist file, here for reference
+    # https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
+
+    # Allows you to hold down keys in VSCode Vim Mode
+    defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+    # Set up the dock
+    # hide
+    defaults write com.apple.dock autohide -bool true
+    # magnify
+    defaults write com.apple.dock magnification -bool true
+    # set the dock size
+    defaults write com.apple.dock tilesize -float 35
+    defaults write com.apple.dock largesize -float 100
+    # only show active apps in the dock
+    defaults write com.apple.dock static-only -bool true
+    # dont animate when opening an app
+    defaults write com.apple.dock launchanim -bool false
+
+    # Set up Finder
+    # Use list view in all Finder windows by default
+    # Four-letter codes for the other view modes: icnv, clmv, glyv
+    defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+    # Set up Safari
+    # show the debug menu
+    defaults write com.apple.Safari IncludeDebugMenu -boolean true
+    # show the full URL always
+    defaults write com.apple.safari ShowFullURLInSmartSearchField -bool true
+    # show the favorites bar (for bookmarklets mostly)
+    defaults write com.apple.Safari ShowFavoritesBar -bool true
+
+    # done with Dock customization, go ahead and restart it
+    killall Dock
+
+    # don't hide the ~/Library/ folder
+    setfile -a v ~/Library
+    chflags nohidden ~/Library
+
+    echo "Finished with macOS configuration"
+fi
+
+if [ "$(uname)" = "FreeBSD" ]; then
+    # FreeBSD-specific configuration
+    echo "Starting FreeBSD specific configuration"
+
+    # Install applications using FreeBSD ports
+    if ! command -v pkg >/dev/null 2>&1; then
+        echo "pkg is not installed. Please install it manually."
+        exit 1
+    fi
+    sudo pkg install -y git zsh vim tmux tldr exa ripgrep fzf gh
+
+    echo "Finished with FreeBSD configuration"
+fi
+
+if [ "$(uname)" = "Linux" ]; then
+    # Linux-specific configuration
+    echo "Starting Linux specific configuration"
+
+    if command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get -y update
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
+
+        # install the github CLI
+        # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+        type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
+    else
+      echo "apt-get is not available. Please install the required packages manually."
+    fi
+
+    # install starship
+    curl -sS https://starship.rs/install.sh | sh
+
+    # use zsh
+    chsh -s $(which zsh)
+
+    echo "Finished with Linux configuration"
+fi
+
+echo "Starting non-OS specific configuration"
+
+# Projects go in the Projects directory
+echo "Adding a Projects directory"
+mkdir -p ~/Projects
 
 # TMUX
 #####
@@ -71,7 +202,7 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/gh
 #
-# Then add ssh key to your github using the `gh` CLI
+# Then add ssh key to your github using the gh CLI
 # Get access token here: https://github.com/settings/tokens
 # gh ssh-key add ~/.ssh/gh
 #
@@ -86,124 +217,3 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 #
 # There's probably a way to automate all of this without it feeling
 # insecure?
-
-# Projects go in the Projects directory
-echo "Adding a Projects directory"
-mkdir ~/Projects
-
-# MacOS specific subshell.
-(
-if [ "$(uname)" != "Darwin" ]
-then exit
-fi
-
-echo "Starting macOS specific configuration"
-
-# Install xcode CLI tools
-# This will have likely already happened but just in case
-if [ ! -d "/Library/Developer/CommandLineTools" ]
-then xcode-select --install
-fi
-
-# Install Homebrew
-if [ ! -f "/opt/homebrew/bin/brew" ]
-then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-
-# Oceanic for iTerm, too
-# https://raw.githubusercontent.com/mhartington/oceanic-next-iterm/master/Oceanic-Next.itermcolors
-# TODO figure out how to automate iTerm's colors
-
-# Install some handy CLI tools all helpfully bundled up in a local Brewfile
-# to generate the .Brewfile: brew bundle dump --file .Brewfile
-brew bundle --file .Brewfile
-rm .Brewfile.lock.json
-# don't forget to install personall apps after! brew bundle --file .Brewfile.personal
-
-# fzf needs some additional config
-$(brew --prefix)/opt/fzf/install
-
-# brew installs some default apps, like bbedit, macvim, visual-studio-code, and iterm, so ok to config here
-
-# Config iTerm
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.iterm"
-defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-
-# Allows you to hold down keys in VSCode Vim Mode
-defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
-
-# Set up the dock
-# hide
-defaults write com.apple.dock autohide -bool true
-# magnify
-defaults write com.apple.dock magnification -bool true
-# set the dock size
-defaults write com.apple.dock tilesize -float 35
-defaults write com.apple.dock largesize -float 100
-# only show active apps in the dock
-defaults write com.apple.dock static-only -bool true
-# don't animate when opening an app
-defaults write com.apple.dock launchanim -bool false
-
-# Set up Finder
-# Use list view in all Finder windows by default
-# Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
-
-# Set up Safari
-# show the debug menu
-defaults write com.apple.Safari IncludeDebugMenu -boolean true
-# show the full URL always
-defaults write com.apple.safari ShowFullURLInSmartSearchField -bool true
-# show the favorites bar (for bookmarklets mostly)
-defaults write com.apple.Safari ShowFavoritesBar -bool true
-
-# done with Dock customization, go ahead and restart it
-killall Dock
-
-# figure out how to install Safari extensions: Bumpr, Better, 1Password, Quiet, keysearch, StopTheMadness
-# The answer is the `mas` app but Apple keeps breaking it
-
-# don't hide the ~/Library/ folder
-setfile -a v ~/Library
-chflags nohidden ~/Library
-
-echo "Finished with macOS specific configuration"
-)
-# End MacOS specific subshell
-
-# Linux specific subshell
-(
-if [ "$(uname)" != "Linux" ]
-then exit fi
-
-echo "Starting Linux specific configuration"
-
-# Install Debian based linux utils
-if [ -x "$(command -v apt-get)" ]; then
-
-  echo "Installing common utils"
-
-  sudo apt-get -y update
-  sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
-
-
-  # install the github CLI
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-  sudo apt update
-  sudo apt install gh
-fi
-
-# install starship
-curl -sS https://starship.rs/install.sh | sh
-
-# use zsh
-chsh -s $(which zsh)
-
-echo "Finished with Linux specific configuration"
-)
-# End Linux specific subshell
