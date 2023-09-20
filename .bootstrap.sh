@@ -100,7 +100,11 @@ if [ "$(uname)" = "FreeBSD" ]; then
         echo "pkg is not installed. Please install it manually."
         exit 1
     fi
-    sudo pkg install -y git zsh vim tmux tldr exa ripgrep fzf gh
+
+    sudo pkg install -y git zsh vim tmux tldr exa ripgrep fzf gh starship
+
+    # use zsh
+    chsh -s $(which zsh)
 
     echo "Finished with FreeBSD configuration"
 fi
