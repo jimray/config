@@ -13,6 +13,7 @@
 #####
 
 # Set up tmux for plugins
+echo "Set up tmux for plugins"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # VIM
@@ -20,8 +21,8 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Set up vim for plugins
 # These are vim8-style packages, not using a plugin manager like Pathogen
 # :h packages
+echo "Set up vim for plugins"
 mkdir -p ~/.vim/pack/plugins/start/
-mkdir -p ~/.vim/colors/
 
 # Grab vim plugins
 git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround
@@ -87,6 +88,7 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # insecure?
 
 # Projects go in the Projects directory
+echo "Adding a Projects directory"
 mkdir ~/Projects
 
 # MacOS specific subshell.
@@ -94,6 +96,8 @@ mkdir ~/Projects
 if [ "$(uname)" != "Darwin" ]
 then exit
 fi
+
+echo "Starting macOS specific configuration"
 
 # Install xcode CLI tools
 # This will have likely already happened but just in case
@@ -166,6 +170,8 @@ killall Dock
 # don't hide the ~/Library/ folder
 setfile -a v ~/Library
 chflags nohidden ~/Library
+
+echo "Finished with macOS specific configuration"
 )
 # End MacOS specific subshell
 
@@ -174,8 +180,13 @@ chflags nohidden ~/Library
 if [ "$(uname)" != "Linux" ]
 then exit fi
 
+echo "Starting Linux specific configuration"
+
 # Install Debian based linux utils
 if [ -x "$(command -v apt-get)" ]; then
+
+  echo "Installing common utils"
+
   sudo apt-get -y update
   sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
 
@@ -192,5 +203,7 @@ curl -sS https://starship.rs/install.sh | sh
 
 # use zsh
 chsh -s $(which zsh)
+
+echo "Finished with Linux specific configuration"
 )
 # End Linux specific subshell
