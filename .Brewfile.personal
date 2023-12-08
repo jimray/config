@@ -7,10 +7,12 @@ brew "hugo"
 # Other personal apps
 cask "fantastical"
 cask "slack"
+cask "raycast"
 
 # Fonts
 
 # Mac Store apps
+# Find the ID with `mas search "My App"`
 mas "Things 3", id: 904280696
 mas "Ulysses", id: 1225570693
 mas "Nozio", id: 928871589
@@ -18,3 +20,4 @@ mas "AdGuard for Safari", id: 1440147259
 mas "Hush", id: 1544743900
 mas "Homecoming for Mastodon", id: 1666139593
 mas "Keyword Search", id: 1558453954
+mas "Save to Reader", id: 1640236961
