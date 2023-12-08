@@ -38,6 +38,7 @@ brew "ripgrep"
 brew "fzf"
 
 # Mac apps, sideloaded
+# Upgrade with `brew cu -a --interactive`
 cask "alfred"
 cask "bbedit"
 cask "iterm2"
@@ -46,7 +47,9 @@ cask "nova"
 cask "visual-studio-code"
 cask "safari-technology-preview"
 cask "utm"
+cask "obsidian"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"
 cask "font-league-gothic"
+cask "font-monaspace-nerd-font"
