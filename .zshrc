@@ -94,15 +94,14 @@ eval "$(starship init zsh)"
 # Aliases
 # #######
 
-# use exa instead of ls
-#if [ -x "$(command -v exa)" ]; then
-if (( $+commands[exa] )); then
-  alias ls='exa --icons'
-  alias ll='exa -alhgUm --git --icons'
-  alias lt='exa --tree --icons'
-  alias lg='exa -a --long --grid -h'
+# use eza instead of ls
+if (( $+commands[eza] )); then
+  alias ls='eza --icons'
+  alias ll='eza --all --long --header --group --created --modified --git --icons'
+  alias lt='eza --tree --icons'
+  alias lg='eza -a --long --grid -h'
   # but if you *need* ls...
-  alias lsls='ls'
+  alias xls='/bin/ls'
 fi
 
 alias reload='source ~/.zshrc'
@@ -115,12 +114,4 @@ alias sql='sqlite3'
 # start a simple HTTP server and serve the current directory at 8000
 alias serve='python -m http.server 8000'
 
-# if MacVim is installed use that instead
-if [ -e /Applications/MacVim.app/ ]; then
-  alias vim='/Applications/MacVim.app/Contents/bin/vim'
-  alias vi='/Applications/MacVim.app/Contents/bin/vim'
-fi
 
-if [ -e /Applications/Nova.app/ ]; then
-  alias coda='nova'
-fi
