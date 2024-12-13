@@ -8,6 +8,7 @@ brew "hugo"
 cask "fantastical"
 cask "slack"
 cask "raycast"
+cask "netnewswire"
 
 # Fonts
 
