@@ -1,7 +1,12 @@
 # set the path for homebrew
+if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+eval $($(brew --prefix)/bin/brew shellenv)
+
 if [ -x "$(command -v brew)" ]; then
     #eval "$(/opt/homebrew/bin/brew shellenv)"
-    eval $($(brew --prefix)/bin/brew shellenv)
 
     # use homebrew sqlite
     #export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
@@ -18,6 +23,9 @@ if [ -x "$(command -v brew)" ]; then
 
     # append completions to fpath
     fpath=(${ASDF_DIR}/completions $fpath)
+
+    # make the default bundle file invisible
+    export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
 # initialise completions with ZSH's compinit
@@ -26,7 +34,6 @@ compinit
 
 # Homebrew
 if [ -x "$(command -v brew)" ]; then
-  export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
 # if MacVim is installed use that instead
