@@ -33,13 +33,12 @@ brew "tmux"
 brew "watchman"
 brew "wget"
 brew "starship"
-brew "exa"
+brew "eza"
 brew "ripgrep"
 brew "fzf"
 
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
-cask "alfred"
 cask "bbedit"
 cask "iterm2"
 cask "macvim"
@@ -48,6 +47,7 @@ cask "visual-studio-code"
 cask "safari-technology-preview"
 cask "utm"
 cask "obsidian"
+cask "raycast"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"

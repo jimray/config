@@ -600,7 +600,11 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
+<<<<<<< HEAD
 			<string>SauceCodeProNFP 13</string>
+=======
+			<string>SauceCodeProNFM 13</string>
+>>>>>>> c96cff0 (Updated exa to eza, python versioning)
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -608,7 +612,11 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
+<<<<<<< HEAD
 			<integer>46</integer>
+=======
+			<integer>60</integer>
+>>>>>>> c96cff0 (Updated exa to eza, python versioning)
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
