@@ -94,7 +94,6 @@ eval "$(starship init zsh)"
 # Aliases
 # #######
 
-<<<<<<< HEAD
 # use eza instead of ls
 if (( $+commands[eza] )); then
   alias ls='eza --icons'
