@@ -25,17 +25,18 @@ brew "git-lfs"
 
 # handy tools
 brew "asdf"
+brew "eza"
+brew "fzf"
 brew "jq"
+brew "llm"
 brew "pandoc"
+brew "ripgrep"
+brew "starship"
 brew "tcptraceroute"
 brew "tldr"
 brew "tmux"
 brew "watchman"
 brew "wget"
-brew "starship"
-brew "eza"
-brew "ripgrep"
-brew "fzf"
 
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
@@ -43,11 +44,11 @@ cask "bbedit"
 cask "iterm2"
 cask "macvim"
 cask "nova"
-cask "visual-studio-code"
-cask "safari-technology-preview"
-cask "utm"
 cask "obsidian"
 cask "raycast"
+cask "safari-technology-preview"
+cask "utm"
+cask "visual-studio-code"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"

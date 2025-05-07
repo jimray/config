@@ -27,9 +27,9 @@ done
 ##############################################
 /usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 ##############################################
 #
 
@@ -115,3 +115,6 @@ alias sql='sqlite3'
 alias serve='python -m http.server 8000'
 
 
+
+# Added by Windsurf
+export PATH="/Users/jim.ray/.codeium/windsurf/bin:$PATH"
