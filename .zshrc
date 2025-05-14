@@ -97,7 +97,7 @@ eval "$(starship init zsh)"
 # use eza instead of ls
 if (( $+commands[eza] )); then
   alias ls='eza --icons'
-  alias ll='eza --all --long --header --group --created --modified --git --icons'
+  alias ll='eza --all --long --group-directories-first --header --group --created --modified --git --icons'
   alias lt='eza --tree --icons'
   alias lg='eza -a --long --grid -h'
   # but if you *need* ls...
