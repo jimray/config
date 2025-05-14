@@ -72,6 +72,8 @@ if [ "$(uname)" = "Darwin" ]; then
     # Use list view in all Finder windows by default
     # Four-letter codes for the other view modes: icnv, clmv, glyv
     defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+    # Finder always displays folders first when sorting by name
+    defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"
 
     # Set up Safari
     # show the debug menu

@@ -825,7 +825,7 @@
 			<key>Use Non-ASCII Font</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1.01</real>
+			<real>1</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -1959,10 +1959,6 @@
 	<integer>5</integer>
 	<key>TimeBetweenTips</key>
 	<real>604800</real>
-	<key>ToolbeltTools</key>
-	<array>
-		<string>Profiles</string>
-	</array>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>
