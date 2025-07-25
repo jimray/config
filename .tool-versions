@@ -1,5 +1,5 @@
-nodejs 23.11.0
+nodejs 24.4.1
 golang 1.17.8
-python 3.12.7
-deno 1.36.4
+python 3.13.5t
+deno 2.4.2
 rust 1.82.0
