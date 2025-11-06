@@ -35,7 +35,7 @@ brew "starship"
 brew "tcptraceroute"
 brew "tldr"
 brew "tmux"
-brew "watchman"
+brew "uv"
 brew "wget"
 
 # Mac apps, sideloaded

@@ -21,17 +21,6 @@ done
 
 
 # Specific app setups
-# ###################
-#
-# PDE SETUP || 2022-02-09T13:37:47-0500
-##############################################
-/usr/bin/ssh-add --apple-load-keychain >/dev/null 2>&1
-
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-##############################################
-#
 
 # activate z
 # https://github.com/rupa/z
@@ -39,14 +28,14 @@ done
 
 # activate poetry packaging
 # https://python-poetry.org
-export PATH="$HOME/.poetry/bin:$PATH"
+# export PATH="$HOME/.poetry/bin:$PATH"
 
 #pipx autocompletion
 autoload -U bashcompinit
 bashcompinit
 
-# eval "$(register-python-argcomplete pipx)"
-export PATH="$PATH:/Users/jim.ray/.local/bin"
+# path for uv
+export PATH="$PATH:/Users/jimray/.local/bin:$PATH"
 
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
@@ -113,8 +102,3 @@ alias sql='sqlite3'
 
 # start a simple HTTP server and serve the current directory at 8000
 alias serve='python -m http.server 8000'
-
-
-
-# Added by Windsurf
-export PATH="/Users/jim.ray/.codeium/windsurf/bin:$PATH"
