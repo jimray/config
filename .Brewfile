@@ -37,6 +37,7 @@ brew "tldr"
 brew "tmux"
 brew "uv"
 brew "wget"
+brew "yt-dlp"
 
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
