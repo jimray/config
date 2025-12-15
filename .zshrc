@@ -1,5 +1,17 @@
 # Init
 # ####
+#
+# Fuzzy completion setup
+# Enable case-insensitive and substring matching
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# Enable approximate matching (allows typos)
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Make completion menu more readable
+zstyle ':completion:*' menu select
+
 # This is for portable dotfiles-style config, using a bare git tree
 # https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-rep
 # Usage is just git commands, with the config alias instead
@@ -36,6 +48,9 @@ bashcompinit
 
 # path for uv
 export PATH="$PATH:/Users/jimray/.local/bin:$PATH"
+
+# set golang paths
+. ${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/golang/set-env.zsh
 
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
@@ -102,3 +117,6 @@ alias sql='sqlite3'
 
 # start a simple HTTP server and serve the current directory at 8000
 alias serve='python -m http.server 8000'
+
+# Added by Antigravity
+export PATH="/Users/jimray/.antigravity/antigravity/bin:$PATH"
