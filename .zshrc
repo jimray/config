@@ -34,14 +34,6 @@ done
 
 # Specific app setups
 
-# activate z
-# https://github.com/rupa/z
-. $HOME/._z/z.sh
-
-# activate poetry packaging
-# https://python-poetry.org
-# export PATH="$HOME/.poetry/bin:$PATH"
-
 #pipx autocompletion
 autoload -U bashcompinit
 bashcompinit

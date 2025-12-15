@@ -189,9 +189,6 @@ vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-commentary/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-fugitive/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-gitgutter/doc" -c q
 
-# Install z
-git clone https://github.com/rupa/z.git ~/._z
-
 # Install asdf
 # ASDF manages plugins that manage software versions like python, nodejs
 # I always forget how this works! Example:
