@@ -37,12 +37,6 @@ done
 autoload -U bashcompinit
 bashcompinit
 
-# path for uv
-export PATH="$PATH:/Users/jimray/.local/bin:$PATH"
-
-# set golang paths
-. ${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/golang/set-env.zsh
-
 # where should ripgrep find its config file?
 # https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
 if [ -x "$(command -v rg)" ]; then
