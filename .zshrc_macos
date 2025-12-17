@@ -1,8 +1,3 @@
-# set the path for uv
-if [ -x "$(command -v uv)" ]; then
-    export PATH="$PATH:/Users/jimray/.local/bin:$PATH"
-fi
-
 # set the path for homebrew
 if [ -x /opt/homebrew/bin/brew ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -14,37 +9,30 @@ if [ -x "$(command -v brew)" ]; then
     #eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # use homebrew sqlite
-    #export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
     export PATH="$(brew --prefix sqlite)/bin:$PATH"
 
     #use homebrew curl
-    #export PATH="/opt/homebrew/opt/curl/bin:$PATH"
     export PATH="$(brew --prefix curl)/bin:$PATH"
-
-    # activate asdf
-    # https://asdf-vm.com
-    #. /opt/homebrew/opt/asdf/libexec/asdf.sh
-    #$(brew --prefix asdf)/libexec/asdf.sh
-
-    # append completions to fpath
-    #fpath=(${ASDF_DIR}/completions $fpath)
-
-    # asdf config
-    export ASDF_DATA_DIR="$HOME/.asdf"
-    export PATH="$ASDF_DATA_DIR/shims:$PATH"
-    fpath=(${ASDF_DIR}/completions $fpath)
 
     # make the default bundle file invisible
     export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
+# asdf version manager
+if [ -d "${ASDF_DATA_DIR:-$HOME/.asdf}" ]; then
+    export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
+    export PATH="$ASDF_DATA_DIR/shims:$PATH"
+    fpath=(${ASDF_DATA_DIR}/completions $fpath)
+
+    # Source golang plugin setup if it exists
+    if [ -f "$ASDF_DATA_DIR/plugins/golang/set-env.zsh" ]; then
+        . "$ASDF_DATA_DIR/plugins/golang/set-env.zsh"
+    fi
+fi
+
 # initialise completions with ZSH's compinit
 autoload -Uz compinit
 compinit
-
-# Homebrew
-if [ -x "$(command -v brew)" ]; then
-fi
 
 # if MacVim is installed use that instead
 if [ -e /Applications/MacVim.app/ ]; then
