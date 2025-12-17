@@ -24,7 +24,6 @@ brew "git"
 brew "git-lfs"
 
 # handy tools
-brew "asdf"
 brew "eza"
 brew "fzf"
 brew "jq"
