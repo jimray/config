@@ -153,6 +153,9 @@ mkdir -p ~/Projects
 echo "Set up tmux for plugins"
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# Install TPM plugins from .tmux.conf without needing to be in tmux
+~/.tmux/plugins/tpm/bin/install_plugins
+
 # VIM
 #####
 # Set up vim for plugins
