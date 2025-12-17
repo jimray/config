@@ -103,7 +103,7 @@ if [ "$(uname)" = "FreeBSD" ]; then
         exit 1
     fi
 
-    sudo pkg install -y git zsh vim tmux tldr exa ripgrep fzf gh starship
+    sudo pkg install -y git zsh vim tmux tldr eza ripgrep fzf gh starship
 
     # use zsh
     chsh -s $(which zsh)
@@ -117,7 +117,7 @@ if [ "$(uname)" = "Linux" ]; then
 
     if command -v apt-get >/dev/null 2>&1; then
       sudo apt-get -y update
-      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "exa" "ripgrep" "fzf"
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf"
 
         # install the github CLI
         # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
