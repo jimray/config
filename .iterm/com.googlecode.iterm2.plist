@@ -1438,7 +1438,7 @@
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>5</integer>
+	<integer>4</integer>
 	<key>TimeBetweenTips</key>
 	<real>604800</real>
 	<key>VisualIndicatorForEsc</key>
