@@ -117,7 +117,7 @@ if [ "$(uname)" = "Linux" ]; then
 
     if command -v apt-get >/dev/null 2>&1; then
       sudo apt-get -y update
-      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf"
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq"
 
         # install the github CLI
         # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
@@ -188,15 +188,6 @@ vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-surround/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-commentary/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-fugitive/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-gitgutter/doc" -c q
-
-# Install asdf
-# ASDF manages plugins that manage software versions like python, nodejs
-# I always forget how this works! Example:
-# asdf plugin add nodejs
-# asdf install nodejs 13.14.0
-# asdf plugin add python
-# asdf install python latest
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 
 # At some point, set up SSH for Github
 # ssh-keygen -f ~/.ssh/gh -t ed25519 -C "gh_email@emaildomain.tld"
