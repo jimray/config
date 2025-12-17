@@ -106,7 +106,32 @@ alias sqlite='sqlite3'
 alias sql='sqlite3'
 
 # start a simple HTTP server and serve the current directory at 8000
-alias serve='python -m http.server 8000'
+# alias serve='python3 -m http.server 8000'
+serve() {
+    local port="${1:-8000}"
+    local max_port=$((port + 10))
+
+    while [[ $port -le $max_port ]]; do
+        if lsof -i ":$port" &>/dev/null; then
+            echo "Port $port in use, trying $((port + 1))..."
+            ((port++))
+        else
+            echo "Starting server at http://localhost:$port"
+            python3 -m http.server "$port" --bind localhost
+            break
+        fi
+    done
+
+    if [[ $port -gt $max_port ]]; then
+        echo "Could not find available port between ${1:-8000} and $max_port"
+        return 1
+    fi
+}
+# it's annoying to add the 3 to the end!
+# Alias python to python3 if python command doesn't exist
+if ! command -v python &> /dev/null; then
+    alias python='python3'
+fi
 
 # Added by Antigravity
 export PATH="/Users/jimray/.antigravity/antigravity/bin:$PATH"
