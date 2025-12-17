@@ -24,22 +24,22 @@ brew "git"
 brew "git-lfs"
 
 # handy tools
-brew "eza"
-brew "fzf"
-brew "jq"
-brew "lima"
-brew "llm"
-brew "macvim"
-brew "mise"         # runtime version manager, replaces asdf, reads .tool-versions
-brew "pandoc"
-brew "ripgrep"
-brew "starship"
-brew "tcptraceroute"
-brew "tldr"
-brew "tmux"
-brew "uv"
-brew "wget"
-brew "yt-dlp"
+brew "eza"            # better ls, replaced exa
+brew "fzf"            # fuzzy finder
+brew "jq"             # CLI json tool
+brew "lima"           # create and manage linux sandboxes
+brew "llm"            # large language model cli tool
+brew "macvim"         # vim, for the Mac
+brew "mise"           # runtime version manager, replaces asdf, reads .tool-versions
+brew "pandoc"         # text processing engine
+brew "ripgrep"        # recursively search directories for a regex, respects .gitignores
+brew "starship"       # fancify the CLI
+brew "tcptraceroute"  # traceroute, but TCP instead of UDP
+brew "tlrc"           # better manpages, use with `tldr $COMMAND`
+brew "tmux"           # terminal muxer of course
+brew "uv"             # less bad python tooling
+brew "wget"           # because some things you can't curl
+brew "yt-dlp"         # download any video from anywhere
 
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
