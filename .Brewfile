@@ -30,6 +30,7 @@ brew "jq"
 brew "lima"
 brew "llm"
 brew "macvim"
+brew "mise"         # runtime version manager, replaces asdf, reads .tool-versions
 brew "pandoc"
 brew "ripgrep"
 brew "starship"
