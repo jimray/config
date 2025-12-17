@@ -43,6 +43,11 @@ if [ -x "$(command -v rg)" ]; then
   export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 fi
 
+# ~/.local/bin is where utils like uv and claude live
+if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
 # Specific OS setups
 # ##################
 case `uname` in
