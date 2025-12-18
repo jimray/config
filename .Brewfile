@@ -31,6 +31,7 @@ brew "lima"           # create and manage linux sandboxes
 brew "llm"            # large language model cli tool
 brew "macvim"         # vim, for the Mac
 brew "mise"           # runtime version manager, replaces asdf, reads .tool-versions
+brew "neovim"         # modern vim with better LSP handling
 brew "pandoc"         # text processing engine
 brew "ripgrep"        # recursively search directories for a regex, respects .gitignores
 brew "starship"       # fancify the CLI

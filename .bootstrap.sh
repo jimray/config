@@ -117,7 +117,7 @@ if [ "$(uname)" = "Linux" ]; then
 
     if command -v apt-get >/dev/null 2>&1; then
       sudo apt-get -y update
-      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq"
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq" "nvim"
 
         # install the github CLI
         # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
@@ -191,6 +191,17 @@ vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-surround/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-commentary/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-fugitive/doc" -c q
 vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-gitgutter/doc" -c q
+
+# NEOVIM
+# ######
+# Set up nvim to use vim for now
+# Eventually, this will all be migrated to native neovim config
+# Symlink vim plugins so neovim can find them
+if command -v nvim >/dev/null 2>&1; then
+    echo "Setting up Neovim plugin symlink"
+    mkdir -p ~/.local/share/nvim/site/pack
+    ln -sf ~/.vim/pack/plugins ~/.local/share/nvim/site/pack/plugins
+fi
 
 # At some point, set up SSH for Github
 # ssh-keygen -f ~/.ssh/gh -t ed25519 -C "gh_email@emaildomain.tld"
