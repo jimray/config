@@ -117,7 +117,7 @@ if [ "$(uname)" = "Linux" ]; then
 
     if command -v apt-get >/dev/null 2>&1; then
       sudo apt-get -y update
-      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq" "nvim"
+      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq" "neovim"
 
         # install the github CLI
         # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
