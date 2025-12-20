@@ -1,9 +1,0 @@
-# Use a default tmux so you don't have to start it manually
-# `new-session` will connect to `default` if it exits
-# or create it if not
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux at
-  # tmux new-session -A -s default
-  # echo "\nYou probably want to start a tmux session"
-  # tmux ls
-fi
