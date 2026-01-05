@@ -87,3 +87,6 @@
 	helper = !gh auth git-credential
 [pull]
 	rebase = true
+[user]
+	email = jimray@gmail.com
+	name = Jim Ray
