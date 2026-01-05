@@ -33,15 +33,11 @@
   # add all tracked files AND commit
   aux = "!git add -u && git commit"
 
-  # remote rebase from origin
-  rrb = "!git fetch origin $(git branch-name) && git rebase origin/$(git branch-name)"
-
-  # better pull and fetch -- only from the current branch not *every* branch
-  pu = "!git pull origin $(git branch-name)"
-  fe = "!git fetch origin $(git branch-name)"
-
   # create a new branch and check it out
 	b = checkout -b
+
+  # list branches
+  ls = branch -vv
 
   # because you gotta checkout main a lot
   main = checkout main
@@ -51,6 +47,13 @@
 
   # get submodules
   mods = pull --recurse-submodules
+
+  # remote rebase from origin
+  rrb = "!git fetch origin $(git branch-name) && git rebase origin/$(git branch-name)"
+
+  # better pull and fetch -- only from the current branch not *every* branch
+  pu = "!git pull origin $(git branch-name)"
+  fe = "!git fetch origin $(git branch-name)"
 
   c = commit
   cm = commit -m
