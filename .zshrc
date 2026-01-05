@@ -98,6 +98,10 @@ if (( $+commands[eza] )); then
   alias xls='/bin/ls'
 fi
 
+if (( $+commands[nvim] )); then
+  alias vim='nvim'
+fi
+
 alias reload='source ~/.zshrc'
 
 alias g='git'
