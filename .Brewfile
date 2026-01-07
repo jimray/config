@@ -25,6 +25,7 @@ brew "git-lfs"
 
 # handy tools
 brew "eza"            # better ls, replaced exa
+brew "ffmpeg"         # video swiss army knife
 brew "fzf"            # fuzzy finder
 brew "jq"             # CLI json tool
 brew "lima"           # create and manage linux sandboxes
