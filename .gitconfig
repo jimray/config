@@ -36,6 +36,9 @@
   # create a new branch and check it out
 	b = checkout -b
 
+  # show a nice history readout
+  hist = log --oneline --graph --all --decorate
+
   # list branches
   ls = branch -vv
 
