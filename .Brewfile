@@ -53,6 +53,7 @@ cask "raycast"
 cask "safari-technology-preview"
 cask "utm"
 cask "visual-studio-code"
+cask "vlc"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"
