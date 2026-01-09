@@ -1,0 +1,33 @@
+# Minimal Lima VM template
+# Usage: limactl create --name myvm ~/.lima/templates/minimal.yaml
+
+minimumLimaVersion: "2.0.0"
+
+# Ubuntu 24.04 LTS (Noble)
+images:
+  - location: "https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img"
+    arch: "x86_64"
+  - location: "https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-arm64.img"
+    arch: "aarch64"
+
+# Writable mounts (uncomment and modify as needed)
+# mounts:
+#   - location: "~"
+#     writable: false
+#   - location: "~/Projects"
+#     writable: true
+
+# Provision dotfiles automatically
+provision:
+  - mode: user
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      if [ ! -d "$HOME/.cfg" ]; then
+        echo "Setting up dotfiles..."
+        curl -Lks https://raw.githubusercontent.com/jimray/config/main/.dotfiles-init.sh -o /tmp/dotfiles-init.sh
+        chmod +x /tmp/dotfiles-init.sh
+        echo "y" | /tmp/dotfiles-init.sh
+      else
+        echo "Dotfiles already configured, skipping init"
+      fi
