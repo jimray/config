@@ -77,7 +77,7 @@ brew install lima
 
 ```sh
 # Create and start a new VM (dotfiles auto-provision)
-limactl create myvm
+limactl create --name myvm
 limactl start myvm
 
 # Shell into the VM
@@ -103,6 +103,22 @@ When any Lima VM starts, the config in `.lima/_config/default.yaml` runs automat
 3. Runs the bootstrap to install tools
 
 No manual setup needed - just `limactl create` and your dev environment is ready.
+
+### Writable Directories
+
+By default, Lima mounts your home directory as **read-only**. The config in `.lima/_config/default.yaml` makes `~/Projects` writable.
+
+To add more writable directories, edit `.lima/_config/default.yaml`:
+
+```yaml
+mounts:
+  - location: "~"
+    writable: false
+  - location: "~/Projects"
+    writable: true
+  - location: "~/another-dir"
+    writable: true
+```
 
 ## Local Overrides
 

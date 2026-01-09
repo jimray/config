@@ -79,7 +79,9 @@ fi
 
 
 # use starship for a nicer console
-eval "$(starship init zsh)"
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi
 
 # fzf for fuzzy find
 # github.com/junegunn/fzf
