@@ -106,17 +106,13 @@ No manual setup needed - just `limactl create` and your dev environment is ready
 
 ### Writable Directories
 
-By default, Lima mounts your home directory as **read-only**. The config in `.lima/_config/default.yaml` makes `~/Projects` writable.
-
-To add more writable directories, edit `.lima/_config/default.yaml`:
+By default, Lima mounts your home directory as **read-only**. To make directories writable, edit `.lima/_config/default.yaml` and add a `mounts` section:
 
 ```yaml
 mounts:
   - location: "~"
     writable: false
   - location: "~/Projects"
-    writable: true
-  - location: "~/another-dir"
     writable: true
 ```
 

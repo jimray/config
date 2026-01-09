@@ -1,14 +1,6 @@
 # Global Lima VM defaults - applies to ALL VMs
 # This file is part of the dotfiles repo and gets symlinked to ~/.lima/_config/default.yaml
 
-# Mount ~/Projects as writable (home directory is read-only by default)
-# Add additional writable mounts as needed
-mounts:
-  - location: "~"
-    writable: false
-  - location: "~/Projects"
-    writable: true
-
 provision:
   - mode: user
     script: |
