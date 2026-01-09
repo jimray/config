@@ -63,6 +63,47 @@ Plus cross-platform setup:
 - **Terminal**: tmux + iTerm2 (macOS)
 - **Search**: fzf, ripgrep, eza
 
+## Lima Virtual Machines
+
+[Lima](https://lima-vm.io/) provides Linux VMs on macOS (and Linux). The included `.lima/_config/default.yaml` automatically provisions dotfiles on every new VM.
+
+### Install Lima
+
+```sh
+brew install lima
+```
+
+### Basic Commands
+
+```sh
+# Create and start a new VM (dotfiles auto-provision)
+limactl create myvm
+limactl start myvm
+
+# Shell into the VM
+limactl shell myvm
+
+# Or use the default VM
+limactl start default
+lima  # shortcut for `limactl shell default`
+
+# Stop and delete
+limactl stop myvm
+limactl delete myvm
+
+# List all VMs
+limactl list
+```
+
+### How Auto-Provisioning Works
+
+When any Lima VM starts, the config in `.lima/_config/default.yaml` runs automatically:
+1. Checks if `~/.cfg` exists (dotfiles already set up)
+2. If not, downloads and runs the dotfiles init script
+3. Runs the bootstrap to install tools
+
+No manual setup needed - just `limactl create` and your dev environment is ready.
+
 ## Local Overrides
 
 For machine-specific settings that shouldn't be committed:
