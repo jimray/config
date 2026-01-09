@@ -61,6 +61,10 @@ if [ -d "$CFG_DIR" ]; then
 else
     echo "Cloning dotfiles repository..."
     git clone --bare https://github.com/jimray/config.git "$CFG_DIR"
+
+    # Configure fetch refspec - bare repos don't set this up by default,
+    # which breaks git fetch/pull. This makes the bare repo behave normally.
+    config config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 fi
 
 # Create backup directory
