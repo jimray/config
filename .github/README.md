@@ -106,7 +106,7 @@ No manual setup needed - just `limactl create` and your dev environment is ready
 
 ### Writable Directories
 
-By default, Lima mounts your home directory as **read-only**. To make directories writable, edit `.lima/_config/default.yaml` and add a `mounts` section:
+By default, Lima mounts your home directory as **read-only**. To make directories writable for a specific VM, edit `~/.lima/<vm-name>/lima.yaml` and add a `mounts` section:
 
 ```yaml
 mounts:
@@ -114,6 +114,12 @@ mounts:
     writable: false
   - location: "~/Projects"
     writable: true
+```
+
+Then restart the VM for changes to take effect:
+
+```sh
+limactl stop myvm && limactl start myvm
 ```
 
 ## Local Overrides
