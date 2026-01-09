@@ -76,16 +76,16 @@ brew install lima
 ### Basic Commands
 
 ```sh
-# Create and start a new VM (dotfiles auto-provision)
+# Create a VM with minimal config (recommended)
+limactl create --name myvm ~/.lima/templates/minimal.yaml
+limactl start myvm
+
+# Or use Lima's default template (verbose config)
 limactl create --name myvm
 limactl start myvm
 
 # Shell into the VM
 limactl shell myvm
-
-# Or use the default VM
-limactl start default
-lima  # shortcut for `limactl shell default`
 
 # Stop and delete
 limactl stop myvm
