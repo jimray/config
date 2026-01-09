@@ -46,6 +46,7 @@ brew "yt-dlp"         # download any video from anywhere
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
 cask "bbedit"
+cask "claude"
 cask "iterm2"
 cask "nova"
 cask "obsidian"
