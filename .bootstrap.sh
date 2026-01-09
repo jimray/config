@@ -196,11 +196,8 @@ echo "Setting up tmux plugins..."
 if [ ! -d ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-
-# Install TPM plugins from .tmux.conf without needing to be in tmux
-if [ -x ~/.tmux/plugins/tpm/bin/install_plugins ]; then
-    ~/.tmux/plugins/tpm/bin/install_plugins
-fi
+# Note: TPM plugins are auto-installed on first tmux launch (prefix + I)
+# Running install_plugins outside tmux fails due to missing TMUX_PLUGIN_MANAGER_PATH
 
 # VIM
 #####
