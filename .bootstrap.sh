@@ -1,12 +1,14 @@
 #!/bin/sh
+set -e
 
 # This is an evolving record of setting up a macOS or unix box
-# It most mostly serves as as record keeping and notes to myself
-# Before running this, init the dotfiles setup
-# curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/sh
+# It mostly serves as record keeping and notes to myself
 #
-# When setting up a new Mac, you should be able to run the above script from the built-in Terminal app
-# and then never have to touch that again as iTerm 2 is one of the apps that gets gets installed
+# Before running this, init the dotfiles setup:
+# curl -Lks https://raw.githubusercontent.com/jimray/config/main/.dotfiles-init.sh | /bin/sh
+#
+# When setting up a new Mac (or Lima VM), run the above command from the built-in Terminal
+# and then never have to touch that again as iTerm 2 is one of the apps that gets installed
 # via homebrew. Neat!
 
 # Operating system specific configurations
@@ -116,26 +118,66 @@ if [ "$(uname)" = "Linux" ]; then
     echo "Starting Linux specific configuration"
 
     if command -v apt-get >/dev/null 2>&1; then
-      sudo apt-get -y update
-      sudo apt-get -y install "git" "zsh" "vim" "tmux" "tldr" "eza" "ripgrep" "fzf" "jq" "neovim"
+        sudo apt-get -y update
 
-        # install the github CLI
+        # Install core packages (eza installed separately below)
+        sudo apt-get -y install git zsh vim tmux ripgrep fzf jq neovim wget curl gpg
+
+        # Install eza (modern ls replacement) - requires adding the official repository
+        # https://github.com/eza-community/eza/blob/main/INSTALL.md
+        if ! command -v eza >/dev/null 2>&1; then
+            echo "Installing eza from official repository..."
+            sudo mkdir -p /etc/apt/keyrings
+            wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+            sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+            sudo apt-get -y update
+            sudo apt-get -y install eza
+        fi
+
+        # Install tldr (may not be in all repos, try npm fallback)
+        if ! command -v tldr >/dev/null 2>&1; then
+            if sudo apt-get -y install tldr 2>/dev/null; then
+                echo "tldr installed via apt"
+            elif command -v npm >/dev/null 2>&1; then
+                echo "Installing tldr via npm..."
+                sudo npm install -g tldr
+            else
+                echo "Warning: Could not install tldr (not in apt repos and npm not available)"
+            fi
+        fi
+
+        # Install the GitHub CLI
         # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
-        type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
-        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
-        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-        && sudo apt update \
-        && sudo apt install gh -y
+        if ! command -v gh >/dev/null 2>&1; then
+            echo "Installing GitHub CLI..."
+            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+            && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+            && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+            && sudo apt-get -y update \
+            && sudo apt-get -y install gh
+        fi
     else
-      echo "apt-get is not available. Please install the required packages manually."
+        echo "apt-get is not available. Please install the required packages manually."
+        exit 1
     fi
 
-    # install starship
-    curl -sS https://starship.rs/install.sh | sh
+    # Install starship (non-interactive)
+    if ! command -v starship >/dev/null 2>&1; then
+        echo "Installing starship prompt..."
+        curl -sS https://starship.rs/install.sh | sh -s -- -y
+    fi
 
-    # use zsh
-    chsh -s $(which zsh)
+    # Set zsh as default shell (if not already)
+    if [ "$SHELL" != "$(which zsh)" ]; then
+        echo "Setting zsh as default shell..."
+        # Add zsh to /etc/shells if not present
+        if ! grep -q "$(which zsh)" /etc/shells; then
+            which zsh | sudo tee -a /etc/shells
+        fi
+        # Use sudo to change shell non-interactively
+        sudo chsh -s "$(which zsh)" "$USER"
+    fi
 
     echo "Finished with Linux configuration"
 fi
@@ -150,47 +192,62 @@ mkdir -p ~/Projects
 #####
 
 # Set up tmux for plugins
-echo "Set up tmux for plugins"
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+echo "Setting up tmux plugins..."
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 # Install TPM plugins from .tmux.conf without needing to be in tmux
-~/.tmux/plugins/tpm/bin/install_plugins
+if [ -x ~/.tmux/plugins/tpm/bin/install_plugins ]; then
+    ~/.tmux/plugins/tpm/bin/install_plugins
+fi
 
 # VIM
 #####
 # Set up vim for plugins
 # These are vim8-style packages, not using a plugin manager like Pathogen
 # :h packages
-echo "Set up vim for plugins"
+echo "Setting up vim plugins..."
 mkdir -p ~/.vim/pack/plugins/start/
 
+# Helper function to clone a plugin only if it doesn't exist
+clone_plugin() {
+    repo_url="$1"
+    dest_dir="$2"
+    extra_args="${3:-}"
+    if [ ! -d "$dest_dir" ]; then
+        echo "  Cloning $(basename "$dest_dir")..."
+        git clone $extra_args "$repo_url" "$dest_dir"
+    fi
+}
+
 # Grab vim plugins
-git clone https://github.com/tpope/vim-surround.git ~/.vim/pack/plugins/start/vim-surround
-git clone https://github.com/tpope/vim-vinegar.git ~/.vim/pack/plugins/start/vim-vinegar
-git clone https://github.com/tpope/vim-commentary.git ~/.vim/pack/plugins/start/vim-commentary
-git clone https://github.com/tpope/vim-fugitive.git ~/.vim/pack/plugins/start/vim-fugitive
-git clone https://github.com/vim-airline/vim-airline.git ~/.vim/pack/plugins/start/vim-airline
-git clone https://github.com/vim-airline/vim-airline-themes.git ~/.vim/pack/plugins/start/vim-airline-themes
-git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/pack/plugins/start/vim-gitgutter
-git clone https://github.com/editorconfig/editorconfig-vim.git ~/.vim/pack/plugins/start/editorconfig-vim
-git clone https://github.com/fatih/vim-go.git ~/.vim/pack/plugins/start/vim-go
-git clone https://github.com/christoomey/vim-tmux-navigator.git ~/.vim/pack/plugins/start/vim-tmux-navigator
-git clone https://github.com/plasticboy/vim-markdown.git ~/.vim/pack/plugins/start/vim-markdown
-git clone https://github.com/reedes/vim-pencil.git ~/.vim/pack/plugins/start/vim-pencil
-git clone https://github.com/jiangmiao/auto-pairs.git ~/.vim/pack/plugins/start/auto-pairs
-git clone --depth 1 https://github.com/adrian5/oceanic-next-vim ~/.vim/pack/plugins/start/oceanic-next-vim
+clone_plugin "https://github.com/tpope/vim-surround.git" "$HOME/.vim/pack/plugins/start/vim-surround"
+clone_plugin "https://github.com/tpope/vim-vinegar.git" "$HOME/.vim/pack/plugins/start/vim-vinegar"
+clone_plugin "https://github.com/tpope/vim-commentary.git" "$HOME/.vim/pack/plugins/start/vim-commentary"
+clone_plugin "https://github.com/tpope/vim-fugitive.git" "$HOME/.vim/pack/plugins/start/vim-fugitive"
+clone_plugin "https://github.com/vim-airline/vim-airline.git" "$HOME/.vim/pack/plugins/start/vim-airline"
+clone_plugin "https://github.com/vim-airline/vim-airline-themes.git" "$HOME/.vim/pack/plugins/start/vim-airline-themes"
+clone_plugin "https://github.com/airblade/vim-gitgutter.git" "$HOME/.vim/pack/plugins/start/vim-gitgutter"
+clone_plugin "https://github.com/editorconfig/editorconfig-vim.git" "$HOME/.vim/pack/plugins/start/editorconfig-vim"
+clone_plugin "https://github.com/fatih/vim-go.git" "$HOME/.vim/pack/plugins/start/vim-go"
+clone_plugin "https://github.com/christoomey/vim-tmux-navigator.git" "$HOME/.vim/pack/plugins/start/vim-tmux-navigator"
+clone_plugin "https://github.com/plasticboy/vim-markdown.git" "$HOME/.vim/pack/plugins/start/vim-markdown"
+clone_plugin "https://github.com/reedes/vim-pencil.git" "$HOME/.vim/pack/plugins/start/vim-pencil"
+clone_plugin "https://github.com/jiangmiao/auto-pairs.git" "$HOME/.vim/pack/plugins/start/auto-pairs"
+clone_plugin "https://github.com/adrian5/oceanic-next-vim" "$HOME/.vim/pack/plugins/start/oceanic-next-vim" "--depth 1"
 
 # fzf requires both the binary with the fzf plugin and an additional plugin :shrug:
-git clone http://github.com/junegunn/fzf ~/.vim/pack/plugins/start/fzf
-git clone http://github.com/junegunn/fzf.vim ~/.vim/pack/plugins/start/fzf.vim
+clone_plugin "https://github.com/junegunn/fzf" "$HOME/.vim/pack/plugins/start/fzf"
+clone_plugin "https://github.com/junegunn/fzf.vim" "$HOME/.vim/pack/plugins/start/fzf.vim"
 
-# vim help config
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-airline/doc" -c q
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-pencil/doc" -c q
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-surround/doc" -c q
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-commentary/doc" -c q
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-fugitive/doc" -c q
-vim -u NONE -c "helptags ~/.vim/pack/plugins/start/vim-gitgutter/doc" -c q
+# vim help config - generate helptags for plugins with doc directories
+echo "Generating vim helptags..."
+for plugin_doc in ~/.vim/pack/plugins/start/*/doc; do
+    if [ -d "$plugin_doc" ]; then
+        vim -u NONE -c "helptags $plugin_doc" -c q 2>/dev/null || true
+    fi
+done
 
 # NEOVIM
 # ######
@@ -225,3 +282,6 @@ fi
 #
 # There's probably a way to automate all of this without it feeling
 # insecure?
+
+echo ""
+echo "Bootstrap complete!"

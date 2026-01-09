@@ -1,0 +1,19 @@
+# Global Lima VM defaults - applies to ALL VMs
+# This file is part of the dotfiles repo and gets symlinked to ~/.lima/_config/default.yaml
+#
+# Note: Ubuntu LTS image is set in override.yaml (default.yaml can't override builtin images)
+
+provision:
+  - mode: user
+    script: |
+      #!/bin/bash
+      set -eux -o pipefail
+      # Only run if dotfiles not already set up
+      if [ ! -d "$HOME/.cfg" ]; then
+        echo "Setting up dotfiles..."
+        curl -Lks https://raw.githubusercontent.com/jimray/config/main/.dotfiles-init.sh -o /tmp/dotfiles-init.sh
+        chmod +x /tmp/dotfiles-init.sh
+        echo "y" | /tmp/dotfiles-init.sh
+      else
+        echo "Dotfiles already configured, skipping init"
+      fi
