@@ -2,12 +2,13 @@
 set -e
 
 # This is an evolving record of setting up a macOS or unix box
-# It most mostly serves as as record keeping and notes to myself
-# Before running this, init the dotfiles setup
-# curl -Lks https://gist.githubusercontent.com/jimray/dad38720ddcfbca58e8f5a1ac1af00d7/raw | /bin/sh
+# It mostly serves as record keeping and notes to myself
 #
-# When setting up a new Mac, you should be able to run the above script from the built-in Terminal app
-# and then never have to touch that again as iTerm 2 is one of the apps that gets gets installed
+# Before running this, init the dotfiles setup:
+# curl -Lks https://raw.githubusercontent.com/jimray/config/main/.dotfiles-init.sh | /bin/sh
+#
+# When setting up a new Mac (or Lima VM), run the above command from the built-in Terminal
+# and then never have to touch that again as iTerm 2 is one of the apps that gets installed
 # via homebrew. Neat!
 
 # Operating system specific configurations
