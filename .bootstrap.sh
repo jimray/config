@@ -186,10 +186,6 @@ fi
 
 echo "Starting non-OS specific configuration"
 
-# Projects go in the Projects directory
-echo "Adding a Projects directory"
-mkdir -p ~/Projects
-
 # TMUX
 #####
 
