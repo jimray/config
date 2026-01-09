@@ -1,12 +1,7 @@
 # Global Lima VM defaults - applies to ALL VMs
 # This file is part of the dotfiles repo and gets symlinked to ~/.lima/_config/default.yaml
-
-# Use Ubuntu LTS (not interim releases)
-images:
-  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img"
-    arch: "x86_64"
-  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
-    arch: "aarch64"
+#
+# Note: Ubuntu LTS image is set in override.yaml (default.yaml can't override builtin images)
 
 provision:
   - mode: user
