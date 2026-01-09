@@ -169,16 +169,14 @@ if [ "$(uname)" = "Linux" ]; then
     fi
 
     # Set zsh as default shell (if not already)
-    current_shell=$(getent passwd "$USER" | cut -d: -f7)
-    zsh_path=$(which zsh)
-    if [ "$current_shell" != "$zsh_path" ]; then
+    if [ "$SHELL" != "$(which zsh)" ]; then
         echo "Setting zsh as default shell..."
         # Add zsh to /etc/shells if not present
-        if ! grep -q "$zsh_path" /etc/shells; then
-            echo "$zsh_path" | sudo tee -a /etc/shells
+        if ! grep -q "$(which zsh)" /etc/shells; then
+            which zsh | sudo tee -a /etc/shells
         fi
-        # Change login shell
-        sudo chsh -s "$zsh_path" "$USER"
+        # Use sudo to change shell non-interactively
+        sudo chsh -s "$(which zsh)" "$USER"
     fi
 
     echo "Finished with Linux configuration"

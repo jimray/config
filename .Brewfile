@@ -46,6 +46,7 @@ brew "yt-dlp"         # download any video from anywhere
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`
 cask "bbedit"
+cask "claude"
 cask "iterm2"
 cask "nova"
 cask "obsidian"
@@ -53,6 +54,7 @@ cask "raycast"
 cask "safari-technology-preview"
 cask "utm"
 cask "visual-studio-code"
+cask "vlc"
 
 # fonts!
 cask "font-sauce-code-pro-nerd-font"
