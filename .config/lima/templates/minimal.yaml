@@ -1,5 +1,5 @@
 # Minimal Lima VM template
-# Usage: limactl create --name myvm ~/.lima/templates/minimal.yaml
+# Usage: limactl create --name myvm ~/.config/lima/templates/minimal.yaml
 
 minimumLimaVersion: "2.0.0"
 

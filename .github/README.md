@@ -77,7 +77,7 @@ brew install lima
 
 ```sh
 # Create a VM with minimal config (recommended)
-limactl create --name myvm ~/.lima/templates/minimal.yaml
+limactl create --name myvm ~/.config/lima/templates/minimal.yaml
 limactl start myvm
 
 # Or use Lima's default template (verbose config)
