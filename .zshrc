@@ -87,6 +87,11 @@ fi
 # github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# mise version manager (cross-platform)
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
+
 # Aliases
 # #######
 

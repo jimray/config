@@ -1,7 +1,2 @@
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
-
-# activate mise
-if [ -x "$(command -v mise)" ]; then
-  eval "$(mise activate zsh)"
-fi
