@@ -168,6 +168,9 @@ if [ "$(uname)" = "Linux" ]; then
         curl -sS https://starship.rs/install.sh | sh -s -- -y
     fi
 
+    # install mise
+    curl https://mise.run | sh
+
     # Set zsh as default shell (if not already)
     # Check actual login shell from /etc/passwd, not $SHELL env var
     current_shell=$(getent passwd "$USER" | cut -d: -f7)

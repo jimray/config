@@ -1,4 +1,8 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
       "Bash(done)",
@@ -15,7 +19,7 @@
       "WebSearch",
       "WebFetch(domain:github.com)"
     ],
-    "deny": [
+    "ask": [
       "Bash(git push:*)",
       "Bash(rm -rf:*)"
     ]
@@ -25,10 +29,7 @@
     "github@claude-plugins-official": true,
     "figma@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true
-  },
-  "attribution": {
-    "commit": "",
-    "pr": ""
+    "gopls-lsp@claude-plugins-official": true,
+    "frontend-design@claude-code-plugins": true
   }
 }

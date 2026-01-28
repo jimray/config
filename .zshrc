@@ -139,8 +139,6 @@ if ! command -v python &> /dev/null; then
     alias python='python3'
 fi
 
-# Added by Antigravity
-export PATH="/Users/jimray/.antigravity/antigravity/bin:$PATH"
 # Lima BEGIN
 # Make sure iptables and mount.fuse3 are available
 PATH="$PATH:/usr/sbin:/sbin"
