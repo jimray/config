@@ -47,6 +47,7 @@ brew "yt-dlp"         # download any video from anywhere
 # Upgrade with `brew cu -a --interactive`
 cask "bbedit"
 cask "claude"
+cask "handbrake-app"
 cask "iterm2"
 cask "lolgato"
 cask "nova"
