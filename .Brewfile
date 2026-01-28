@@ -48,6 +48,7 @@ brew "yt-dlp"         # download any video from anywhere
 cask "bbedit"
 cask "claude"
 cask "iterm2"
+cask "lolgato"
 cask "nova"
 cask "obsidian"
 cask "raycast"
