@@ -63,7 +63,7 @@ Plus cross-platform setup:
 - **Terminal**: tmux + iTerm2 (macOS)
 - **Search**: fzf, ripgrep, eza
 
-## Lima Virtual Machines
+## Dev Virtual Machines with Lima
 
 [Lima](https://lima-vm.io/) provides Linux VMs on macOS (and Linux). The included `.lima/_config/default.yaml` automatically provisions dotfiles on every new VM.
 
@@ -120,6 +120,99 @@ Then restart the VM for changes to take effect:
 
 ```sh
 limactl stop myvm && limactl start myvm
+```
+### Project-Aware VM Execution
+
+The `vm` shell function enables running commands in a Lima VM without explicitly SSHing. It looks for a `.vm` file in your current directory to determine which VM to use.
+
+#### Setup
+
+Add to your `.zfunc/vm` file:
+```bash
+vm() {
+    local vm_name
+    local vm_file=".vm"
+
+    # Look for .vm file in current directory
+    if [[ -f "$vm_file" ]]; then
+        vm_name=$(cat "$vm_file")
+        echo "→ Using VM: $vm_name"
+    else
+        # Get list of running VMs
+        local vms=($(limactl list -q))
+
+        if [[ ${#vms[@]} -eq 0 ]]; then
+            echo "No Lima VMs found. Create one with: limactl create"
+            return 1
+        fi
+
+        # Show available VMs
+        echo "Available VMs:"
+        for i in {1..${#vms[@]}}; do
+            echo "  $i) ${vms[$i]}"
+        done
+
+        # Prompt for selection
+        echo -n "Which VM? (number or name): "
+        read selection
+
+        # Handle numeric selection
+        if [[ "$selection" =~ ^[0-9]+$ ]] && [[ $selection -ge 1 ]] && [[ $selection -le ${#vms[@]} ]]; then
+            vm_name="${vms[$selection]}"
+        else
+            vm_name="$selection"
+        fi
+
+        # Ask if they want to save it
+        echo -n "Save '$vm_name' to .vm file? (y/n): "
+        read save_choice
+
+        if [[ "$save_choice" =~ ^[Yy] ]]; then
+            echo "$vm_name" > "$vm_file"
+            echo "Saved to $vm_file"
+        fi
+    fi
+
+    # Execute the command
+    limactl shell "$vm_name" "$@"
+}
+```
+
+Then in `.zshrc`:
+```bash
+# Add .zfunc to fpath
+fpath=(~/.zfunc $fpath)
+
+# Autoload the vm function
+autoload -Uz vm
+```
+
+#### Usage
+```bash
+# In a project directory with a .vm file
+vm claude              # Run Claude in the associated VM
+vm npm test           # Run npm test in the VM
+vm git status         # Run git in the VM
+
+# First time in a new project (no .vm file)
+vm ls
+# → Available VMs:
+#   1) dev
+#   2) ai-sandbox
+# Which VM? (number or name): 2
+# Save 'ai-sandbox' to .vm file? (y/n): y
+```
+
+This pattern enables sandboxed execution of AI tools (like Claude Code) or experimental code without replicating your entire development environment in the VM:
+
+- **Security**: AI tools run isolated from your SSH keys, API tokens, and credentials
+- **Flexibility**: Use your local editor, git, and familiar tools
+- **Progressive isolation**: Start minimal, add VM-specific tooling only as needed
+- **Low friction**: The `.vm` file acts as a simple project-level configuration
+
+Add `.vm` to your global gitignore since VM names are machine-specific:
+```bash
+echo ".vm" >> ~/.gitignore
 ```
 
 ## Local Overrides

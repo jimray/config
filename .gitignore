@@ -53,3 +53,7 @@ yarn-error.log*
 ##########
 env/
 venv/
+
+# Virtual Machine #
+###################
+.vm

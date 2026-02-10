@@ -23,8 +23,13 @@ zstyle ':completion:*' menu select
 alias config='$(which git) --git-dir=$HOME/.cfg --work-tree=$HOME'
 
 # Load zsh functions
-for file in ~/.zfunc/**; do
-  autoload $file
+# Add .zfunc to fpath
+fpath=(~/.zfunc $fpath)
+
+# Autoload all functions in .zfunc
+# This looks for files (not directories) in .zfunc
+for func in ~/.zfunc/*(:t); do
+    autoload -Uz $func
 done
 
 # ctrl-leftarrow and ctrl-right arrow move word by word

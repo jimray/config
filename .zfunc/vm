@@ -1,0 +1,48 @@
+# In your .zshrc
+vm() {
+    local vm_name
+    local vm_file=".vm"
+
+    # Look for .vm file in current directory
+    if [[ -f "$vm_file" ]]; then
+        vm_name=$(cat "$vm_file")
+        echo "→ Using VM: $vm_name"
+    else
+        # Get list of running VMs
+        local vms=($(limactl list -q))
+
+        if [[ ${#vms[@]} -eq 0 ]]; then
+            echo "No Lima VMs found. Create one with: limactl create"
+            return 1
+        fi
+
+        # Show available VMs
+        echo "Available VMs:"
+        for i in {1..${#vms[@]}}; do
+            echo "  $i) ${vms[$i]}"
+        done
+
+        # Prompt for selection
+        echo -n "Which VM? (number or name): "
+        read selection
+
+        # Handle numeric selection
+        if [[ "$selection" =~ ^[0-9]+$ ]] && [[ $selection -ge 1 ]] && [[ $selection -le ${#vms[@]} ]]; then
+            vm_name="${vms[$selection]}"
+        else
+            vm_name="$selection"
+        fi
+
+        # Ask if they want to save it
+        echo -n "Save '$vm_name' to .vm file? (y/n): "
+        read save_choice
+
+        if [[ "$save_choice" =~ ^[Yy] ]]; then
+            echo "$vm_name" > "$vm_file"
+            echo "Saved to $vm_file"
+        fi
+    fi
+
+    # Execute the command
+    limactl shell "$vm_name" "$@"
+}
