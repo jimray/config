@@ -171,6 +171,10 @@ if [ "$(uname)" = "Linux" ]; then
     # install mise
     curl https://mise.run | sh
 
+    # install claude
+    curl -fsSL https://claude.ai/install.sh | bash
+
+
     # Set zsh as default shell (if not already)
     # Check actual login shell from /etc/passwd, not $SHELL env var
     current_shell=$(getent passwd "$USER" | cut -d: -f7)
