@@ -43,6 +43,11 @@ vm() {
         fi
     fi
 
-    # Execute the command
-    limactl shell "$vm_name" "$@"
+    if [[ "$1" == "claude" ]]; then
+      shift # remove 'claude' from args
+      limactl shell "$vm_name" claude --dangerously-skip-permissions "$@"
+    else
+      # Execute other commands normally
+      limactl shell "$vm_name" "$@"
+    fi
 }
