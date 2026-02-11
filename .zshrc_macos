@@ -22,12 +22,6 @@ fi
 autoload -Uz compinit
 compinit
 
-# if MacVim is installed use that instead
-if [ -e /Applications/MacVim.app/ ]; then
-  alias vim='/Applications/MacVim.app/Contents/bin/vim'
-  alias vi='/Applications/MacVim.app/Contents/bin/vim'
-fi
-
 if [ -e /Applications/Nova.app/ ]; then
   alias coda='nova'
 fi
