@@ -22,6 +22,7 @@ This will:
 |------|---------|
 | `.zshrc` | Main shell config (sources OS-specific files) |
 | `.zshrc_macos` / `.zshrc_linux` | OS-specific shell settings |
+| `.zfunc` | Shell functions, like `vm` (see below) |
 | `.vimrc` | Vim/Neovim configuration |
 | `.tmux.conf` | tmux with plugins (resurrect, continuum, vim-navigator) |
 | `.gitconfig` | Git aliases and settings |
@@ -94,12 +95,12 @@ limactl create --name myvm
 limactl start myvm
 ```
 
-# Shell into the VM
+Shell into the VM
 ```sh
 limactl shell myvm
 ```
 
-# Stop and delete
+Stop and delete
 ```sh
 limactl stop myvm
 ```
@@ -108,7 +109,7 @@ limactl stop myvm
 limactl delete myvm
 ```
 
-# List all VMs
+List all VMs
 ```sh
 limactl list
 ```
@@ -141,84 +142,24 @@ limactl stop myvm && limactl start myvm
 ```
 ### Project-Aware VM Execution
 
-The `vm` shell function enables running commands in a Lima VM without explicitly SSHing. It looks for a `.vm` file in your current directory to determine which VM to use.
+A `vm` shell function enables running commands in a Lima VM without explicitly SSHing. It looks for a `.vm` file in your current directory to determine which VM to use (or asks which vm to use and optionally saves it to `.vm`).
 
-#### Setup
-
-Add to your `.zfunc/vm` file:
-```bash
-vm() {
-    local vm_name
-    local vm_file=".vm"
-
-    # Look for .vm file in current directory
-    if [[ -f "$vm_file" ]]; then
-        vm_name=$(cat "$vm_file")
-        echo "→ Using VM: $vm_name"
-    else
-        # Get list of running VMs
-        local vms=($(limactl list -q))
-
-        if [[ ${#vms[@]} -eq 0 ]]; then
-            echo "No Lima VMs found. Create one with: limactl create"
-            return 1
-        fi
-
-        # Show available VMs
-        echo "Available VMs:"
-        for i in {1..${#vms[@]}}; do
-            echo "  $i) ${vms[$i]}"
-        done
-
-        # Prompt for selection
-        echo -n "Which VM? (number or name): "
-        read selection
-
-        # Handle numeric selection
-        if [[ "$selection" =~ ^[0-9]+$ ]] && [[ $selection -ge 1 ]] && [[ $selection -le ${#vms[@]} ]]; then
-            vm_name="${vms[$selection]}"
-        else
-            vm_name="$selection"
-        fi
-
-        # Ask if they want to save it
-        echo -n "Save '$vm_name' to .vm file? (y/n): "
-        read save_choice
-
-        if [[ "$save_choice" =~ ^[Yy] ]]; then
-            echo "$vm_name" > "$vm_file"
-            echo "Saved to $vm_file"
-        fi
-    fi
-
-    # Execute the command
-    limactl shell "$vm_name" "$@"
-}
-```
-
-Then in `.zshrc`:
-```bash
-# Add .zfunc to fpath
-fpath=(~/.zfunc $fpath)
-
-# Autoload the vm function
-autoload -Uz vm
-```
+It even works for interactive tools like Claude.
 
 #### Usage
 ```bash
-# In a project directory with a .vm file
-vm claude              # Run Claude in the associated VM
-vm npm test           # Run npm test in the VM
-vm git status         # Run git in the VM
-
 # First time in a new project (no .vm file)
 vm ls
 # → Available VMs:
-#   1) dev
-#   2) ai-sandbox
+#   1) work
+#   2) personal
 # Which VM? (number or name): 2
-# Save 'ai-sandbox' to .vm file? (y/n): y
+# Save 'personal' to .vm file? (y/n): y
+
+# In a project directory with a .vm file
+vm claude             # Run Claude in the associated VM
+vm npm test           # Run npm test in the VM
+vm git status         # Run git in the VM
 ```
 
 This pattern enables sandboxed execution of AI tools (like Claude Code) or experimental code without replicating your entire development environment in the VM:
