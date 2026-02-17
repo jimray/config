@@ -1,0 +1,9 @@
+# combine nvim with fzf
+vf() {
+  if ! command -v bat &>/dev/null; then
+    echo "vf: bat is not installed" >&2
+    return 1
+  fi
+  local file
+  file=$(fzf --exact --preview 'bat --color=always {}') && nvim "$file"
+}

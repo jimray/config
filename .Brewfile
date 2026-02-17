@@ -24,6 +24,7 @@ brew "git"
 brew "git-lfs"
 
 # handy tools
+brew "bat"            # better cat, with syntax highlighting
 brew "eza"            # better ls, replaced exa
 brew "ffmpeg"         # video swiss army knife
 brew "fzf"            # fuzzy finder

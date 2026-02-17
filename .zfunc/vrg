@@ -1,0 +1,18 @@
+# combine fzf, rg, and nvim
+# Searches the contents of a directory (via rigrep) and
+# shows a preview of the file (via fzf and bat)
+vrg() {
+  if ! command -v rg &>/dev/null; then
+    echo "vrg: rg is not installed" >&2
+    return 1
+  fi
+  if ! command -v bat &>/dev/null; then
+    echo "vrg: bat is not installed" >&2
+    return 1
+  fi
+  local result file line
+  result=$(rg --line-number "" | fzf --preview 'bat --color=always --highlight-line {2} {1}' --delimiter=:)
+  file=$(echo "$result" | cut -d: -f1)
+  line=$(echo "$result" | cut -d: -f2)
+  [[ -n "$file" ]] && nvim +"$line" "$file"
+}
