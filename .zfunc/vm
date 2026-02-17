@@ -1,4 +1,7 @@
 # In your .zshrc
+# Run a function in a lima virtual machine
+# Usage: vm claude
+# If .vm does not exist in a directory, it will ask which vm to use
 vm() {
     local vm_name
     local vm_file=".vm"
