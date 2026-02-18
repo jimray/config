@@ -42,6 +42,7 @@ brew "tmux"           # terminal muxer of course
 brew "uv"             # less bad python tooling
 brew "wget"           # because some things you can't curl
 brew "yt-dlp"         # download any video from anywhere
+brew "zoxide"         # better cd with the z command
 
 # Mac apps, sideloaded
 # Upgrade with `brew cu -a --interactive`

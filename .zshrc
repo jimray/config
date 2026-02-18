@@ -137,3 +137,6 @@ fi
 PATH="$PATH:/usr/sbin:/sbin"
 export PATH
 # Lima END
+
+# init zoxide
+eval "$(zoxide init zsh)"
