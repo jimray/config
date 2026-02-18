@@ -1,0 +1,22 @@
+# start a simple HTTP server and serve the current directory at 8000
+# alias serve='python3 -m http.server 8000'
+serve() {
+    local port="${1:-8000}"
+    local max_port=$((port + 10))
+
+    while [[ $port -le $max_port ]]; do
+        if lsof -i ":$port" &>/dev/null; then
+            echo "Port $port in use, trying $((port + 1))..."
+            ((port++))
+        else
+            echo "Starting server at http://localhost:$port"
+            python3 -m http.server "$port" --bind localhost
+            break
+        fi
+    done
+
+    if [[ $port -gt $max_port ]]; then
+        echo "Could not find available port between ${1:-8000} and $max_port"
+        return 1
+    fi
+}
