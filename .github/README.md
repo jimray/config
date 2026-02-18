@@ -62,7 +62,45 @@ Plus cross-platform setup:
 - **Shell**: zsh + [Starship](https://starship.rs/) prompt
 - **Editor**: Neovim (with vim as fallback)
 - **Terminal**: tmux + iTerm2 (macOS)
-- **Search**: fzf, ripgrep, eza
+- **Search**: fzf, ripgrep
+- **File listing**: eza
+- **File preview**: bat
+- **Directory jumping**: zoxide
+
+## CLI Customizations
+
+### Navigation
+
+[zoxide](https://github.com/ajeetdsouza/zoxide) replaces `cd` with a frecency-based directory jumper. Use `z` instead of `cd` — it learns your most-visited directories and lets you jump with partial names.
+
+### File Listing
+
+`eza` replaces `ls` with icons, git status, and better formatting. Several aliases are configured:
+
+| Alias | Description |
+|-------|-------------|
+| `ls` | Default listing with icons |
+| `ll` | Long format with git status, timestamps, and groups |
+| `lt` | Tree view |
+| `lg` | Grid view |
+| `xls` | Escape hatch to system `ls` |
+
+### Finding and Opening Files
+
+Two functions in `.zfunc/` combine ripgrep, fzf, bat, and Neovim into a fast file-picking workflow. Both require `bat` for previews.
+
+**`vf`** — fuzzy file picker with preview. Launches fzf with a syntax-highlighted bat preview of each file; opens the selection in Neovim.
+
+**`vrg`** — search file contents, preview matches, open at the right line. Runs ripgrep across the current directory, passes results to fzf with bat highlighting the matched line, then opens the file in Neovim at the correct line number. Useful as a terminal-native alternative to an IDE's global search.
+
+### Development Server
+
+**`serve [port]`** — starts a Python HTTP server for the current directory, defaulting to port 8000. If that port is taken, it increments automatically up to 10 times before giving up.
+
+```bash
+serve        # starts at 8000, or next available
+serve 3000   # starts at 3000, or next available
+```
 
 ## Dev Virtual Machines with Lima
 
