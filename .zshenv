@@ -3,7 +3,13 @@ if [ -d "$HOME/.local/bin" ]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Version manager (mise reads .tool-versions)
+# Bootstrap Homebrew early so its bins are available
+# Here instead of .zshrc_macos for mise
+if [ -f "/opt/homebrew/bin/brew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Version manager
 if command -v mise &> /dev/null; then
     eval "$(mise activate zsh)"
 fi

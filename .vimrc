@@ -113,6 +113,15 @@ augroup pencil
   let g:pencil#conceallevel = 0
 augroup END
 
+" fzf.vim
+" Better searching when opening a file
+" ,f to search filenames in the working dir using fzf
+" ,b to search buffers with fzf
+" ,r to search within files using ripgrep
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>r :Rg<CR>
+
 " ---------------------
 " END PLUGIN STUFF HERE
 
