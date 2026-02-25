@@ -41,6 +41,7 @@ brew "tlrc"           # better manpages, use with `tldr $COMMAND`
 brew "tmux"           # terminal muxer of course
 brew "uv"             # less bad python tooling
 brew "wget"           # because some things you can't curl
+brew "websocat"       # curl for websockets
 brew "yt-dlp"         # download any video from anywhere
 brew "zoxide"         # better cd with the z command
 
