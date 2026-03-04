@@ -5,5 +5,5 @@ vf() {
     return 1
   fi
   local file
-  file=$(fzf --exact --preview 'bat --color=always {}') && nvim "$file"
+  file=$(fzf --exact --query "$1" --preview 'bat --color=always {}') && nvim "$file"
 }
