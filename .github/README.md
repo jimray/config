@@ -32,6 +32,7 @@ This will:
 | `.Brewfile.personal` | Homebrew packages (personal) |
 | `.bootstrap.sh` | Full system setup script |
 | `.lima/_config/default.yaml` | Auto-provisions dotfiles in Lima VMs |
+| `.tool-versions` | mise-managed runtime versions |
 
 ## Managing Dotfiles
 
@@ -56,6 +57,7 @@ Plus cross-platform setup:
 - tmux plugin manager (tpm)
 - Vim plugins (vim8-style packages)
 - Neovim symlinks
+- mise (runtime version manager)
 
 ## Key Tools
 
@@ -66,6 +68,7 @@ Plus cross-platform setup:
 - **File listing**: eza
 - **File preview**: bat
 - **Directory jumping**: zoxide
+- **Runtime versions**: mise
 
 ## CLI Customizations
 
@@ -100,6 +103,69 @@ Two functions in `.zfunc/` combine ripgrep, fzf, bat, and Neovim into a fast fil
 ```bash
 serve        # starts at 8000, or next available
 serve 3000   # starts at 3000, or next available
+```
+
+### Runtime Version Management with mise
+
+[mise](https://github.com/jdx/mise) (mise-en-place) manages runtime versions for Node.js, Go, Deno, and other tools. It reads `.tool-versions` in the current directory (or `$HOME`) to determine which versions to use, making it easy to keep consistent versions across machines and VMs.
+
+mise is activated in `.zshenv` so it's available in all shell sessions:
+
+```sh
+eval "$(mise activate zsh)"
+```
+
+The bootstrap script installs mise automatically on Linux and macOS.
+
+#### Common commands
+
+```sh
+# Install all runtimes listed in .tool-versions
+mise install
+
+# Install a specific tool at a specific version
+mise use --global node@lts
+mise use --global node@22.0.0
+
+# Check latest available version
+mise latest node
+mise latest go
+
+# List installed tools and their versions
+mise list
+
+# Check what's active in the current directory
+mise current
+```
+
+#### `.tool-versions`
+
+The `.tool-versions` file in `$HOME` defines the global defaults:
+
+```
+deno 2.6.0
+go 1.25.5
+node 25.2.1
+```
+
+You can also drop a `.tool-versions` in any project directory to override versions locally — mise will pick it up automatically when you `cd` into that directory.
+
+#### Installing Node in a Lima VM
+
+Since dotfiles are provisioned automatically in new VMs, `.tool-versions` will already be present. From inside the VM:
+
+```sh
+# Install everything in .tool-versions at once
+mise install
+
+# Or install Node specifically
+mise use --global node@lts
+```
+
+If you're still in a bash session (before `chsh` has switched you to zsh), activate mise manually first:
+
+```sh
+eval "$(~/.local/bin/mise activate bash)"
 ```
 
 ## Dev Virtual Machines with Lima
