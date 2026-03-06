@@ -125,6 +125,34 @@ nnoremap <leader>r :Rg<CR>
 " ---------------------
 " END PLUGIN STUFF HERE
 
+" Make quitting work like most apps: if there's a buffer open
+" Write (if modified) and close buffer, or quit if it's the last one
+function! SmartQuit()
+  if &modified
+    if expand('%') == ''
+      " No filename - prompt rather than silently fail
+      echohl WarningMsg
+      echo "No filename. Use :w <filename> to save first."
+      echohl None
+      return
+    endif
+    write
+  endif
+  if len(getbufinfo({'buflisted': 1})) > 1
+    bdelete
+  else
+    quit
+  endif
+endfunction
+
+" override the default :wq and :q to call SmartQuit
+cnoreabbrev wq call SmartQuit()
+cnoreabbrev q call SmartQuit()
+
+cabbrev wq call SmartQuit()
+cabbrev q call SmartQuit()
+
+
 " Turn syntax highlighting on
 syntax enable
 
