@@ -121,7 +121,7 @@ if [ "$(uname)" = "Linux" ]; then
         sudo apt-get -y update
 
         # Install core packages (eza installed separately below)
-        sudo apt-get -y install git zsh vim tmux ripgrep fzf jq neovim wget curl gpg
+        sudo apt-get -y install git zsh vim tmux ripgrep fzf jq neovim wget curl gpg libatomic1
 
         # Install eza (modern ls replacement) - requires adding the official repository
         # https://github.com/eza-community/eza/blob/main/INSTALL.md
