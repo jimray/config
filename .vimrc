@@ -66,10 +66,10 @@ set splitright
 
 " Buffers
 set hidden
-" ctrl+n, ctrl+p to go back and forth between buffers
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
-nnoremap <C-W> :bd<CR>
+" [b / ]b to navigate buffers, ,x to close current buffer
+nnoremap [b :bprev<CR>
+nnoremap ]b :bnext<CR>
+nnoremap <leader>x :bd<CR>
 
 " Plugins
 " #######

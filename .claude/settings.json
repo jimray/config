@@ -30,7 +30,21 @@
     "defaultMode": "plan"
   },
   "enabledPlugins": {
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "learning-opportunities@learning-opportunities": true,
+    "learning-opportunities-auto@learning-opportunities": true,
+    "orient@learning-opportunities": true
   },
+  "extraKnownMarketplaces": {
+    "learning-opportunities": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/DrCatHicks/learning-opportunities.git"
+      }
+    }
+  },
+  "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true
 }

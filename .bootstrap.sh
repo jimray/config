@@ -77,6 +77,12 @@ if [ "$(uname)" = "Darwin" ]; then
     # Finder always displays folders first when sorting by name
     defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"
 
+    # Vim-ish movement between spaces
+    # Move left a space: cmd+ctrl+h
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 79 "{enabled=1;value={parameters=(104,4,1310720);type=standard;};}"
+    # Move right a space: cmd+ctrl+l
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 81 "{enabled=1;value={parameters=(108,37,1310720);type=standard;};}"
+
     # Set up Safari
     # show the debug menu
     defaults write com.apple.Safari IncludeDebugMenu -boolean true
