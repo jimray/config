@@ -1,0 +1,7 @@
+# zd - fuzzy cd using fd and fzf
+zd() {
+  local dir
+  dir=$(fd --type d --hidden --exclude .git --exclude .Trash --exclude Library --exclude node_modules 2>/dev/null \
+    | fzf --query "${1:-}" --preview 'eza --tree --level 2 --icons {} 2>/dev/null || ls {}')
+  [[ -n "$dir" ]] && cd "$dir"
+}

@@ -1,4 +1,5 @@
 # combine nvim with fzf
+# Open nvim with a fuzzy search finder
 vf() {
   if ! command -v bat &>/dev/null; then
     echo "vf: bat is not installed" >&2

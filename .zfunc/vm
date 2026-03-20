@@ -1,7 +1,12 @@
-# In your .zshrc
 # Run a function in a lima virtual machine
+# Handy for isolating functions outside of the host (AI agents)
+# or for just running one without having to ssh in
+#
 # Usage: vm claude
+# Usage: vm node dev
+#
 # If .vm does not exist in a directory, it will ask which vm to use
+# and optionally save that choice for future usage
 vm() {
     local vm_name
     local vm_file=".vm"

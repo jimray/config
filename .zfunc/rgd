@@ -1,0 +1,7 @@
+# rgd - search file contents with rg, cd to matching file's directory
+rgd() {
+  local file dir
+  file=$(rg --files-with-matches --hidden --glob '!.git' --glob '!.Trash' --glob '!Library' --glob '!node_modules' "${1:-}" 2>/dev/null \
+    | fzf --query "${1:-}" --preview 'bat --color=always {}')
+  [[ -n "$file" ]] && dir=$(dirname "$file") && cd "$dir"
+}

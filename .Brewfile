@@ -26,6 +26,7 @@ brew "git-lfs"
 # handy tools
 brew "bat"            # better cat, with syntax highlighting
 brew "eza"            # better ls, replaced exa
+brew "fd"             # better find, faster, respects .gitignore
 brew "ffmpeg"         # video swiss army knife
 brew "fzf"            # fuzzy finder
 brew "jq"             # CLI json tool
@@ -49,9 +50,10 @@ brew "zoxide"         # better cd with the z command
 # Upgrade with `brew cu -a --interactive`
 cask "bbedit"
 cask "claude"
+cask "contexts"     # better window switching contexts.co
 cask "handbrake-app"
 cask "iterm2"
-cask "lolgato"
+cask "lolgato"      # automatically turn on the lights when you start video conferencing
 cask "nova"
 cask "obsidian"
 cask "raycast"
