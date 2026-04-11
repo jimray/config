@@ -14,7 +14,7 @@
 [fetch]
 	prune = true
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = /Users/jimray/.gitignore
 	editor = /usr/bin/vim
 	ignorecase = true
 

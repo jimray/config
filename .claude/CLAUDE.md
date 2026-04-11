@@ -41,3 +41,7 @@ When building apps using the AT Protocol and JavaScript or Typescript, please us
 
 - https://github.com/bluesky-social/atproto/tree/main/packages/lex/lex
 - https://github.com/bluesky-social/atproto/tree/main/packages/lex/lex-password-session
+
+For OAuth based workflows, here is the canonical Node implementation:
+
+- https://github.com/bluesky-social/atproto/tree/main/packages/oauth/oauth-client-node

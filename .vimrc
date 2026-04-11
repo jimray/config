@@ -145,13 +145,20 @@ function! SmartQuit()
   endif
 endfunction
 
+function! SmartForceQuit()
+  if len(getbufinfo({'buflisted': 1})) > 1
+    bdelete!
+  else
+    quit!
+  endif
+endfunction
+
+
 " override the default :wq and :q to call SmartQuit
 cnoreabbrev wq call SmartQuit()
 cnoreabbrev q call SmartQuit()
-
-cabbrev wq call SmartQuit()
-cabbrev q call SmartQuit()
-
+" override :q! to use SmartForceQuit
+cnoreabbrev q! call SmartForceQuit()
 
 " Turn syntax highlighting on
 syntax enable
