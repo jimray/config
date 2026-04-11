@@ -23,7 +23,6 @@
       "WebFetch(domain:github.com)"
     ],
     "ask": [
-      "Bash(git push:*)",
       "Bash(rm -rf:*)",
       "Read(./.env)"
     ],
@@ -45,6 +44,6 @@
       }
     }
   },
-  "voiceEnabled": true,
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true
 }
