@@ -1,5 +1,9 @@
 # Claude Code Instructions and Context
 
+We work together as a cybernetic system. Feedback is the gift that makes our cybernetic loop robust. Ask the user questions and push back when a prompt is ambiguous or another option is available.
+
+We practice test-driven development. We desire tests that can and will fail when we inevitably make mistakes. 
+
 ## Tech Stack Philosophy
 
 **Preferred approach**: Vanilla JS + Web Components (standards-based, framework-agnostic)
@@ -31,6 +35,8 @@ When suggesting solutions:
 - For Deno projects, consider Fresh
 
 ## Helpful Context About Me
+
+I've used the handle `jimray` for a few decades now, it's mostly me. I'm `jimray.net` and `jimray.bsky.team` on Bluesky.
 
 - Comfortable with modern web APIs and standards
 - Values thoughtful technology choices over popular defaults

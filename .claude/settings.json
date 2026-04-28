@@ -23,10 +23,40 @@
       "WebFetch(domain:github.com)"
     ],
     "ask": [
-      "Bash(rm -rf:*)",
       "Read(./.env)"
     ],
-    "defaultMode": "plan"
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(pulumi stack rm *)",
+      "Bash(pulumi destroy *)",
+      "Bash(pulumi up --yes *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push * --force *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fd *)",
+      "Bash(aws s3 rb *)",
+      "Bash(aws s3 rm * --recursive *)",
+      "Bash(aws ec2 terminate-instances *)",
+      "Bash(aws rds delete-db-instance *)",
+      "Bash(kubectl delete *)",
+      "Bash(dropdb *)",
+      "Bash(brew install *)",
+      "Bash(git push *)",
+      "Bash(git push)",
+      "Bash(gh pr merge *)",
+      "Bash(gh -R * pr merge *)",
+      "Bash(gh pr close *)",
+      "Bash(gh -R * pr close *)",
+      "Bash(gh release create *)",
+      "Bash(gh -R * release create *)",
+      "Bash(gh release delete *)",
+      "Bash(gh -R * release delete *)",
+      "Bash(gh repo delete *)",
+      "Bash(gh -R * repo delete *)"
+    ]
   },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
@@ -45,5 +75,6 @@
     }
   },
   "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "defaultMode": "plan"
 }
