@@ -22,9 +22,6 @@
       "WebSearch",
       "WebFetch(domain:github.com)"
     ],
-    "ask": [
-      "Read(./.env)"
-    ],
     "deny": [
       "Bash(sudo *)",
       "Bash(rm -rf /)",
@@ -55,7 +52,9 @@
       "Bash(gh release delete *)",
       "Bash(gh -R * release delete *)",
       "Bash(gh repo delete *)",
-      "Bash(gh -R * repo delete *)"
+      "Bash(gh -R * repo delete *)",
+      "Read(.env)",
+      "Read(~/.ssh)"
     ]
   },
   "enabledPlugins": {
@@ -76,5 +75,6 @@
   },
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
-  "defaultMode": "plan"
+  "defaultMode": "plan",
+  "editorMode": "vim"
 }
