@@ -1,6 +1,6 @@
-# Setup homebrew. It's activate by .zshenv
-
-eval $($(brew --prefix)/bin/brew shellenv)
+# Homebrew is already activated by .zshenv, so there's no unguarded
+# `brew shellenv` here -- calling it before checking that brew exists just
+# errors out on a Mac that hasn't been bootstrapped yet.
 
 if [ -x "$(command -v brew)" ]; then
     # use homebrew sqlite
@@ -13,9 +13,8 @@ if [ -x "$(command -v brew)" ]; then
     export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 fi
 
-# initialise completions with ZSH's compinit
-autoload -Uz compinit
-compinit
+# compinit moved to .zshrc so macOS and Linux initialise completions
+# the same way, and so it always runs after ~/.zfunc joins fpath.
 
 if [ -e /Applications/Nova.app/ ]; then
   alias coda='nova'

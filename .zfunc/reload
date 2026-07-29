@@ -3,7 +3,9 @@ reload() {
     source ~/.zshrc
 
     # Unload and reload all autoloaded functions from .zfunc
-    for func in ~/.zfunc/*(:t); do
+    # Mirrors the glob in .zshrc: (N) so a missing dir isn't an error,
+    # [^_] so completion functions are left to compinit.
+    for func in ~/.zfunc/[^_]*(N:t); do
         unfunction $func 2>/dev/null
         autoload -Uz $func
     done

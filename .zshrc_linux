@@ -1,2 +1,15 @@
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+# Linux-specific shell setup.
+#
+# fzf keybindings/completions are handled in .zshrc now: fzf 0.48+ can emit
+# them itself with `fzf --zsh`. These paths are the Debian/Ubuntu package
+# layout and are only needed for older fzf, so they're guarded -- an
+# unguarded `source` of a missing file kills the rest of the rc file.
+if ! (( $+functions[fzf-file-widget] )); then
+  for _fzf_file in \
+    /usr/share/doc/fzf/examples/key-bindings.zsh \
+    /usr/share/doc/fzf/examples/completion.zsh
+  do
+    [ -f "$_fzf_file" ] && source "$_fzf_file"
+  done
+  unset _fzf_file
+fi

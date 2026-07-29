@@ -1,0 +1,43 @@
+# Update every vim8-style package under ~/.vim/pack/plugins/start/
+#
+# .bootstrap.sh only clones plugins that are missing, so re-running it never
+# updates anything. This does. Plugins are shallow clones, so the pull is
+# shallow too.
+#
+# Usage: vimup
+vimup() {
+  local plugin_dir="$HOME/.vim/pack/plugins/start"
+  local dir name before after
+
+  if [[ ! -d "$plugin_dir" ]]; then
+    echo "vimup: no plugins at $plugin_dir -- run ~/.bootstrap.sh first" >&2
+    return 1
+  fi
+
+  for dir in "$plugin_dir"/*(N/); do
+    [[ -d "$dir/.git" ]] || continue
+    name=${dir:t}
+    before=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
+
+    if ! git -C "$dir" pull --quiet --ff-only --depth 1 2>/dev/null; then
+      printf '  %-24s could not fast-forward (local changes?)\n' "$name"
+      continue
+    fi
+
+    after=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
+    if [[ "$before" == "$after" ]]; then
+      printf '  %-24s up to date\n' "$name"
+    else
+      printf '  %-24s %s -> %s\n' "$name" "$before" "$after"
+    fi
+  done
+
+  echo "Regenerating helptags..."
+  vim -u NONE --not-a-term \
+      -c 'set packpath^=~/.vim' \
+      -c 'silent! packloadall!' \
+      -c 'helptags ALL' \
+      -c q >/dev/null 2>&1
+
+  echo "Done. Restart vim to pick up changes."
+}

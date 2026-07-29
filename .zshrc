@@ -24,11 +24,16 @@ alias config='$(which git) --git-dir=$HOME/.cfg --work-tree=$HOME'
 
 # Load zsh functions
 # Add .zfunc to fpath
+# This MUST happen before compinit below, or completion files living in
+# .zfunc (like _poetry) never get registered.
 fpath=(~/.zfunc $fpath)
 
 # Autoload all functions in .zfunc
 # This looks for files (not directories) in .zfunc
-for func in ~/.zfunc/*(:t); do
+# (N) is the nullglob qualifier -- without it zsh throws "no matches found"
+# on a machine where ~/.zfunc doesn't exist yet.
+# Files starting with _ are completion functions; compinit handles those.
+for func in ~/.zfunc/[^_]*(N:t); do
     autoload -Uz $func
 done
 
@@ -36,9 +41,48 @@ done
 # bindkey ";5D" backward-word
 # bindkey ";5C" forward-word
 
-# Specific app setups
+# History
+# #######
+# Set explicitly rather than inheriting whatever the OS decided. macOS
+# /etc/zshrc gives you 1000 lines; Ubuntu sets no HISTFILE at all, which
+# means a Lima VM keeps NO history between sessions. Both are worse than
+# this, and a deep history makes fzf's ctrl-r actually worth using.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000          # lines kept in memory
+SAVEHIST=100000          # lines written to HISTFILE
 
-#pipx autocompletion
+setopt EXTENDED_HISTORY       # record timestamp and duration
+setopt INC_APPEND_HISTORY     # write as you go, not just on exit
+setopt SHARE_HISTORY          # share between concurrent shells (and tmux panes)
+setopt HIST_IGNORE_ALL_DUPS   # drop older duplicates of a repeated command
+setopt HIST_IGNORE_SPACE      # leading space keeps a command out of history
+setopt HIST_REDUCE_BLANKS     # tidy up whitespace before saving
+setopt HIST_VERIFY            # expand !! etc. onto the line instead of running it
+
+# Shell behavior
+setopt AUTO_CD                # `cd` is optional when typing a bare directory
+setopt INTERACTIVE_COMMENTS   # allow # comments when typing interactively
+setopt EXTENDED_GLOB          # **/, ^negation, (#qN) qualifiers
+setopt NO_BEEP
+
+# Completions
+# ###########
+# compinit lives here (not in .zshrc_macos) so both OSes behave the same.
+# It has to run AFTER the fpath line above. Ubuntu's /etc/zsh/zshrc runs its
+# own compinit before this file is even read, which is too early to see
+# ~/.zfunc -- skip_global_compinit in .zshenv turns that off.
+autoload -Uz compinit
+_zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+mkdir -p "${_zcompdump:h}"
+# Only do the (slow) full security check on the dump once a day
+if [[ -n "$_zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+unset _zcompdump
+
+#pipx autocompletion -- must come after compinit
 autoload -U bashcompinit
 bashcompinit
 
@@ -79,7 +123,31 @@ fi
 
 # fzf for fuzzy find
 # github.com/junegunn/fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if (( $+commands[fzf] )); then
+  # fzf 0.48+ ships its own keybindings and completions, so the old
+  # ~/.fzf.zsh that `$(brew --prefix)/opt/fzf/install` writes is no longer
+  # needed. Fall back to it for older fzf.
+  if fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)
+  elif [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+  fi
+
+  # Use fd for fzf's file list: it's faster than find and it respects
+  # .gitignore, so node_modules stops drowning out real results.
+  if (( $+commands[fd] )); then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+  fi
+
+  export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --info=inline'
+  # ctrl-t previews files, alt-c previews the directory it would cd into
+  (( $+commands[bat] )) && \
+    export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :200 {}'"
+  (( $+commands[eza] )) && \
+    export FZF_ALT_C_OPTS="--preview 'eza --tree --level 2 --icons {}'"
+fi
 
 # Aliases
 # #######
@@ -117,4 +185,9 @@ export PATH
 # Lima END
 
 # init zoxide
-eval "$(zoxide init zsh)"
+# Guarded like starship above -- an unguarded eval prints
+# "command not found: zoxide" on every single shell start on any machine
+# where it isn't installed.
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi

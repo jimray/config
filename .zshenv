@@ -1,3 +1,9 @@
+# Debian/Ubuntu's /etc/zsh/zshrc runs its own compinit, and it runs before
+# ~/.zshrc gets a chance to put ~/.zfunc on fpath -- so completions living
+# there are silently skipped. .zshenv is read first, which makes this the
+# only place the opt-out can go. .zshrc handles compinit itself.
+skip_global_compinit=1
+
 # ~/.local/bin is where utils like uv and claude live
 if [ -d "$HOME/.local/bin" ]; then
     export PATH="$HOME/.local/bin:$PATH"
