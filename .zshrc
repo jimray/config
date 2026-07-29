@@ -38,6 +38,20 @@ for func in ~/.zfunc/[^_]*(N:t); do
 done
 
 # ctrl-leftarrow and ctrl-right arrow move word by word
+# Keybindings
+# ###########
+# Use emacs-style line editing (ctrl-a, ctrl-e, ctrl-k, ctrl-w, ctrl-u...).
+#
+# This has to be explicit. zsh picks its default keymap by checking whether
+# $VISUAL/$EDITOR contains the substring "vi" -- and .zshenv sets both to
+# "nvim", which does. Without this line zsh silently starts in vi insert
+# mode, where ctrl-a is self-insert rather than beginning-of-line.
+#
+# Must come BEFORE the fzf setup further down: `bindkey -e` changes which
+# keymap `main` points at, so anything bound earlier (fzf's ctrl-r, ctrl-t)
+# would be left behind in the old keymap.
+bindkey -e
+
 # bindkey ";5D" backward-word
 # bindkey ";5C" forward-word
 
