@@ -249,6 +249,7 @@ clone_plugin "https://github.com/plasticboy/vim-markdown.git" "$HOME/.vim/pack/p
 clone_plugin "https://github.com/reedes/vim-pencil.git" "$HOME/.vim/pack/plugins/start/vim-pencil"
 clone_plugin "https://github.com/jiangmiao/auto-pairs.git" "$HOME/.vim/pack/plugins/start/auto-pairs"
 clone_plugin "https://github.com/adrian5/oceanic-next-vim" "$HOME/.vim/pack/plugins/start/oceanic-next-vim" "--depth 1"
+clone_plugin "https://github.com/shortcuts/no-neck-pain.nvim.git" "$HOME/.vim/pack/plugins/start/no-neck-pain.nvim"
 
 # fzf requires both the binary with the fzf plugin and an additional plugin :shrug:
 clone_plugin "https://github.com/junegunn/fzf" "$HOME/.vim/pack/plugins/start/fzf"
