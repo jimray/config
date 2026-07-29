@@ -91,3 +91,5 @@
 [user]
 	email = jimray@gmail.com
 	name = Jim Ray
+[branch]
+	autoSetupMerge = simple

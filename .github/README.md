@@ -2,6 +2,7 @@
 
 Personal configuration files for macOS, Linux, and FreeBSD. Uses a bare git repo approach so dotfiles live directly in `$HOME` without symlinks.
 
+
 ## Quick Start
 
 On a fresh machine, run:
