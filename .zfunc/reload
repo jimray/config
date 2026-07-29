@@ -1,14 +1,23 @@
+# Reload the shell config.
+#
+# This execs a fresh zsh rather than re-sourcing ~/.zshrc, because .zshrc is
+# full of init hooks that are only safe to run once per shell:
+#
+#   starship  - `starship init zsh` wraps any existing zle-keymap-select. Run
+#               it twice and it wraps its own wrapper, so the widget calls
+#               itself forever. Symptom is
+#               "starship_zle-keymap-select-wrapped:1: maximum nested
+#               function level reached; increase FUNCNEST?" the next time you
+#               change vi modes.
+#   zoxide    - re-registers its chpwd hook, so every cd is recorded twice
+#   fzf       - rebinds widgets over whatever is currently bound
+#   compinit  - rebuilds the completion dump for no reason
+#
+# exec keeps the working directory and replaces the process, so you get a
+# genuinely clean shell instead of one carrying two of everything.
+#
+# Usage: reload
 reload() {
-    # Reload main zsh config
-    source ~/.zshrc
-
-    # Unload and reload all autoloaded functions from .zfunc
-    # Mirrors the glob in .zshrc: (N) so a missing dir isn't an error,
-    # [^_] so completion functions are left to compinit.
-    for func in ~/.zfunc/[^_]*(N:t); do
-        unfunction $func 2>/dev/null
-        autoload -Uz $func
-    done
-
-    echo "Reloaded .zshrc and functions from .zfunc/"
+    echo "Reloading shell..."
+    exec zsh
 }
