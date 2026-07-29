@@ -26,6 +26,21 @@ set nobackup
 set nowb
 set noswapfile
 
+" ...but undo history surviving a close is worth keeping. With no swap and no
+" backup, quitting a file used to throw away every undo step with it.
+" Now `u` still works after reopening.
+if has('persistent_undo')
+  " nvim already defaults to a sensible per-user undodir (:h undodir), and
+  " its undo files aren't interchangeable with vim's, so let it use its own
+  if !has('nvim')
+    if !isdirectory($HOME . '/.vim/undo')
+      call mkdir($HOME . '/.vim/undo', 'p', 0700)
+    endif
+    set undodir=~/.vim/undo//
+  endif
+  set undofile
+endif
+
 " Comma leader
 let mapleader = ","
 
@@ -63,6 +78,36 @@ nnoremap <CR> :noh<CR><CR>
 " Split smarter
 set splitbelow
 set splitright
+
+" Keep a few lines of context visible above/below the cursor
+set scrolloff=3
+set sidescrolloff=5
+
+" Better command-line completion: show the menu, complete to the longest
+" common prefix first, then cycle
+set wildmenu
+set wildmode=longest:full,full
+set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*.o,*.pyc
+
+" gitgutter draws in the sign column. Pinning it open stops the whole buffer
+" from shifting left and right every time a line's git status changes.
+if has('patch-8.1.1564') || has('nvim')
+  set signcolumn=yes
+endif
+
+" Live preview of :s///  as you type it (nvim only)
+if has('nvim')
+  set inccommand=nosplit
+endif
+
+" Yank to / put from the system clipboard on demand. Deliberately NOT
+" `set clipboard=unnamedplus` -- that routes every yank through a clipboard
+" provider, which doesn't exist in a headless Lima VM.
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+y$
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
 
 " Buffers
 set hidden
@@ -154,11 +199,35 @@ function! SmartForceQuit()
 endfunction
 
 
-" override the default :wq and :q to call SmartQuit
-cnoreabbrev wq call SmartQuit()
-cnoreabbrev q call SmartQuit()
-" override :q! to use SmartForceQuit
-cnoreabbrev q! call SmartForceQuit()
+" Route :q / :q! / :wq / :x through the Smart* functions above.
+"
+" This used to be done with cnoreabbrev, which had two problems:
+"
+"   1. Abbreviations expand on ANY word boundary, not just at the start of a
+"      command. `:Rg q` searched for "call SmartQuit()" instead of "q".
+"   2. Typing :q! expanded the `q` as soon as the `!` was typed, producing
+"      `:call SmartQuit()!` -- so :q! WROTE the file (the opposite of what
+"      you asked for) and then failed with E488: Trailing characters.
+"
+" Checking the finished command line at <CR> time sidesteps both. Anything
+" that isn't an exact match is passed straight through untouched.
+"
+" Escape hatch: :qa, :qa!, :wqa, and :wq! are not intercepted and still do
+" the normal vim thing.
+function! s:SmartQuitCR() abort
+  if getcmdtype() !=# ':'
+    return "\<CR>"
+  endif
+  let l:cmd = getcmdline()
+  if l:cmd ==# 'q' || l:cmd ==# 'wq' || l:cmd ==# 'x'
+    return "\<C-u>call SmartQuit()\<CR>"
+  elseif l:cmd ==# 'q!'
+    return "\<C-u>call SmartForceQuit()\<CR>"
+  endif
+  return "\<CR>"
+endfunction
+
+cnoremap <expr> <CR> <SID>SmartQuitCR()
 
 " Turn syntax highlighting on
 syntax enable
