@@ -1,0 +1,47 @@
+# ripgrep config
+# Found via $RIPGREP_CONFIG_PATH, which .zshenv sets to this file.
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+#
+# One argument per line. No comments on the same line as an argument, and no
+# quoting -- ripgrep takes each line literally, so `--glob=!.git` is right
+# and `--glob='!.git'` would look for a directory named '.git' with quotes.
+
+# Case-insensitive until the pattern has a capital in it
+--smart-case
+
+# Follow symlinks
+--follow
+
+# Search hidden files (dotfiles are the whole point of this repo), but keep
+# out of the places that are never interesting
+--hidden
+--glob=!.git/
+--glob=!node_modules/
+--glob=!.venv/
+--glob=!venv/
+--glob=!vendor/
+--glob=!dist/
+--glob=!build/
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!package-lock.json
+--glob=!yarn.lock
+--glob=!pnpm-lock.yaml
+
+# macOS specific noise
+--glob=!.DS_Store
+--glob=!Library/
+--glob=!.Trash/
+
+# Readability
+--max-columns=200
+--max-columns-preview
+
+# Nicer colours than the defaults, roughly matching Oceanic Next
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:green
+--colors=path:style:bold
+--colors=match:fg:black
+--colors=match:bg:yellow
+--colors=match:style:nobold
