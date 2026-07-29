@@ -14,9 +14,12 @@
 [fetch]
 	prune = true
 [core]
-	excludesfile = /Users/jimray/.gitignore
-	editor = /usr/bin/vim
-	ignorecase = true
+	# ~ not an absolute path, so this works on Linux and FreeBSD too
+	excludesfile = ~/.gitignore
+	editor = nvim
+	# core.ignorecase is NOT set here on purpose. Git autodetects it per-repo
+	# at clone/init time. Forcing it globally to true means git misses
+	# case-only renames on case-sensitive filesystems (i.e. every Lima VM).
 
 [alias]
   # get the branch name, used later
@@ -88,8 +91,44 @@
 	helper = !gh auth git-credential
 [pull]
 	rebase = true
-[user]
-	email = jimray@gmail.com
-	name = Jim Ray
+
+# NOTE: do not add a [user] block here. Git applies the LAST value it sees,
+# and the [include] at the top of this file is expanded in place, so anything
+# set down here silently wins over ~/.gitconfig.local -- which defeats the
+# whole point of keeping work and personal identities separate.
+
 [branch]
 	autoSetupMerge = simple
+	# newest branches first in `git branch` (git 2.19+)
+	sort = -committerdate
+
+# Modern git defaults. All of these are built in -- no extra tools needed.
+[merge]
+	# zdiff3 shows the common ancestor in conflict markers, so you can see
+	# what each side actually changed instead of guessing (git 2.35+)
+	conflictStyle = zdiff3
+[diff]
+	# noticeably better hunk boundaries than the default myers algorithm
+	algorithm = histogram
+	# highlight moved lines in a different color than added/removed
+	colorMoved = default
+	mnemonicPrefix = true
+	renames = true
+[rerere]
+	# remember how you resolved a conflict and replay it next time.
+	# Pairs well with pull.rebase = true above.
+	enabled = true
+	autoupdate = true
+[rebase]
+	autosquash = true
+	# stash dirty worktree before rebasing, restore after
+	autostash = true
+	# keep stacked branches pointing at the right commits (git 2.38+)
+	updateRefs = true
+[commit]
+	# show the full diff in the commit message editor
+	verbose = true
+[column]
+	ui = auto
+[tag]
+	sort = -version:refname
