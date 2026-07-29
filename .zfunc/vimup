@@ -1,13 +1,26 @@
 # Update every vim8-style package under ~/.vim/pack/plugins/start/
 #
 # .bootstrap.sh only clones plugins that are missing, so re-running it never
-# updates anything. This does. Plugins are shallow clones, so the pull is
-# shallow too.
+# updates anything. This does.
+#
+# Uses fetch + an explicit --ff-only merge rather than `git pull`, because
+# pull reports failures unhelpfully and hides which of several very different
+# problems you actually have:
+#
+#   - the plugin was cloned on `master` and upstream renamed to `main`, so
+#     the tracked branch no longer exists (extremely common for plugins
+#     cloned more than a couple of years ago)
+#   - the checkout is on a detached HEAD, so there's nothing to fast-forward
+#   - there really are local modifications
+#
+# The previous version ran `pull --ff-only --depth 1` with stderr sent to
+# /dev/null and printed "could not fast-forward (local changes?)" for all of
+# them, which was a guess and usually the wrong one. Real errors now print.
 #
 # Usage: vimup
 vimup() {
   local plugin_dir="$HOME/.vim/pack/plugins/start"
-  local dir name before after
+  local dir name before after branch remote_head err
 
   if [[ ! -d "$plugin_dir" ]]; then
     echo "vimup: no plugins at $plugin_dir -- run ~/.bootstrap.sh first" >&2
@@ -19,8 +32,39 @@ vimup() {
     name=${dir:t}
     before=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
 
-    if ! git -C "$dir" pull --quiet --ff-only --depth 1 2>/dev/null; then
-      printf '  %-24s could not fast-forward (local changes?)\n' "$name"
+    branch=$(git -C "$dir" symbolic-ref --quiet --short HEAD 2>/dev/null)
+    if [[ -z "$branch" ]]; then
+      printf '  %-24s detached HEAD -- skipping\n' "$name"
+      continue
+    fi
+
+    if ! err=$(git -C "$dir" fetch --quiet origin 2>&1); then
+      printf '  %-24s fetch failed: %s\n' "$name" "${err%%$'\n'*}"
+      continue
+    fi
+
+    # Which branch does upstream actually consider default? origin/HEAD is
+    # often unset in older clones, so ask the remote if we have to.
+    remote_head=$(git -C "$dir" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+    if [[ -z "$remote_head" ]]; then
+      git -C "$dir" remote set-head origin --auto >/dev/null 2>&1
+      remote_head=$(git -C "$dir" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+    fi
+    remote_head=${remote_head#origin/}
+    [[ -n "$remote_head" ]] || remote_head=$branch
+
+    # Follow a master -> main rename instead of failing forever
+    if [[ "$branch" != "$remote_head" ]] \
+       && git -C "$dir" show-ref --quiet "refs/remotes/origin/$remote_head"; then
+      if git -C "$dir" checkout -q "$remote_head" 2>/dev/null \
+         || git -C "$dir" checkout -q -b "$remote_head" "origin/$remote_head" 2>/dev/null; then
+        printf '  %-24s upstream renamed %s -> %s\n' "$name" "$branch" "$remote_head"
+        branch=$remote_head
+      fi
+    fi
+
+    if ! err=$(git -C "$dir" merge --ff-only "origin/$branch" 2>&1); then
+      printf '  %-24s %s\n' "$name" "${err%%$'\n'*}"
       continue
     fi
 
