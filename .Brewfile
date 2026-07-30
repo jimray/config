@@ -55,7 +55,6 @@ cask "claude"
 cask "contexts"     # better window switching contexts.co
 cask "handbrake-app"
 cask "iterm2"
-cask "lolgato"      # automatically turn on the lights when you start video conferencing
 cask "nova"
 cask "obsidian"
 cask "raycast"
