@@ -38,6 +38,95 @@ for func in ~/.zfunc/[^_]*(N:t); do
 done
 
 # ctrl-leftarrow and ctrl-right arrow move word by word
+# Keybindings
+# ###########
+# vi-style line editing. zsh would land here anyway -- it picks its keymap by
+# checking whether $VISUAL/$EDITOR contains the substring "vi", and .zshenv
+# sets both to nvim -- but relying on that is exactly how you end up in vi
+# mode for years without knowing. Explicit, so the rest of this block can
+# assume it.
+#
+# All of this must come BEFORE the fzf setup further down: `bindkey -v`
+# changes which keymap `main` points at, and anything bound beforehand is
+# left behind in the old keymap.
+bindkey -v
+
+# Esc responds immediately instead of waiting 400ms to see whether it was the
+# start of an escape sequence. 1 = 10ms; much below that and real multi-byte
+# terminal sequences start getting split.
+KEYTIMEOUT=1
+
+# Esc then v opens the line you're typing in $EDITOR as a real buffer --
+# macros, :%s, the lot. :wq runs it. Worth the switch on its own for long
+# pipelines.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
+
+# Cursor shape as the mode indicator: block in normal, beam in insert.
+# Better than a prompt symbol -- it's where you're already looking.
+#
+# starship also defines zle-keymap-select and wraps whatever it finds, which
+# is fine exactly once. Re-sourcing this file makes it wrap its own wrapper
+# and recurse until FUNCNEST trips, which is why `reload` execs a new shell
+# instead of sourcing.
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd)      printf '\e[1 q' ;;  # block
+    viins|main) printf '\e[5 q' ;;  # beam
+  esac
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+  printf '\e[5 q'   # every new prompt starts in insert mode
+}
+zle -N zle-line-init
+
+# Keep the line-editing shortcuts that work everywhere else in the OS.
+# Bound in viins so they're there while typing, without leaving insert mode.
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^K' kill-line
+bindkey -M viins '^U' backward-kill-line
+bindkey -M viins '^W' backward-kill-word
+bindkey -M viins '^Y' yank
+# vi mode otherwise refuses to backspace over text you didn't type this
+# insert -- the single most irritating default in the whole keymap
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
+
+# History search: vim-style in normal mode, ctrl-r from insert.
+# fzf overrides ^R further down when it's installed.
+bindkey -M vicmd '/' history-incremental-search-backward
+bindkey -M vicmd '?' history-incremental-search-forward
+bindkey -M viins '^R' history-incremental-search-backward
+
+# Text objects -- ciw, di", ci( and friends. zsh ships the widgets but binds
+# none of them.
+autoload -Uz select-bracketed select-quoted
+zle -N select-bracketed
+zle -N select-quoted
+for _km in visual viopp; do
+  for _c in {a,i}${(s..)^:-\'\"\`}; do
+    bindkey -M $_km $_c select-quoted
+  done
+  for _c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $_km $_c select-bracketed
+  done
+done
+unset _km _c
+
+# vim-surround, also shipped and also unbound: cs"' ds" ysiw"
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd 'cs' change-surround
+bindkey -M vicmd 'ds' delete-surround
+bindkey -M vicmd 'ys' add-surround
+bindkey -M visual 'S' add-surround
+
 # bindkey ";5D" backward-word
 # bindkey ";5C" forward-word
 
