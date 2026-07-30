@@ -3,7 +3,7 @@
 # top-most EditorConfig file
 root = true
 
-# matches every file -- set some defualts the override
+# matches every file -- set some defaults then override
 # per-filetype
 [*]
 charset = utf-8
@@ -28,9 +28,22 @@ indent_style = space
 indent_size = 4
 
 # Markdown
+# trailing whitespace is meaningful here (two spaces = hard line break)
 [*.md]
 indent_style = tab
 trim_trailing_whitespace = false
+
+# Go is gofmt's business, and gofmt uses tabs. Without this the [*] default
+# above tells editorconfig-vim to set expandtab, so vim-go and gofmt spend
+# the rest of the session undoing each other.
+[*.go]
+indent_style = tab
+indent_size = 4
+
+[*.{yml,yaml}]
+# YAML forbids tabs outright
+indent_style = space
+indent_size = 2
 
 [{Makefile,**.mk}]
 # Use tabs for indentation (Makefiles require tabs)

@@ -1,0 +1,49 @@
+# ripgrep config
+# Found via $RIPGREP_CONFIG_PATH, which .zshenv sets to this file.
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+#
+# One argument per line. No comments on the same line as an argument, and no
+# quoting -- ripgrep takes each line literally, so `--glob=!.git` is right
+# and `--glob='!.git'` would look for a directory named '.git' with quotes.
+
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Add my 'web' type.
+--type-add
+web:*.{html,css,js}*
+
+# ignore case unless the search string contains an upper
+--smart-case
+
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
+# ...but --hidden also makes ripgrep descend into .git, which is never what
+# you want and isn't covered by .gitignore. Has to be excluded by hand.
+--glob=!.git/
+
+# Dependency and lockfile noise that drowns out real matches
+--glob=!node_modules/
+--glob=!.venv/
+--glob=!venv/
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!package-lock.json
+--glob=!yarn.lock
+--glob=!pnpm-lock.yaml
+
+# macOS noise, mostly matters when searching from $HOME
+--glob=!.DS_Store
+--glob=!Library/
+--glob=!.Trash/
+
+# Nicer colours than the defaults, roughly matching Oceanic Next
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=path:fg:green
+--colors=path:style:bold
+--colors=match:fg:black
+--colors=match:bg:yellow
+--colors=match:style:nobold

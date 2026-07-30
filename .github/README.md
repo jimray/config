@@ -21,12 +21,16 @@ This will:
 
 | File | Purpose |
 |------|---------|
-| `.zshrc` | Main shell config (sources OS-specific files) |
+| `.zshenv` | Runs for every zsh (login or not) — PATH, mise, Homebrew |
+| `.zshrc` | Main interactive shell config (sources OS-specific files) |
 | `.zshrc_macos` / `.zshrc_linux` | OS-specific shell settings |
 | `.zfunc` | Shell functions, like `vm` (see below) |
 | `.vimrc` | Vim/Neovim configuration |
 | `.tmux.conf` | tmux with plugins (resurrect, continuum, vim-navigator) |
 | `.gitconfig` | Git aliases and settings |
+| `.gitignore` | Global gitignore (`core.excludesfile`) |
+| `.ripgreprc` | ripgrep defaults, found via `$RIPGREP_CONFIG_PATH` |
+| `.editorconfig` | Per-filetype indent rules, read by vim + most editors |
 | `.config/starship.toml` | Starship prompt theme |
 | `.config/nvim/` | Neovim configuration |
 | `.Brewfile` | Homebrew packages (work) |
@@ -91,11 +95,27 @@ Plus cross-platform setup:
 
 ### Finding and Opening Files
 
-Two functions in `.zfunc/` combine ripgrep, fzf, bat, and Neovim into a fast file-picking workflow. Both require `bat` for previews.
+Several functions in `.zfunc/` combine ripgrep, fzf, bat, and Neovim into a fast file-picking workflow. They require `bat` for previews and `fd`/`rg` for searching — all installed by the bootstrap script on every platform.
 
-**`vf`** — fuzzy file picker with preview. Launches fzf with a syntax-highlighted bat preview of each file; opens the selection in Neovim.
+**`vf [dir]`** — fuzzy file picker with preview. Launches fzf with a syntax-highlighted bat preview of each file; opens the selection in Neovim.
 
-**`vrg`** — search file contents, preview matches, open at the right line. Runs ripgrep across the current directory, passes results to fzf with bat highlighting the matched line, then opens the file in Neovim at the correct line number. Useful as a terminal-native alternative to an IDE's global search.
+**`vrg [query]`** — search file contents, preview matches, open at the right line. ripgrep re-runs on every keystroke (fzf does no filtering of its own), so it stays fast in large repos. bat highlights the matched line in the preview, and the selection opens in Neovim at the correct line number. A terminal-native alternative to an IDE's global search.
+
+**`rgd <pattern> [dir]`** — plain ripgrep search with a bat preview, for when you want to read results rather than jump to one.
+
+**`zd`** — fuzzy-jump to any directory zoxide knows about, with an `eza` tree preview.
+
+### Shell History
+
+History is set explicitly in `.zshrc` rather than inherited from the OS: 100k lines, shared live between concurrent shells and tmux panes, with duplicates collapsed. Left to their own devices macOS caps you at 1000 lines and Ubuntu keeps no history at all between sessions, which makes fzf's `ctrl-r` far less useful than it should be.
+
+A command typed with a **leading space** is kept out of history entirely — handy for anything with a token in it.
+
+### Maintenance
+
+**`vimup`** — updates every vim plugin under `~/.vim/pack/plugins/start/` and regenerates helptags. The bootstrap script only ever *clones* plugins that are missing, so it will never update one that already exists; this is how you pull new versions.
+
+**`reload`** — re-sources `.zshrc` and reloads everything in `.zfunc/` without starting a new shell.
 
 ### Development Server
 
@@ -279,9 +299,39 @@ Add `.vm` to your global gitignore since VM names are machine-specific:
 echo ".vm" >> ~/.gitignore
 ```
 
+## Editor and tmux Notes
+
+Two behaviors here are surprising enough to be worth writing down.
+
+**tmux's prefix is `ctrl-d`, not `ctrl-b`.** That's the same key as the shell's EOF, so a bare `ctrl-d` no longer exits a shell or quits a REPL. Press it **twice** to send a real one through.
+
+**Vim's `:q` doesn't quit vim.** `.vimrc` routes `:q`, `:q!`, `:wq`, and `:x` through `SmartQuit`, which closes the current *buffer* and only exits vim when it's the last one — closer to how a tabbed editor behaves. `:qa`, `:qa!`, and `:wqa` are untouched and still quit outright.
+
+This is wired to the Enter key in command-line mode rather than to abbreviations. Abbreviations expand on any word boundary, which meant `:Rg q` searched for `call SmartQuit()` instead of `q`, and — worse — `:q!` expanded the `q` the moment you typed `!`, so it *wrote the file* and then failed with `E488: Trailing characters`. Checking the finished command line on Enter avoids both.
+
+Undo history now persists across sessions (`undofile`), which matters more than usual here because swap and backup files are turned off.
+
 ## Local Overrides
 
 For machine-specific settings that shouldn't be committed:
 
-- `.zshrc_local` - Shell customizations
-- `.gitconfig.local` - Git identity, work vs personal email
+- `.zshrc_local` — Shell customizations. Sourced at the end of `.zshrc` if present.
+- `.gitconfig.local` — Git identity, work vs personal email. `.gitconfig` has **no `[user]` block on purpose**, so this file is what makes commits possible; the bootstrap script prompts for a name and email and writes it on a fresh machine.
+
+  Because `[include]` is expanded in place, anything set *after* the include in `.gitconfig` would silently override the local file. That's why the identity include sits at the very top.
+
+## Git Defaults
+
+Beyond aliases, `.gitconfig` turns on a handful of things git ships with but doesn't enable by default:
+
+| Setting | What it does |
+|---------|--------------|
+| `merge.conflictStyle = zdiff3` | Conflict markers include the common ancestor, so you can see what each side actually changed |
+| `diff.algorithm = histogram` | Better hunk boundaries than the default myers |
+| `diff.colorMoved` | Moved lines colored differently from added/removed |
+| `rerere.enabled` | Remembers how you resolved a conflict and replays it — pairs well with `pull.rebase` |
+| `rebase.autostash` | Stashes a dirty worktree before rebasing, restores after |
+| `rebase.updateRefs` | Keeps stacked branches pointing at the right commits |
+| `commit.verbose` | Shows the full diff in the commit message editor |
+
+These need git 2.38+ (`rebase.updateRefs` is the newest of them). Every supported platform's default git is well past that.

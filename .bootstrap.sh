@@ -32,18 +32,38 @@ if [ "$(uname)" = "Darwin" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # Install some handy CLI tools all helpfully bundled up in a local Brewfile
-    # to generate the .Brewfile: brew bundle dump --file .Brewfile
-    brew bundle --file .Brewfile
-    rm .Brewfile.lock.json
+    # to generate the .Brewfile: brew bundle dump --file ~/.Brewfile
+    # Absolute paths: this script gets run from whatever directory you happen
+    # to be in, and with `set -e` a relative path that misses aborts the
+    # whole bootstrap. Same reason `rm` has -f.
+    brew bundle --file "$HOME/.Brewfile"
+    rm -f "$HOME/.Brewfile.lock.json"
 
     # Ask the user if they want to run brew bundle
-    read -p "Do you want to install non-work apps in .Brewfile.personal? (y/n): " run_brew_bundle
-    if [ "$run_brew_bundle" = "y" ]; then
-        brew bundle --file .Brewfile.personal
+    # (printf + read -r, not `read -p`, which is a bashism this /bin/sh
+    # script can't rely on)
+    #
+    # [ -t 0 ] guards this: without it, a non-interactive run (piped stdin,
+    # like the Lima auto-provisioner's `echo y | dotfiles-init.sh`) hits EOF
+    # on `read`, which returns non-zero -- and under `set -e` that aborts the
+    # whole script right here, silently skipping everything below.
+    if [ -t 0 ]; then
+        printf "Do you want to install non-work apps in .Brewfile.personal? (y/n): "
+        read -r run_brew_bundle
+    else
+        echo "Non-interactive shell -- skipping .Brewfile.personal prompt."
+        run_brew_bundle="n"
+    fi
+    if [ "$run_brew_bundle" = "y" ] || [ "$run_brew_bundle" = "Y" ]; then
+        brew bundle --file "$HOME/.Brewfile.personal"
+        rm -f "$HOME/.Brewfile.personal.lock.json"
     fi
 
-    # fuzzy completion and keybindings for fzf
-    $(brew --prefix)/opt/fzf/install
+    # fzf 0.48+ emits its own keybindings via `fzf --zsh` (see .zshrc), so
+    # the interactive install script isn't needed on a current fzf.
+    if ! fzf --zsh >/dev/null 2>&1; then
+        "$(brew --prefix)"/opt/fzf/install --all
+    fi
 
     # brew installs some default apps, like bbedit, macvim, visual-studio-code, and iterm, so ok to config here
 
@@ -112,7 +132,10 @@ if [ "$(uname)" = "FreeBSD" ]; then
         exit 1
     fi
 
-    sudo pkg install -y git zsh vim tmux tldr eza ripgrep fzf gh starship
+    # neovim, bat, fd-find and zoxide are needed by .zshenv/.zshrc and the
+    # .zfunc helpers, same as on Linux
+    sudo pkg install -y git zsh vim neovim tmux tldr eza ripgrep fzf gh starship \
+        bat fd-find zoxide
 
     # use zsh
     chsh -s $(which zsh)
@@ -128,7 +151,22 @@ if [ "$(uname)" = "Linux" ]; then
         sudo apt-get -y update
 
         # Install core packages (eza installed separately below)
-        sudo apt-get -y install git zsh vim tmux ripgrep fzf jq neovim wget curl gpg libatomic1
+        # bat and fd-find are here because the .zfunc helpers (vf, vrg, rgd,
+        # zd) hard-depend on them -- without these they just print
+        # "bat is not installed" in every Lima VM.
+        sudo apt-get -y install git zsh vim tmux ripgrep fzf jq neovim wget curl gpg libatomic1 \
+            bat fd-find
+
+        # Debian/Ubuntu ship these under different binary names to avoid
+        # clashes (bat -> batcat, fd -> fdfind). Everything else in these
+        # dotfiles calls them bat and fd, so alias them onto the PATH.
+        mkdir -p "$HOME/.local/bin"
+        if command -v batcat >/dev/null 2>&1 && ! command -v bat >/dev/null 2>&1; then
+            ln -sf "$(command -v batcat)" "$HOME/.local/bin/bat"
+        fi
+        if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
+            ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
+        fi
 
         # Install eza (modern ls replacement) - requires adding the official repository
         # https://github.com/eza-community/eza/blob/main/INSTALL.md
@@ -173,6 +211,15 @@ if [ "$(uname)" = "Linux" ]; then
     if ! command -v starship >/dev/null 2>&1; then
         echo "Installing starship prompt..."
         curl -sS https://starship.rs/install.sh | sh -s -- -y
+    fi
+
+    # zoxide -- .zshrc initialises it, and the README calls it a key tool,
+    # but nothing installed it on Linux until now
+    if ! command -v zoxide >/dev/null 2>&1; then
+        echo "Installing zoxide..."
+        if ! sudo apt-get -y install zoxide 2>/dev/null; then
+            curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+        fi
     fi
 
     # install mise
@@ -224,15 +271,50 @@ echo "Setting up vim plugins..."
 mkdir -p ~/.vim/pack/plugins/start/
 
 # Helper function to clone a plugin only if it doesn't exist
+# Everything is shallow-cloned -- nobody needs the full history of a plugin,
+# and it makes a fresh VM noticeably quicker to set up.
 clone_plugin() {
     repo_url="$1"
     dest_dir="$2"
-    extra_args="${3:-}"
+    extra_args="${3:---depth 1}"
     if [ ! -d "$dest_dir" ]; then
         echo "  Cloning $(basename "$dest_dir")..."
         git clone $extra_args "$repo_url" "$dest_dir"
     fi
 }
+
+# GIT IDENTITY
+# ############
+# .gitconfig deliberately has no [user] block -- it's kept out of the repo so
+# work and personal machines can differ. Nothing created that file though, so
+# a fresh machine had no identity at all and every commit failed with
+# "Please tell me who you are". Create it here if it's missing.
+if [ ! -f "$HOME/.gitconfig.local" ]; then
+    echo ""
+    echo "No ~/.gitconfig.local found -- git needs a name and email to commit."
+    # [ -t 0 ] guards this the same way as the Brewfile.personal prompt above:
+    # a non-interactive run (piped stdin, e.g. Lima's auto-provisioner) hits
+    # EOF on `read`, which returns non-zero and -- under `set -e` -- aborts
+    # the rest of the script right here, before a single plugin is cloned.
+    if [ -t 0 ]; then
+        printf "  Name  [Jim Ray]: "
+        read -r git_name
+        printf "  Email [470581+jimray@users.noreply.github.com]: "
+        read -r git_email
+    else
+        echo "  Non-interactive shell -- using defaults. Edit ~/.gitconfig.local afterwards if these are wrong."
+        git_name=""
+        git_email=""
+    fi
+
+    cat > "$HOME/.gitconfig.local" <<EOF
+# Local git identity. Not checked into the config repo.
+[user]
+	name = ${git_name:-Jim Ray}
+	email = ${git_email:-470581+jimray@users.noreply.github.com}
+EOF
+    echo "  Wrote ~/.gitconfig.local"
+fi
 
 # Grab vim plugins
 clone_plugin "https://github.com/tpope/vim-surround.git" "$HOME/.vim/pack/plugins/start/vim-surround"
@@ -245,8 +327,12 @@ clone_plugin "https://github.com/airblade/vim-gitgutter.git" "$HOME/.vim/pack/pl
 clone_plugin "https://github.com/editorconfig/editorconfig-vim.git" "$HOME/.vim/pack/plugins/start/editorconfig-vim"
 clone_plugin "https://github.com/fatih/vim-go.git" "$HOME/.vim/pack/plugins/start/vim-go"
 clone_plugin "https://github.com/christoomey/vim-tmux-navigator.git" "$HOME/.vim/pack/plugins/start/vim-tmux-navigator"
-clone_plugin "https://github.com/plasticboy/vim-markdown.git" "$HOME/.vim/pack/plugins/start/vim-markdown"
-clone_plugin "https://github.com/reedes/vim-pencil.git" "$HOME/.vim/pack/plugins/start/vim-pencil"
+# vim-markdown and vim-pencil both moved to the preservim org, which is where
+# the maintained versions live now (plasticboy/reedes just redirect).
+clone_plugin "https://github.com/preservim/vim-markdown.git" "$HOME/.vim/pack/plugins/start/vim-markdown"
+clone_plugin "https://github.com/preservim/vim-pencil.git" "$HOME/.vim/pack/plugins/start/vim-pencil"
+# NOTE: jiangmiao/auto-pairs has been unmaintained since 2019.
+# LunarWatcher/auto-pairs is a drop-in maintained fork if it starts misbehaving.
 clone_plugin "https://github.com/jiangmiao/auto-pairs.git" "$HOME/.vim/pack/plugins/start/auto-pairs"
 clone_plugin "https://github.com/adrian5/oceanic-next-vim" "$HOME/.vim/pack/plugins/start/oceanic-next-vim" "--depth 1"
 clone_plugin "https://github.com/shortcuts/no-neck-pain.nvim.git" "$HOME/.vim/pack/plugins/start/no-neck-pain.nvim"
@@ -255,13 +341,21 @@ clone_plugin "https://github.com/shortcuts/no-neck-pain.nvim.git" "$HOME/.vim/pa
 clone_plugin "https://github.com/junegunn/fzf" "$HOME/.vim/pack/plugins/start/fzf"
 clone_plugin "https://github.com/junegunn/fzf.vim" "$HOME/.vim/pack/plugins/start/fzf.vim"
 
-# vim help config - generate helptags for plugins with doc directories
+# vim help config - generate helptags for every plugin in one pass.
+# `helptags ALL` walks every doc/ directory on the runtimepath, so this does
+# the same job as the old per-plugin loop without starting vim 16 times.
+# packloadall! is required: -u NONE skips package loading, so without it the
+# pack/plugins/start/* directories never make it onto the runtimepath and
+# helptags ALL silently finds nothing.
 echo "Generating vim helptags..."
-for plugin_doc in ~/.vim/pack/plugins/start/*/doc; do
-    if [ -d "$plugin_doc" ]; then
-        vim -u NONE -c "helptags $plugin_doc" -c q 2>/dev/null || true
-    fi
-done
+vim -u NONE --not-a-term \
+    -c 'set packpath^=~/.vim' \
+    -c 'silent! packloadall!' \
+    -c 'helptags ALL' \
+    -c q >/dev/null 2>&1 || true
+
+# Re-running this script only clones plugins that are missing, so it will
+# never update one that's already there. `vimup` (in .zfunc) pulls them all.
 
 # NEOVIM
 # ######

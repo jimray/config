@@ -1,6 +1,14 @@
 # combine fzf, rg, and nvim
-# Searches the contents of a directory (via rigrep) and
+# Searches the contents of a directory (via ripgrep) and
 # shows a preview of the file (via fzf and bat)
+#
+# ripgrep re-runs on every keystroke instead of being piped into fzf once.
+# The old version ran `rg --line-number ""`, which matches every line of
+# every file -- fine in a small repo, brutal in a big one. Here fzf does no
+# filtering of its own (--disabled); ripgrep does all the matching.
+#
+# Usage: vrg            (start with an empty query)
+#        vrg needle     (start with the query prefilled)
 vrg() {
   if ! command -v rg &>/dev/null; then
     echo "vrg: rg is not installed" >&2
@@ -10,9 +18,24 @@ vrg() {
     echo "vrg: bat is not installed" >&2
     return 1
   fi
+
+  local rg_cmd="rg --line-number --no-heading --color=always --smart-case"
   local result file line
-  result=$(rg --line-number "" | fzf --preview 'bat --color=always --highlight-line {2} {1}' --delimiter=:)
-  file=$(echo "$result" | cut -d: -f1)
-  line=$(echo "$result" | cut -d: -f2)
+
+  result=$(
+    FZF_DEFAULT_COMMAND="$rg_cmd -- ${(q)1}" \
+    fzf --ansi \
+        --disabled \
+        --query "${1:-}" \
+        --bind "change:reload:$rg_cmd -- {q} || true" \
+        --delimiter : \
+        --preview 'bat --color=always --highlight-line {2} {1}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3'
+  ) || return 0
+
+  # ripgrep output is file:line:text
+  file=${result%%:*}
+  line=${${result#*:}%%:*}
+
   [[ -n "$file" ]] && nvim +"$line" "$file"
 }

@@ -2,11 +2,13 @@
 # To install personal apps (not on a work machine), run `brew bundle --file .Brewfile.personal`
 #
 # Core setup
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
+#
+# homebrew/core and homebrew/cask haven't needed an explicit tap since
+# Homebrew 4.0 -- they're served from the JSON API now, and tapping them
+# forces a slow full git clone instead. homebrew/bundle was merged into
+# brew itself (that repo is archived), and homebrew/cask-fonts was retired
+# when the font casks moved into homebrew/cask. All four are dropped.
 tap "buo/cask-upgrade"    # upgrade cask installed apps via `brew cu`
-tap "homebrew/cask-fonts"
 brew "coreutils"
 
 # deps?
@@ -53,7 +55,6 @@ cask "claude"
 cask "contexts"     # better window switching contexts.co
 cask "handbrake-app"
 cask "iterm2"
-cask "lolgato"      # automatically turn on the lights when you start video conferencing
 cask "nova"
 cask "obsidian"
 cask "raycast"
