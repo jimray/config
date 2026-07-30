@@ -42,8 +42,18 @@ if [ "$(uname)" = "Darwin" ]; then
     # Ask the user if they want to run brew bundle
     # (printf + read -r, not `read -p`, which is a bashism this /bin/sh
     # script can't rely on)
-    printf "Do you want to install non-work apps in .Brewfile.personal? (y/n): "
-    read -r run_brew_bundle
+    #
+    # [ -t 0 ] guards this: without it, a non-interactive run (piped stdin,
+    # like the Lima auto-provisioner's `echo y | dotfiles-init.sh`) hits EOF
+    # on `read`, which returns non-zero -- and under `set -e` that aborts the
+    # whole script right here, silently skipping everything below.
+    if [ -t 0 ]; then
+        printf "Do you want to install non-work apps in .Brewfile.personal? (y/n): "
+        read -r run_brew_bundle
+    else
+        echo "Non-interactive shell -- skipping .Brewfile.personal prompt."
+        run_brew_bundle="n"
+    fi
     if [ "$run_brew_bundle" = "y" ] || [ "$run_brew_bundle" = "Y" ]; then
         brew bundle --file "$HOME/.Brewfile.personal"
         rm -f "$HOME/.Brewfile.personal.lock.json"
@@ -282,10 +292,20 @@ clone_plugin() {
 if [ ! -f "$HOME/.gitconfig.local" ]; then
     echo ""
     echo "No ~/.gitconfig.local found -- git needs a name and email to commit."
-    printf "  Name  [Jim Ray]: "
-    read -r git_name
-    printf "  Email [470581+jimray@users.noreply.github.com]: "
-    read -r git_email
+    # [ -t 0 ] guards this the same way as the Brewfile.personal prompt above:
+    # a non-interactive run (piped stdin, e.g. Lima's auto-provisioner) hits
+    # EOF on `read`, which returns non-zero and -- under `set -e` -- aborts
+    # the rest of the script right here, before a single plugin is cloned.
+    if [ -t 0 ]; then
+        printf "  Name  [Jim Ray]: "
+        read -r git_name
+        printf "  Email [470581+jimray@users.noreply.github.com]: "
+        read -r git_email
+    else
+        echo "  Non-interactive shell -- using defaults. Edit ~/.gitconfig.local afterwards if these are wrong."
+        git_name=""
+        git_email=""
+    fi
 
     cat > "$HOME/.gitconfig.local" <<EOF
 # Local git identity. Not checked into the config repo.
