@@ -57,13 +57,29 @@
       "Read(~/.ssh)"
     ]
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|Write|Grep|Glob|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$HOME/.claude/hooks/block-secret-files.sh\"",
+            "timeout": 5,
+            "statusMessage": "Checking for credential access"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "github@claude-plugins-official": true,
     "learning-opportunities@learning-opportunities": true,
     "learning-opportunities-auto@learning-opportunities": true,
-    "orient@learning-opportunities": true
+    "orient@learning-opportunities": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "learning-opportunities": {
@@ -74,7 +90,8 @@
     }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
-  "defaultMode": "plan",
-  "editorMode": "vim"
+  "editorMode": "vim",
+  "defaultMode": "plan"
 }
