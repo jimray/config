@@ -6,36 +6,38 @@
 # quoting -- ripgrep takes each line literally, so `--glob=!.git` is right
 # and `--glob='!.git'` would look for a directory named '.git' with quotes.
 
-# Case-insensitive until the pattern has a capital in it
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Add my 'web' type.
+--type-add
+web:*.{html,css,js}*
+
+# ignore case unless the search string contains an upper
 --smart-case
 
-# Follow symlinks
---follow
-
-# Search hidden files (dotfiles are the whole point of this repo), but keep
-# out of the places that are never interesting
+# Search hidden files / directories (e.g. dotfiles) by default
 --hidden
+
+# ...but --hidden also makes ripgrep descend into .git, which is never what
+# you want and isn't covered by .gitignore. Has to be excluded by hand.
 --glob=!.git/
+
+# Dependency and lockfile noise that drowns out real matches
 --glob=!node_modules/
 --glob=!.venv/
 --glob=!venv/
---glob=!vendor/
---glob=!dist/
---glob=!build/
 --glob=!*.min.js
 --glob=!*.min.css
 --glob=!package-lock.json
 --glob=!yarn.lock
 --glob=!pnpm-lock.yaml
 
-# macOS specific noise
+# macOS noise, mostly matters when searching from $HOME
 --glob=!.DS_Store
 --glob=!Library/
 --glob=!.Trash/
-
-# Readability
---max-columns=200
---max-columns-preview
 
 # Nicer colours than the defaults, roughly matching Oceanic Next
 --colors=line:fg:yellow
