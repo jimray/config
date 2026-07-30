@@ -56,12 +56,20 @@ bindkey -v
 # terminal sequences start getting split.
 KEYTIMEOUT=1
 
-# Esc then v opens the line you're typing in $EDITOR as a real buffer --
+# ctrl-x ctrl-e opens the line you're typing in $EDITOR as a real buffer --
 # macros, :%s, the lot. :wq runs it. Worth the switch on its own for long
-# pipelines.
+# pipelines. Same binding bash/readline uses for the same thing, so it's not
+# a new thing to learn.
+#
+# NOT bound to vicmd 'v': that's visual-mode by default (character-wise
+# select, then a motion, then an operator). Binding over it looked
+# convenient but silently took visual mode away -- 'v' just opened the
+# editor instead, and V (visual-LINE) was the only selection left. Found by
+# checking `bindkey -M vicmd v` before and after this file loads.
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd 'v' edit-command-line
+bindkey -M vicmd '^X^E' edit-command-line
+bindkey -M viins '^X^E' edit-command-line
 
 # Cursor shape as the mode indicator: block in normal, beam in insert.
 # Better than a prompt symbol -- it's where you're already looking.
