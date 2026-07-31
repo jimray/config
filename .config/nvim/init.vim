@@ -104,4 +104,48 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
   end,
 })
+
+-- Handle the return trip: coming back to vim FROM a plain tmux pane.
+--
+-- This is NOT a mirror-image of the fix above, and can't be fixed the same
+-- way. Read from vim-tmux-navigator's own tmux-side script
+-- (vim-tmux-navigator.tmux): when the CURRENT pane is a plain shell (not
+-- vim), the tmux keybinding runs `select-pane` directly -- no keystroke is
+-- ever sent into vim. There is no incoming <C-j> for a vim-side mapping to
+-- intercept; tmux just changes which pane is active, and whatever window
+-- vim's own cursor was last sitting in becomes visible again as-is.
+--
+-- That "last sitting in" window is exactly the problem: the fix above,
+-- when it forwards out to tmux, does so with its *last* TmuxNavigate call
+-- made from inside the padding window (that's the whole trick -- calling
+-- it again from there is what lets the plugin's own edge-detection
+-- correctly find the true edge). The plugin's forward-to-tmux path only
+-- shells out to `tmux select-pane`; it never moves vim's own cursor back
+-- to real content. So vim is left internally parked in the padding window
+-- until something else changes its focus -- which nothing does, until you
+-- come back.
+--
+-- FocusGained is the right hook (`focus-events on` in .tmux.conf makes
+-- tmux relay real terminal focus in/out to whichever pane is active). If
+-- we're back and sitting in a "no-neck-pain" window, hop onto the real
+-- content next to it -- padding is always immediately adjacent to main on
+-- one side or the other, never more than one window away.
+--
+-- Verified by injecting a raw xterm FocusIn escape sequence (ESC [ I)
+-- directly into a real nvim instance: parked in a simulated padding
+-- window, it correctly relocates to the real content; already-real content
+-- is left untouched.
+vim.api.nvim_create_autocmd("FocusGained", {
+  callback = function()
+    if vim.bo.filetype ~= "no-neck-pain" then
+      return
+    end
+    for _, dir in ipairs({ "l", "h" }) do
+      vim.cmd("wincmd " .. dir)
+      if vim.bo.filetype ~= "no-neck-pain" then
+        return
+      end
+    end
+  end,
+})
 EOF
