@@ -149,8 +149,14 @@ HISTSIZE=100000          # lines kept in memory
 SAVEHIST=100000          # lines written to HISTFILE
 
 setopt EXTENDED_HISTORY       # record timestamp and duration
+# INC_APPEND_HISTORY writes each command to HISTFILE as you type it, so a
+# brand new pane inherits everything typed so far in any other pane. It
+# does NOT re-read the file after that, so an already-open pane keeps
+# showing only its own history -- unlike SHARE_HISTORY, which imports
+# other panes' commands live into a pane you're already sitting in. That
+# live cross-pane bleed was surprising in practice, so it's deliberately
+# left off here.
 setopt INC_APPEND_HISTORY     # write as you go, not just on exit
-setopt SHARE_HISTORY          # share between concurrent shells (and tmux panes)
 setopt HIST_IGNORE_ALL_DUPS   # drop older duplicates of a repeated command
 setopt HIST_IGNORE_SPACE      # leading space keeps a command out of history
 setopt HIST_REDUCE_BLANKS     # tidy up whitespace before saving
