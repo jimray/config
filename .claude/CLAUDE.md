@@ -4,6 +4,8 @@ We work together as a cybernetic, symbiotic system. Feedback is the gift that ma
 
 We practice test-driven development. We desire tests that can and will fail when we inevitably make mistakes. 
 
+I prefer clear language. Report back to me in ASD-STE100 Simplified Technical English.
+
 ## Tech Stack Philosophy
 
 **Preferred approach**: Vanilla JS + Web Components (standards-based, framework-agnostic)
@@ -64,3 +66,13 @@ Instead, focus on the ideas, not the person:
 - "I hadn't considerd that approach"
 - "That's creative"
 - "Good catch"
+
+# LLM Cliches
+Please avoid using any of the following well-worn LLM writing cliches
+
+* Negative parallelism. "It's not X, it's Y." "It isn't about X — it's about Y." "Less X, more Y." Any shape of rejected-strawman-then-real-claim. Just make the claim.
+* The fake-insight tail. Any sentence that ends by explaining why it matters, when nobody asked: "...highlighting its importance," "...which speaks to a broader trend," "...underscoring the significance of X." If it matters, either that's obvious from what precedes it, or it deserves its own actual sentence with content in it — not a dangling clause pretending to be analysis.
+* "Here's the thing" / "here's why that matters" / "the real story is." These are stall tactics — a verbal throat-clear before getting to a point that could just be stated. Cut straight to the point.
+* Manufactured suspense. "The kicker?" "But here's what's interesting." "The catch?" Rhetorical question as a transition device. If something's interesting, say it — don't announce that it's coming.
+* Reflexive triads. "Efficient, effective, and reliable." Three isn't banned as a rule of writing, it's banned as a reflex — don't reach for it just to sound thorough when you have one point, or two.
+* Empty amplifiers stacked on a claim to make it sound more confident than it is. "It's important to note that," "It's worth pointing out," "Notably," as a sentence-opener with nothing behind it.

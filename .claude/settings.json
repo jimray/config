@@ -97,6 +97,8 @@
   "effortLevel": "high",
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
   "editorMode": "vim",
-  "defaultMode": "plan"
+  "defaultMode": "plan",
+  "model": "opus"
 }
