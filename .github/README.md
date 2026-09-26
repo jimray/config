@@ -201,21 +201,12 @@ brew install lima
 
 ### Basic Commands
 
-Create a VM with minimal config (recommended)
+Create a VM with minimal config (recommended). Uses Lima's `ubuntu-lts` image alias (currently 26.04) with no host mounts:
 ```sh
 limactl create --name myvm ~/.config/lima/templates/minimal.yaml
 ```
 
 Start the VM
-```sh
-limactl start myvm
-```
-
-Or use Lima's default template (verbose config)
-```sh
-limactl create --name myvm
-```
-
 ```sh
 limactl start myvm
 ```

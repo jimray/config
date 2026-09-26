@@ -1,7 +1,6 @@
 # Global Lima VM defaults - applies to ALL VMs
 # This file is part of the dotfiles repo and gets symlinked to ~/.lima/_config/default.yaml
 #
-# Note: Ubuntu LTS image is set in override.yaml (default.yaml can't override builtin images)
 
 provision:
   - mode: user
