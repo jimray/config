@@ -38,7 +38,7 @@
   aux = "!git add -u && git commit"
 
   # create a new branch and check it out
-	b = checkout -b
+	b = switch -b
 
   # show a nice history readout
   hist = log --oneline --graph --all --decorate
@@ -47,7 +47,7 @@
   ls = branch -vv
 
   # because you gotta checkout main a lot
-  main = checkout main
+  main = switch main
 
   # show a pretty log
   plog = log --pretty=oneline
@@ -66,7 +66,7 @@
   cm = commit -m
 	d = diff
   g = grep
-	o = checkout
+	o = switch
 	s = status
 
   #blame without whitespace
