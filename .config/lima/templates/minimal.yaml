@@ -6,7 +6,6 @@ minimumLimaVersion: "2.1.2"
 base:
   - template:_images/ubuntu-lts
 
-Writable mounts (uncomment and modify as needed)
 mounts:
   - location: "~"
     writable: false
