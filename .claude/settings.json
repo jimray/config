@@ -62,7 +62,7 @@
       "Bash(git push)"
     ]
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -100,6 +100,13 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "editorMode": "vim",
+<<<<<<< HEAD
   "defaultMode": "plan",
   "agentPushNotifEnabled": true
+||||||| parent of 4d7cb1f (Make ~/Projects writable by VMs)
+  "defaultMode": "plan",
+  "model": "opus"
+=======
+  "defaultMode": "plan"
+>>>>>>> 4d7cb1f (Make ~/Projects writable by VMs)
 }
