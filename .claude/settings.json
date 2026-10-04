@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(done)",
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(head:*)",
@@ -100,13 +99,6 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "editorMode": "vim",
-<<<<<<< HEAD
   "defaultMode": "plan",
   "agentPushNotifEnabled": true
-||||||| parent of 4d7cb1f (Make ~/Projects writable by VMs)
-  "defaultMode": "plan",
-  "model": "opus"
-=======
-  "defaultMode": "plan"
->>>>>>> 4d7cb1f (Make ~/Projects writable by VMs)
 }
