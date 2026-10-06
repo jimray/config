@@ -38,7 +38,7 @@
   aux = "!git add -u && git commit"
 
   # create a new branch and check it out
-	b = switch -b
+	b = switch -c
 
   # show a nice history readout
   hist = log --oneline --graph --all --decorate
